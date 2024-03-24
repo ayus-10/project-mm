@@ -23,14 +23,14 @@ export default function UserForm({ type }: UserFormProps) {
   }
 
   return (
-    <main className="w-screen flex items-center min-h-screen px-5 py-4 max-w-[1000px] mx-auto">
-      <div className="flex w-full md:justify-evenly lg:justify-between md:flex-row flex-col">
+    <main className="mx-auto flex min-h-screen w-screen max-w-[1000px] items-center px-5 py-4">
+      <div className="flex w-full flex-col md:flex-row md:justify-evenly lg:justify-between">
         <div className="md:w-[300px] lg:w-[450px]">
           <Image
             height={50}
             width={174}
             alt="Main Logo"
-            className="md:mx-0 mx-auto"
+            className="mx-auto md:mx-0"
             priority
             src={MainLogo}
           ></Image>
@@ -39,7 +39,7 @@ export default function UserForm({ type }: UserFormProps) {
               type === "signup" ? "flex-col" : "flex-col-reverse"
             }`}
           >
-            <h1 className="text-3xl text-gray-800 font-semibold">
+            <h1 className="text-3xl font-semibold text-gray-800">
               {type === "signup"
                 ? "Enjoy with Mansiaa Chating App"
                 : "Continue to your Account"}
@@ -50,48 +50,48 @@ export default function UserForm({ type }: UserFormProps) {
                 : "Welcome back 👋🏻"}
             </h2>
           </div>
-          <button className="flex my-6 w-full justify-center items-center gap-1 md:mx-0 mx-auto text-purple-700 ease-in-out duration-300 hover:bg-transparent border-2 border-purple-200 bg-purple-200 px-5 rounded-full py-3">
+          <button className="mx-auto my-6 flex w-full items-center justify-center gap-1 rounded-full border-2 border-purple-200 bg-purple-200 px-5 py-3 text-purple-700 duration-300 ease-in-out hover:bg-transparent md:mx-0">
             <Image src={GoogleIcon} alt="Google Icon"></Image>
             <span>{`${
               type === "signup" ? "Sign up" : "Log in"
             } with Google`}</span>
           </button>
           <div className="flex items-center gap-2 ">
-            <div className="grow h-[1px] bg-gray-300"></div>
+            <div className="h-[1px] grow bg-gray-300"></div>
             <p className="text-gray-500">Or use Email</p>
-            <div className="grow h-[1px] bg-gray-300"></div>
+            <div className="h-[1px] grow bg-gray-300"></div>
           </div>
-          <form className="flex my-6 flex-col gap-2" onSubmit={handleSubmit}>
-            <div className="flex flex-col-reverse relative">
+          <form className="my-6 flex flex-col gap-2" onSubmit={handleSubmit}>
+            <div className="relative flex flex-col-reverse">
               <input
                 onChange={(e) => setEmail(e.target.value)}
                 id="email"
-                className="outline-none peer border-2 focus:bg-purple-100 ease-in-out duration-300 rounded-md bg-gray-100 py-4 px-2 border-purple-700"
+                className="peer rounded-md border-2 border-purple-700 bg-gray-100 px-2 py-4 outline-none duration-300 ease-in-out focus:bg-purple-100"
                 type="email"
               />
               <label
-                className={`absolute peer-focus:translate-y-0 peer-focus:top-0 ease-in-out duration-300 text-sm text-purple-700 z-10 left-2 ${
+                className={`absolute left-2 z-10 text-sm text-purple-700 duration-300 ease-in-out peer-focus:top-0 peer-focus:translate-y-0 ${
                   email === ""
-                    ? "-translate-y-1/2 top-1/2"
-                    : "translate-y-0 top-0"
+                    ? "top-1/2 -translate-y-1/2"
+                    : "top-0 translate-y-0"
                 }`}
                 htmlFor="email"
               >
                 Email
               </label>
             </div>
-            <div className="flex flex-col-reverse relative">
+            <div className="relative flex flex-col-reverse">
               <input
                 onChange={(e) => setPassword(e.target.value)}
                 id="password"
-                className="outline-none peer border-2 focus:bg-purple-100 ease-in-out duration-300 z-0 rounded-md bg-gray-100 py-4 px-2 border-purple-700"
+                className="peer z-0 rounded-md border-2 border-purple-700 bg-gray-100 px-2 py-4 outline-none duration-300 ease-in-out focus:bg-purple-100"
                 type={showPassword ? "text" : "password"}
               />
               <label
-                className={`absolute peer-focus:translate-y-0 peer-focus:top-0 ease-in-out duration-300 text-sm text-purple-700 z-10 left-2 ${
+                className={`absolute left-2 z-10 text-sm text-purple-700 duration-300 ease-in-out peer-focus:top-0 peer-focus:translate-y-0 ${
                   password === ""
-                    ? "-translate-y-1/2 top-1/2"
-                    : "translate-y-0 top-0"
+                    ? "top-1/2 -translate-y-1/2"
+                    : "top-0 translate-y-0"
                 }`}
                 htmlFor="password"
               >
@@ -100,19 +100,19 @@ export default function UserForm({ type }: UserFormProps) {
               {password !== "" && (
                 <FaEye
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-2 cursor-pointer text-gray-700 text-lg z-10 -translate-y-1/2 top-1/2"
+                  className="absolute right-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer text-lg text-gray-700"
                 />
               )}
             </div>
-            <button className="bg-purple-700 group justify-center flex items-center text-white py-4 px-3 rounded-md">
+            <button className="group flex items-center justify-center rounded-md bg-purple-700 px-3 py-4 text-white">
               <span className="text-lg">
                 {type === "signup" ? "Sign up" : "Log in"}
               </span>
-              <LuChevronRight className="group-hover:translate-x-2 relative text-2xl ease-in-out duration-300" />
+              <LuChevronRight className="relative text-2xl duration-300 ease-in-out group-hover:translate-x-2" />
             </button>
           </form>
           <p
-            className={`text-gray-500 text-xs ${
+            className={`text-xs text-gray-500 ${
               type === "signup" ? "block" : "hidden"
             }`}
           >
@@ -125,7 +125,7 @@ export default function UserForm({ type }: UserFormProps) {
               Terms of Service
             </Link>
           </p>
-          <p className="text-gray-500 my-2 text-sm text-center">
+          <p className="my-2 text-center text-sm text-gray-500">
             <span>
               {type === "signup"
                 ? "Already have an account? "
@@ -133,13 +133,13 @@ export default function UserForm({ type }: UserFormProps) {
             </span>
             <Link
               href={type === "signup" ? "/login" : "/signup"}
-              className="underline font-semibold"
+              className="font-semibold underline"
             >
               {type === "signup" ? "Log in" : "GET STARTED - IT'S FREE"}
             </Link>
           </p>
         </div>
-        <div className="md:block hidden">
+        <div className="hidden md:block">
           <Image
             height={600}
             width={400}
