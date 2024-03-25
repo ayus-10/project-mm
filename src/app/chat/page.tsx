@@ -17,7 +17,10 @@ export default function Chat() {
   const isMobileScreen = useMobileScreen(); // Returns true if screen width < 768px
 
   const [showUserInfo, setShowUserInfo] = useState(false);
-  const [showMenu, setShowMenu] = useState(!isMobileScreen); // Menu initially hidden on mobile screens
+  const [showMenu, setShowMenu] = useState(!isMobileScreen);
+
+  // Menu initially hidden on mobile screens
+  useEffect(() => setShowMenu(!isMobileScreen), [isMobileScreen]);
 
   function toggleMenuVisibility() {
     setShowMenu(!showMenu);
