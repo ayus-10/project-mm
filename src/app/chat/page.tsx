@@ -9,9 +9,11 @@ import { IoMicOutline } from "react-icons/io5";
 import { RiAttachment2 } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
-import { TbCirclePlus, TbMessageDots } from "react-icons/tb";
+import { TbMessageDots } from "react-icons/tb";
 import { LuChevronLeft, LuMenu } from "react-icons/lu";
 import { useMobileScreen } from "@/hooks/useMobileScreen";
+import UserProfiles from "@/components/chat/UserProfiles";
+import Chats from "@/components/chat/Chats";
 
 export default function Chat() {
   const isMobileScreen = useMobileScreen(); // Returns true if screen width < 768px
@@ -37,7 +39,7 @@ export default function Chat() {
   }
 
   return (
-    <main className="flex h-screen w-screen overflow-hidden text-gray-900">
+    <main className="flex h-dvh w-screen overflow-hidden text-gray-900">
       <section className="relative flex">
         <nav className="relative z-30 flex h-full w-[4.25rem] flex-col justify-between bg-gray-200 p-4">
           <LuMenu
@@ -51,16 +53,16 @@ export default function Chat() {
           <AiOutlineLogout className="cursor-pointer rounded-full p-2 text-4xl text-red-500 duration-200 ease-in-out hover:bg-gray-300" />
         </nav>
         <div
-          className={`absolute z-20 h-full grow bg-gray-100 duration-300 ease-in-out md:static ${showMenu ? "left-[100%] md:block" : "-left-[100vw] md:hidden"}`}
+          className={`absolute z-20 h-full grow bg-gray-200 md:static ${showMenu ? "left-[100%] md:block" : "-left-[100vw] md:hidden"}`}
         >
-          <div className="flex h-[5.5rem] items-center gap-2 bg-gray-200 px-2 sm:px-6">
+          <div className="flex h-[5.5rem] items-center gap-2 px-2 sm:px-6">
             <LuChevronLeft
               onClick={toggleMenuVisibility}
               className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300"
             />
             <span className="text-lg md:text-xl">Chat</span>
           </div>
-          <div className="flex h-[calc(100vh-5.5rem)] w-[calc(100vw-4.25rem)] max-w-[380px] flex-col gap-4 px-2 sm:px-6 md:w-[40vw]">
+          <div className="flex h-[calc(100dvh-5.5rem)] w-[calc(100vw-4.25rem)] max-w-[380px] flex-col gap-4 px-2 sm:px-6 md:w-[40vw]">
             <div className="grid h-48 place-items-center gap-1 py-2">
               <div className="relative h-[100px] w-[100px]">
                 <Image
@@ -79,7 +81,7 @@ export default function Chat() {
                 Active
               </span>
             </div>
-            <Chats />
+            <UserProfiles />
           </div>
         </div>
       </section>
@@ -100,8 +102,8 @@ export default function Chat() {
           </div>
         </div>
         <div className="flex grow flex-col">
-          <div className="grow"></div>
-          <div className="flex items-center justify-between gap-4 px-4 py-4">
+          <Chats />
+          <div className="flex h-[5.25rem] items-center justify-between gap-4 px-4 py-4">
             <div className="relative w-full">
               <div className="absolute left-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-full bg-indigo-300 bg-opacity-50 p-2 text-2xl text-indigo-700 duration-200 ease-in-out hover:bg-opacity-80">
                 <HiOutlineEmojiHappy />
@@ -123,9 +125,9 @@ export default function Chat() {
       </section>
       <section className="relative">
         <div
-          className={`${showUserInfo ? "right-0 md:block" : "-right-[60vw] md:hidden"} absolute z-30 flex h-full max-w-[60vw] flex-col bg-gray-100 duration-300 ease-in-out md:static`}
+          className={`${showUserInfo ? "right-0 md:block" : "-right-[60vw] md:hidden"} absolute z-30 flex h-full max-w-[60vw] flex-col bg-gray-200 md:static`}
         >
-          <div className="flex h-[5.5rem] items-center justify-between bg-gray-200 px-6">
+          <div className="flex h-[5.5rem] items-center justify-between px-6">
             <h1 className="text-lg md:text-xl">Profile</h1>
             <IoMdClose
               className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300"
@@ -157,61 +159,5 @@ export default function Chat() {
         </div>
       </section>
     </main>
-  );
-}
-
-function UserProfile() {
-  return (
-    <div className="my-3 flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg px-2 py-1 duration-200 ease-in-out hover:bg-white">
-      <Image
-        src={DemoUser}
-        className="size-[50px] rounded-full"
-        height={50}
-        width={50}
-        alt="User profile"
-      ></Image>
-      <div className="flex grow">
-        <div className="flex grow flex-col">
-          <h2 className="line-clamp-1 text-sm font-semibold md:text-base">
-            Username Here
-          </h2>
-          <p className="line-clamp-2 text-xs text-gray-600 md:text-sm">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sequi, et?
-          </p>
-        </div>
-        <div className="flex flex-col items-end justify-center gap-2 text-xs">
-          <span className="text-gray-500">04:20</span>
-          <div className="grid size-4 place-content-center rounded-full bg-purple-700 text-white">
-            5
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Chats() {
-  return (
-    <div className="flex h-[calc(100%-12rem)] w-full grow flex-col">
-      <div>
-        <div className="flex justify-between gap-4">
-          <span className="font-semibold md:text-lg">Chats</span>
-          <TbCirclePlus className="cursor-pointer rounded-full p-0.5 text-xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 md:text-2xl" />
-        </div>
-        <div className="relative w-full">
-          <input
-            placeholder="Search..."
-            type="text"
-            className="w-full rounded-md px-2 py-1 shadow-black outline-none drop-shadow-md duration-200 ease-in-out hover:shadow-md focus:shadow-md"
-          />
-          <IoSearch className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500" />
-        </div>
-      </div>
-      <div className="my-2 grow overflow-y-scroll">
-        {Array.from({ length: 21 }).map((_, index) => (
-          <UserProfile key={index} />
-        ))}
-      </div>
-    </div>
   );
 }
