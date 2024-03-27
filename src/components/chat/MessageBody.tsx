@@ -1,11 +1,20 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import MessageBox from "./MessageBox";
 import { PiPaperPlaneTiltFill } from "react-icons/pi";
 import { IoMicOutline } from "react-icons/io5";
 import { RiAttachment2 } from "react-icons/ri";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
+import messageBodyJson from "../../assets/dummy_messages.json";
 
-export default function MessageBody() {
+export type MessageBodyJson = {
+  username: string;
+  profilePictureUrl: string;
+  sentTime: string;
+  receivedTime: string;
+  messageText: string;
+};
+
+export default function MessageBody({ search }: { search: string }) {
   const chatContainer = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (chatContainer.current) {
@@ -13,14 +22,44 @@ export default function MessageBody() {
     }
   }, []);
 
+  const [messageBody, setMessageBody] =
+    useState<MessageBodyJson[]>(messageBodyJson);
+
+  useEffect(() => {
+    if (search) {
+      const filteredMessageBody = messageBodyJson.filter((message) =>
+        message.messageText.toLowerCase().includes(search),
+      );
+      setMessageBody(filteredMessageBody);
+    } else {
+      setMessageBody(messageBodyJson);
+    }
+  }, [search]);
+
+  const loggedInUser = {
+    username: "The Boss",
+    profilePictureUrl:
+      "https://cdn.discordapp.com/avatars/986940340227432450/0a631fa4969b98de989be153d20e689f.webp?size=100",
+  };
+
   return (
     <div className="flex grow flex-col">
       <div
         ref={chatContainer}
         className="flex h-[calc(100dvh-5.5rem-7.5rem)] grow flex-col gap-6 overflow-y-scroll px-4 py-6 md:gap-8 lg:h-[calc(100dvh-5.5rem-5.25rem)]"
       >
-        {Array.from({ length: 33 }).map((_, index) => (
-          <MessageBox key={index} align={index % 2 == 0 ? "left" : "right"} />
+        {messageBody.map((message, index) => (
+          <MessageBox
+            key={index}
+            align={
+              message.username === loggedInUser.username ? "right" : "left"
+            }
+            username={message.username}
+            profilePictureUrl={message.profilePictureUrl}
+            sentTime={message.sentTime}
+            receivedTime={message.receivedTime}
+            messageText={message.messageText}
+          />
         ))}
       </div>
       <div className="flex h-[7.5rem] flex-col-reverse items-center justify-between gap-2 px-4 py-2 lg:h-[5.25rem] lg:flex-row lg:gap-4 lg:py-4">

@@ -1,7 +1,20 @@
 import Image from "next/image";
-import DemoUser from "../../assets/demouser.webp";
+import { MessageBodyJson } from "./MessageBody";
 
-export default function MessageBox({ align }: { align: "left" | "right" }) {
+type MessageBoxProps = {
+  align: "left" | "right";
+} & MessageBodyJson;
+
+export default function MessageBox(props: MessageBoxProps) {
+  const {
+    align,
+    username,
+    profilePictureUrl,
+    sentTime,
+    receivedTime,
+    messageText,
+  } = props;
+
   return (
     <div
       className={`flex w-full ${align === "left" ? "justify-start" : "justify-end"}`}
@@ -10,21 +23,19 @@ export default function MessageBox({ align }: { align: "left" | "right" }) {
         className={`flex w-1/2 items-start gap-2 md:gap-3 lg:items-center ${align === "left" ? "flex-row" : "flex-row-reverse"}`}
       >
         <Image
-          alt="Demo User"
-          src={DemoUser}
+          alt={`Profile picture of ${username}`}
+          src={profilePictureUrl}
           height={50}
           width={50}
           className="rounded-full"
         ></Image>
         <div className="flex flex-col">
-          <span className="text-xs text-gray-500 md:text-sm">
-            26 Mar, 2024 11:59 AM
+          <span className="p-1 text-xs text-gray-500 md:text-sm lg:p-0">
+            {sentTime}
           </span>
-          <div className="flex flex-col items-start gap-4 rounded-lg bg-gray-200 px-4 py-3 lg:flex-row lg:items-end">
-            <p className="text-sm md:text-base">
-              Lorem ipsum dolor sit, amet consectetur adipisicing.
-            </p>
-            <span className="text-xs">04:20PM</span>
+          <div className="flex flex-col items-start gap-4 rounded-lg bg-gray-200 p-2 lg:flex-row lg:items-end lg:px-4 lg:py-3">
+            <p className="text-sm md:text-base">{messageText}</p>
+            <span className="text-right text-xs">{receivedTime}</span>
           </div>
         </div>
       </div>

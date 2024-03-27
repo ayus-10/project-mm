@@ -1,0 +1,65 @@
+[
+  {
+    "username": "John Doe",
+    "profilePictureUrl": "https://cdn.discordapp.com/avatars/833573797809750066/2f4530153f0d992c760ff2ba115380b5.webp",
+    "lastMessage": "Looking forward to it!",
+    "sentTime": "09:20 AM",
+    "unseenMessagesCount": 0
+  },
+  {
+    "username": "Emma Smith",
+    "profilePictureUrl": "https://images.unsplash.com/photo-1553514029-1318c9127859?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=64&ixid=MnwxfDB8MXxyYW5kb218MHx8cG9ydHJhaXR8fHx8fHwxNzExNTIwMDE3&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=64",
+    "lastMessage": "Just finished a big project!",
+    "sentTime": "02:20 AM",
+    "unseenMessagesCount": 2
+  },
+  {
+    "username": "Michael Taylor",
+    "profilePictureUrl": "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=64&ixid=MnwxfDB8MXxyYW5kb218MHx8cG9ydHJhaXR8fHx8fHwxNzExNTIwMDE3&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=64",
+    "lastMessage": "Ready for the weekend!",
+    "sentTime": "12:20 AM",
+    "unseenMessagesCount": 3
+  },
+  {
+    "username": "Sarah Wilson",
+    "profilePictureUrl": "https://images.unsplash.com/photo-1581403341630-a6e0b9d2d257?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=64&ixid=MnwxfDB8MXxyYW5kb218MHx8cG9ydHJhaXR8fHx8fHwxNzExNTIwMDE5&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=64",
+    "lastMessage": "Does anyone have plans for tonight?",
+    "sentTime": "11:20 AM",
+    "unseenMessagesCount": 1
+  },
+  {
+    "username": "David Martinez",
+    "profilePictureUrl": "https://images.unsplash.com/photo-1530268729831-4b0b9e170218?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=64&ixid=MnwxfDB8MXxyYW5kb218MHx8cG9ydHJhaXR8fHx8fHwxNzExNTIwMDIx&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=64",
+    "lastMessage": "Just finished a great book!",
+    "sentTime": "Yesterday",
+    "unseenMessagesCount": 0
+  },
+  {
+    "username": "Jessica Jones",
+    "profilePictureUrl": "https://images.unsplash.com/photo-1519895609939-d2a6491c1196?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=64&ixid=MnwxfDB8MXxyYW5kb218MHx8cG9ydHJhaXR8fHx8fHwxNzExNTIwMDIx&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=64",
+    "lastMessage": "Just got home from a concert!",
+    "sentTime": "03:33 PM",
+    "unseenMessagesCount": 4
+  },
+  {
+    "username": "Olivia Garcia",
+    "profilePictureUrl": "https://images.unsplash.com/photo-1554350342-84cbb65fd7c6?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=64&ixid=MnwxfDB8MXxyYW5kb218MHx8cG9ydHJhaXR8fHx8fHwxNzExNTIwMDgx&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=64",
+    "lastMessage": "Just got back from a jog!",
+    "sentTime": "Yesterday",
+    "unseenMessagesCount": 0
+  },
+  {
+    "username": "Alex Johnson",
+    "profilePictureUrl": "https://images.unsplash.com/photo-1583674392771-2abf6be75965?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=64&ixid=MnwxfDB8MXxyYW5kb218MHx8cG9ydHJhaXR8fHx8fHwxNzExNTIwMDgw&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=64",
+    "lastMessage": "Ready for some Netflix!",
+    "sentTime": "02:33 AM",
+    "unseenMessagesCount": 5
+  },
+  {
+    "username": "Emily Brown",
+    "profilePictureUrl": "https://images.unsplash.com/photo-1557053910-d9eadeed1c58?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=64&ixid=MnwxfDB8MXxyYW5kb218MHx8cG9ydHJhaXR8fHx8fHwxNzExNTIwMDgz&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=64",
+    "lastMessage": "Morning Boss!",
+    "sentTime": "07:33 AM",
+    "unseenMessagesCount": 0
+  }
+]
