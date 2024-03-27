@@ -50,7 +50,7 @@ export default function MessageBody({ search }: { search: string }) {
       >
         {messageBody.map((message, index) => (
           <MessageBox
-            key={index}
+            key={`messageBoxNumber${index}`}
             align={
               message.username === loggedInUser.username ? "right" : "left"
             }

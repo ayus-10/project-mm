@@ -12,6 +12,7 @@ import { useMobileScreen } from "@/hooks/useMobileScreen";
 import MessageBody from "@/components/chat/MessageBody";
 import ChatMenu from "@/components/chat/ChatMenu";
 import SettingsMenu from "@/components/chat/SettingsMenu";
+import ProfileTabs from "@/components/chat/ProfileTabs";
 
 type ActiveTab = "chat" | "settings";
 
@@ -129,7 +130,7 @@ export default function Chat() {
               onClick={toggleUserInfoVisibility}
             />
           </div>
-          <div className="grow px-6">
+          <div className="flex grow flex-col gap-8 px-6">
             <div className="grid h-48 place-items-center gap-1 py-2">
               <Image
                 height={100}
@@ -152,6 +153,7 @@ export default function Chat() {
                 <IoIosVideocam className="cursor-pointer rounded-full bg-indigo-200 bg-opacity-50 p-2 text-4xl text-indigo-700 duration-200 ease-in-out hover:bg-opacity-100" />
               </div>
             </div>
+            <ProfileTabs />
           </div>
         </div>
       </section>

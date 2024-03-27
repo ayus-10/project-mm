@@ -60,7 +60,7 @@ export default function UserProfiles() {
           <IoSearch className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500" />
         </div>
       </div>
-      <div className="flex w-full gap-2 px-2">
+      <div className="flex w-full gap-2">
         <button
           onClick={() => setActiveTab("all")}
           className={`cursor-pointer font-medium duration-200 ease-in-out  hover:text-purple-700 ${activeTab === "all" && "text-purple-700"}`}
@@ -77,7 +77,7 @@ export default function UserProfiles() {
       <div className="grow overflow-y-scroll">
         {userProfiles.map((profile, index) => (
           <UserProfileCard
-            key={index}
+            key={`profileNumber${index}`}
             profilePictureUrl={profile.profilePictureUrl}
             username={profile.username}
             lastMessage={profile.lastMessage}
