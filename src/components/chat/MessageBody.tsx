@@ -65,10 +65,10 @@ export default function MessageBody({ search }: { search: string }) {
       <div className="flex h-[7.5rem] flex-col-reverse items-center justify-between gap-2 px-4 py-2 lg:h-[5.25rem] lg:flex-row lg:gap-4 lg:py-4">
         <div className="relative w-full">
           <div className="absolute left-2 top-1/2 z-10 hidden -translate-y-1/2 gap-2 lg:flex">
-            <div className="cursor-pointer rounded-full bg-indigo-300 bg-opacity-50 p-2 text-2xl text-indigo-700 duration-200 ease-in-out hover:bg-opacity-80">
+            <div className="cursor-pointer rounded-full bg-indigo-300 p-2 text-2xl text-indigo-700 duration-200 ease-in-out hover:bg-indigo-500 hover:text-white">
               <HiOutlineEmojiHappy />
             </div>
-            <div className="cursor-pointer rounded-full bg-green-300 bg-opacity-50 p-2 text-2xl text-green-700 duration-200 ease-in-out hover:bg-opacity-80">
+            <div className="cursor-pointer rounded-full bg-green-300 p-2 text-2xl text-green-700 duration-200 ease-in-out hover:bg-green-500 hover:text-white">
               <RiAttachment2 />
             </div>
           </div>
@@ -77,13 +77,13 @@ export default function MessageBody({ search }: { search: string }) {
             placeholder="Message..."
             className="z-0 w-full rounded-lg bg-gray-200 px-2 py-3 text-lg shadow-black outline-none duration-200 ease-in-out hover:shadow-md focus:shadow-md dark:bg-gray-800 md:text-xl lg:pl-28"
           />
-          <div className="absolute right-2 top-1/2 z-10 block -translate-y-1/2 cursor-pointer rounded-full bg-purple-300 bg-opacity-50 p-2 text-2xl text-purple-700 duration-200 ease-in-out hover:bg-opacity-80">
+          <div className="absolute right-2 top-1/2 z-10 block -translate-y-1/2 cursor-pointer rounded-full bg-purple-300 p-2 text-2xl text-purple-700 duration-200 ease-in-out hover:bg-purple-500 hover:text-white">
             <PiPaperPlaneTiltFill />
           </div>
         </div>
         <div className="flex w-full flex-row-reverse justify-between lg:w-auto">
-          <IoMicOutline className="h-full w-auto cursor-pointer rounded-full bg-gray-200 p-2 text-2xl text-purple-700 duration-200 ease-in-out hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700" />
-          <RiAttachment2 className="h-full w-auto cursor-pointer rounded-full bg-gray-200 p-2 text-2xl text-purple-700 duration-200 ease-in-out hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 lg:hidden" />
+          <IoMicOutline className="h-full w-auto cursor-pointer rounded-full bg-blue-300 p-2 text-2xl text-blue-700 duration-200 ease-in-out hover:bg-blue-500 hover:text-white" />
+          <RiAttachment2 className="h-full w-auto cursor-pointer rounded-full bg-green-300 p-2 text-2xl text-green-700 duration-200 ease-in-out hover:bg-green-500 hover:text-white lg:hidden" />
         </div>
       </div>
     </div>

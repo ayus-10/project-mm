@@ -54,7 +54,7 @@ export default function Chat() {
   };
 
   return (
-    <main className="flex h-dvh w-screen overflow-hidden text-gray-900 dark:text-white">
+    <main className="flex h-dvh w-screen overflow-hidden bg-white text-gray-850 dark:bg-gray-900 dark:text-white">
       <section className="relative flex">
         <nav className="relative z-30 flex h-full w-[4.25rem] flex-col justify-between bg-gray-200 p-4 dark:bg-gray-800">
           <LuMenu
@@ -64,11 +64,11 @@ export default function Chat() {
           <div className="flex flex-col gap-2">
             <TbMessageDots
               onClick={() => setActiveTab("chat")}
-              className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300"
+              className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-850 dark:hover:bg-gray-900"
             />
             <IoSettingsOutline
               onClick={() => setActiveTab("settings")}
-              className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300"
+              className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-850 dark:hover:bg-gray-900"
             />
           </div>
           <AiOutlineLogout className="cursor-pointer rounded-full p-2 text-4xl text-red-500 duration-200 ease-in-out hover:bg-gray-300 dark:hover:bg-gray-700" />
@@ -79,7 +79,7 @@ export default function Chat() {
           <div className="flex h-[5.5rem] items-center gap-2 px-2 sm:px-6">
             <LuChevronLeft
               onClick={toggleMenuVisibility}
-              className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300"
+              className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-850 dark:hover:bg-gray-900"
             />
             <span className="text-lg capitalize md:text-xl">{activeTab}</span>
           </div>
@@ -89,32 +89,32 @@ export default function Chat() {
         </div>
       </section>
       <section className="flex grow flex-col">
-        <div className="relative flex h-[5.5rem] w-full items-center justify-between bg-gray-100 px-2 py-4 dark:bg-gray-900 md:px-6">
+        <div className="relative flex h-[5.5rem] w-full items-center justify-between bg-gray-100 px-2 py-4 dark:bg-gray-850 md:px-6">
           <div>
             <h1 className="text-xl md:text-2xl md:font-semibold">
               {currentChat.username}
             </h1>
-            <p className="text-xs text-gray-500 md:text-sm">
+            <p className="text-xs text-gray-500 dark:text-gray-400 md:text-sm">
               {currentChat.status}
             </p>
           </div>
           <div className="flex text-4xl text-purple-700 md:gap-2">
-            <IoIosVideocam className="shrink-0 cursor-pointer rounded-full p-2 duration-200 ease-in-out hover:bg-purple-200" />
-            <MdLocalPhone className="shrink-0 cursor-pointer rounded-full p-2 duration-200 ease-in-out hover:bg-purple-200" />
+            <IoIosVideocam className="shrink-0 cursor-pointer rounded-full p-2 duration-200 ease-in-out hover:bg-purple-200 dark:hover:bg-gray-900" />
+            <MdLocalPhone className="shrink-0 cursor-pointer rounded-full p-2 duration-200 ease-in-out hover:bg-purple-200 dark:hover:bg-gray-900" />
             <IoSearch
               onClick={() => setShowSearch(!showSearch)}
-              className="shrink-0 cursor-pointer rounded-full p-2 duration-200 ease-in-out hover:bg-purple-200"
+              className="shrink-0 cursor-pointer rounded-full p-2 duration-200 ease-in-out hover:bg-purple-200 dark:hover:bg-gray-900"
             />
             <HiDotsVertical
               onClick={toggleUserInfoVisibility}
-              className="shrink-0 cursor-pointer rounded-full p-2 duration-200 ease-in-out hover:bg-purple-200"
+              className="shrink-0 cursor-pointer rounded-full p-2 duration-200 ease-in-out hover:bg-purple-200 dark:hover:bg-gray-900"
             />
           </div>
           <input
             onChange={(e) => setSearch(e.target.value.toLowerCase())}
             type="text"
             placeholder="Search for message..."
-            className={`absolute left-0 top-[100%] w-full border-b-[3px] border-gray-400 bg-purple-100 p-2 outline-none duration-200 ease-in-out hover:border-purple-700 focus:border-purple-700 md:px-3 md:py-2 md:text-lg ${showSearch ? "block" : "hidden"}`}
+            className={`absolute left-0 top-[100%] w-full border-b-[3px] border-gray-400 bg-purple-100 p-2 outline-none duration-200 ease-in-out hover:border-purple-700 focus:border-purple-700 dark:bg-gray-700 md:px-3 md:py-2 md:text-lg ${showSearch ? "block" : "hidden"}`}
           />
         </div>
         <MessageBody search={search} />
@@ -126,7 +126,7 @@ export default function Chat() {
           <div className="flex h-[5.5rem] items-center justify-between px-6">
             <h1 className="text-lg md:text-xl">Profile</h1>
             <IoMdClose
-              className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300"
+              className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-850 dark:hover:bg-gray-900"
               onClick={toggleUserInfoVisibility}
             />
           </div>
@@ -143,14 +143,14 @@ export default function Chat() {
                 <h1 className="text-xl md:text-2xl md:font-semibold">
                   {currentChat.username}
                 </h1>
-                <p className="text-xs text-gray-500 md:text-sm">
+                <p className="text-xs text-gray-500 dark:text-gray-400 md:text-sm">
                   {currentChat.status}
                 </p>
               </div>
               <div className="flex justify-between gap-4">
-                <IoMail className="cursor-pointer rounded-full bg-green-200 bg-opacity-50 p-2 text-4xl text-green-700 duration-200 ease-in-out hover:bg-opacity-100" />
-                <MdLocalPhone className="cursor-pointer rounded-full bg-purple-200 bg-opacity-50 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-opacity-100" />
-                <IoIosVideocam className="cursor-pointer rounded-full bg-indigo-200 bg-opacity-50 p-2 text-4xl text-indigo-700 duration-200 ease-in-out hover:bg-opacity-100" />
+                <IoMail className="cursor-pointer rounded-full bg-green-300 p-2 text-4xl text-green-700 duration-200 ease-in-out hover:bg-green-500 hover:text-white" />
+                <MdLocalPhone className="cursor-pointer rounded-full bg-purple-300 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-500 hover:text-white" />
+                <IoIosVideocam className="cursor-pointer rounded-full bg-indigo-300 p-2 text-4xl text-indigo-700 duration-200 ease-in-out hover:bg-indigo-500 hover:text-white" />
               </div>
             </div>
             <ProfileTabs />

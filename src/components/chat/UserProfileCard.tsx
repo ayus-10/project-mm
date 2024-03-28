@@ -11,7 +11,7 @@ export default function UserProfileCard(props: UserProfilesJson) {
   } = props;
 
   return (
-    <div className="my-3 flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg px-2 py-1 shadow-black duration-200 ease-in-out hover:bg-white hover:shadow-md">
+    <div className="my-3 flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg px-2 py-1 shadow-black duration-200 ease-in-out hover:bg-white hover:shadow-md dark:hover:bg-gray-900">
       <Image
         priority
         src={profilePictureUrl}
@@ -25,12 +25,14 @@ export default function UserProfileCard(props: UserProfilesJson) {
           <h2 className="line-clamp-1 text-sm font-semibold md:text-base">
             {username}
           </h2>
-          <p className="line-clamp-2 text-xs text-gray-600 md:text-sm">
+          <p className="line-clamp-2 text-xs text-gray-600 dark:text-gray-400 md:text-sm">
             {lastMessage}
           </p>
         </div>
         <div className="flex flex-col items-end justify-center gap-2 text-xs">
-          <span className="text-right text-gray-500">{sentTime}</span>
+          <span className="text-right text-gray-500 dark:text-gray-400">
+            {sentTime}
+          </span>
           {unseenMessagesCount > 0 && (
             <div className="grid size-4 place-content-center rounded-full bg-purple-700 text-white">
               {unseenMessagesCount}

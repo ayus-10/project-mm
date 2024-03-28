@@ -14,7 +14,7 @@ export default function ProfileTabs() {
         >
           <span className="font-semibold">{tab}</span>
           <div
-            className={`h-0.5 w-full duration-200 ease-in-out group-hover:bg-purple-700 ${activeTab === tab ? "bg-purple-700" : "bg-transparent"}`}
+            className={`h-0.5 w-full duration-200 ease-in-out group-hover:bg-purple-700 dark:group-hover:bg-purple-500 ${activeTab === tab ? "bg-purple-700 dark:bg-purple-500" : "bg-transparent"}`}
           ></div>
         </button>
       ))}
