@@ -13,6 +13,7 @@ export default function UserProfileCard(props: UserProfilesJson) {
   return (
     <div className="my-3 flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg px-2 py-1 shadow-black duration-200 ease-in-out hover:bg-white hover:shadow-md">
       <Image
+        priority
         src={profilePictureUrl}
         className="size-[50px] rounded-full"
         height={50}

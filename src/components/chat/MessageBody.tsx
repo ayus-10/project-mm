@@ -75,15 +75,15 @@ export default function MessageBody({ search }: { search: string }) {
           <input
             type="text"
             placeholder="Message..."
-            className="z-0 w-full rounded-lg bg-gray-200 px-2 py-3 text-lg shadow-black outline-none duration-200 ease-in-out hover:shadow-md focus:shadow-md md:text-xl lg:pl-28"
+            className="z-0 w-full rounded-lg bg-gray-200 px-2 py-3 text-lg shadow-black outline-none duration-200 ease-in-out hover:shadow-md focus:shadow-md dark:bg-gray-800 md:text-xl lg:pl-28"
           />
           <div className="absolute right-2 top-1/2 z-10 block -translate-y-1/2 cursor-pointer rounded-full bg-purple-300 bg-opacity-50 p-2 text-2xl text-purple-700 duration-200 ease-in-out hover:bg-opacity-80">
             <PiPaperPlaneTiltFill />
           </div>
         </div>
         <div className="flex w-full flex-row-reverse justify-between lg:w-auto">
-          <IoMicOutline className="h-full w-auto cursor-pointer rounded-full bg-gray-200 p-2 text-2xl text-purple-700 duration-200 ease-in-out hover:bg-gray-300" />
-          <RiAttachment2 className="h-full w-auto cursor-pointer rounded-full bg-gray-200 p-2 text-2xl text-purple-700 duration-200 ease-in-out hover:bg-gray-300 lg:hidden" />
+          <IoMicOutline className="h-full w-auto cursor-pointer rounded-full bg-gray-200 p-2 text-2xl text-purple-700 duration-200 ease-in-out hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700" />
+          <RiAttachment2 className="h-full w-auto cursor-pointer rounded-full bg-gray-200 p-2 text-2xl text-purple-700 duration-200 ease-in-out hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 lg:hidden" />
         </div>
       </div>
     </div>

@@ -13,6 +13,7 @@ export default function ChatMenu() {
       <div className="grid h-48 place-items-center gap-1 py-2">
         <div className="relative size-[100px]">
           <Image
+            priority
             height={100}
             width={100}
             src={loggedInUser.profilePictureUrl}

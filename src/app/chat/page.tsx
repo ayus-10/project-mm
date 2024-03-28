@@ -54,12 +54,12 @@ export default function Chat() {
   };
 
   return (
-    <main className="flex h-dvh w-screen overflow-hidden text-gray-900">
+    <main className="flex h-dvh w-screen overflow-hidden text-gray-900 dark:text-white">
       <section className="relative flex">
-        <nav className="relative z-30 flex h-full w-[4.25rem] flex-col justify-between bg-gray-200 p-4">
+        <nav className="relative z-30 flex h-full w-[4.25rem] flex-col justify-between bg-gray-200 p-4 dark:bg-gray-800">
           <LuMenu
             onClick={toggleMenuVisibility}
-            className="cursor-pointer rounded-full p-2 text-4xl duration-200 ease-in-out hover:bg-gray-300"
+            className="cursor-pointer rounded-full p-2 text-4xl duration-200 ease-in-out hover:bg-gray-300 dark:hover:bg-gray-700"
           />
           <div className="flex flex-col gap-2">
             <TbMessageDots
@@ -71,10 +71,10 @@ export default function Chat() {
               className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300"
             />
           </div>
-          <AiOutlineLogout className="cursor-pointer rounded-full p-2 text-4xl text-red-500 duration-200 ease-in-out hover:bg-gray-300" />
+          <AiOutlineLogout className="cursor-pointer rounded-full p-2 text-4xl text-red-500 duration-200 ease-in-out hover:bg-gray-300 dark:hover:bg-gray-700" />
         </nav>
         <div
-          className={`absolute z-20 h-full grow bg-gray-200 duration-300 ease-in-out md:static ${showMenu ? "left-[100%] md:block" : "-left-[100vw] md:hidden"}`}
+          className={`absolute z-20 h-full grow bg-gray-200 duration-300 ease-in-out dark:bg-gray-800 md:static ${showMenu ? "left-[100%] md:block" : "-left-[100vw] md:hidden"}`}
         >
           <div className="flex h-[5.5rem] items-center gap-2 px-2 sm:px-6">
             <LuChevronLeft
@@ -89,7 +89,7 @@ export default function Chat() {
         </div>
       </section>
       <section className="flex grow flex-col">
-        <div className="relative flex h-[5.5rem] w-full items-center justify-between bg-gray-100 px-2 py-4 md:px-6">
+        <div className="relative flex h-[5.5rem] w-full items-center justify-between bg-gray-100 px-2 py-4 dark:bg-gray-900 md:px-6">
           <div>
             <h1 className="text-xl md:text-2xl md:font-semibold">
               {currentChat.username}
@@ -121,7 +121,7 @@ export default function Chat() {
       </section>
       <section className="relative">
         <div
-          className={`${showUserInfo ? "right-0 md:block" : "-right-[calc(100vw-4.25rem)] md:hidden"} absolute z-30 flex h-full w-[calc(100vw-4.25rem)] flex-col bg-gray-200 duration-300 ease-in-out md:static md:w-auto`}
+          className={`${showUserInfo ? "right-0 md:block" : "-right-[calc(100vw-4.25rem)] md:hidden"} absolute z-30 flex h-full w-[calc(100vw-4.25rem)] flex-col bg-gray-200 duration-300 ease-in-out dark:bg-gray-800 md:static md:w-auto`}
         >
           <div className="flex h-[5.5rem] items-center justify-between px-6">
             <h1 className="text-lg md:text-xl">Profile</h1>

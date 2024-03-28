@@ -1,4 +1,5 @@
-import { useState } from "react";
+import ThemeContext from "@/contexts/ThemeContext";
+import { useContext, useState } from "react";
 import { FaBell, FaLock, FaMoon } from "react-icons/fa";
 import { FaShield } from "react-icons/fa6";
 
@@ -47,28 +48,51 @@ export default function SettingsMenu() {
 }
 
 function Settings({ tab }: { tab: string }) {
+  const { darkTheme } = useContext(ThemeContext);
+
   switch (tab) {
     case "Notifications":
       return (
         <div className="flex items-center justify-between px-4 py-3">
           <span>Show notifications</span>
-          <ToggleSwitch toggle={tab} />
+          <ToggleSwitch parent={tab} checked={false} />
         </div>
       );
     case "Theme":
       return (
         <div className="flex items-center justify-between px-4 py-3">
           <span>Dark theme</span>
-          <ToggleSwitch toggle={tab} />
+          <ToggleSwitch parent={tab} checked={darkTheme} />
         </div>
       );
   }
 }
 
-function ToggleSwitch({ toggle }: { toggle: "Notifications" | "Theme" }) {
+type ToggleSwitchProps = {
+  parent: "Notifications" | "Theme";
+  checked: boolean;
+};
+
+function ToggleSwitch(props: ToggleSwitchProps) {
+  const { parent, checked } = props;
+
+  const { toggleTheme } = useContext(ThemeContext);
+
+  function handleChange() {
+    if (parent == "Theme") {
+      toggleTheme();
+    }
+  }
+
   return (
     <label className="inline-flex cursor-pointer items-center">
-      <input type="checkbox" value="" className="peer sr-only" />
+      <input
+        type="checkbox"
+        value=""
+        className="peer sr-only"
+        onChange={handleChange}
+        checked={checked}
+      />
       <div className="peer relative h-6 w-11 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-purple-700 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none rtl:peer-checked:after:-translate-x-full dark:border-gray-600 dark:bg-gray-700"></div>
     </label>
   );
