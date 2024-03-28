@@ -52,24 +52,20 @@ function Settings({ tab }: { tab: string }) {
       return (
         <div className="flex items-center justify-between px-4 py-3">
           <span>Show notifications</span>
-          <ToggleSwitch />
+          <ToggleSwitch toggle={tab} />
         </div>
       );
-    case "Privacy":
-      return <div></div>;
-    case "Security":
-      return <div></div>;
     case "Theme":
       return (
         <div className="flex items-center justify-between px-4 py-3">
           <span>Dark theme</span>
-          <ToggleSwitch />
+          <ToggleSwitch toggle={tab} />
         </div>
       );
   }
 }
 
-function ToggleSwitch() {
+function ToggleSwitch({ toggle }: { toggle: "Notifications" | "Theme" }) {
   return (
     <label className="inline-flex cursor-pointer items-center">
       <input type="checkbox" value="" className="peer sr-only" />

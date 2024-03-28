@@ -74,7 +74,7 @@ export default function Chat() {
           <AiOutlineLogout className="cursor-pointer rounded-full p-2 text-4xl text-red-500 duration-200 ease-in-out hover:bg-gray-300" />
         </nav>
         <div
-          className={`absolute z-20 h-full grow bg-gray-200 md:static ${showMenu ? "left-[100%] md:block" : "-left-[100vw] md:hidden"}`}
+          className={`absolute z-20 h-full grow bg-gray-200 duration-300 ease-in-out md:static ${showMenu ? "left-[100%] md:block" : "-left-[100vw] md:hidden"}`}
         >
           <div className="flex h-[5.5rem] items-center gap-2 px-2 sm:px-6">
             <LuChevronLeft
@@ -121,7 +121,7 @@ export default function Chat() {
       </section>
       <section className="relative">
         <div
-          className={`${showUserInfo ? "right-0 md:block" : "-right-[calc(100vw-4.25rem)] md:hidden"} absolute z-30 flex h-full w-[calc(100vw-4.25rem)] flex-col bg-gray-200 md:static md:w-auto`}
+          className={`${showUserInfo ? "right-0 md:block" : "-right-[calc(100vw-4.25rem)] md:hidden"} absolute z-30 flex h-full w-[calc(100vw-4.25rem)] flex-col bg-gray-200 duration-300 ease-in-out md:static md:w-auto`}
         >
           <div className="flex h-[5.5rem] items-center justify-between px-6">
             <h1 className="text-lg md:text-xl">Profile</h1>
