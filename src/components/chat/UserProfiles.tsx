@@ -1,6 +1,6 @@
 import UserProfileCard from "./UserProfileCard";
 import { IoSearch } from "react-icons/io5";
-import { TbCirclePlus } from "react-icons/tb";
+import { BiSolidPlusCircle } from "react-icons/bi";
 import userProfilesJson from "../../assets/dummy_profiles.json";
 import { useEffect, useState } from "react";
 
@@ -48,7 +48,7 @@ export default function UserProfiles() {
       <div className="flex flex-col gap-1 py-1">
         <div className="flex justify-between gap-4">
           <span className="font-semibold md:text-lg">Chats</span>
-          <TbCirclePlus className="cursor-pointer rounded-full p-0.5 text-2xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:text-purple-500 dark:hover:bg-gray-900" />
+          <BiSolidPlusCircle className="cursor-pointer rounded-full p-0.5 text-2xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:text-purple-500 dark:hover:bg-gray-900" />
         </div>
         <div className="relative w-full">
           <input
