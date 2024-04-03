@@ -23,12 +23,12 @@ export default function SettingsMenu() {
     },
   ];
 
-  const [setting, setSetting] = useState("none");
+  const [setting, setSetting] = useState("");
 
   return (
     <div className="flex flex-col gap-2">
-      {settingItems.map((item, index) => (
-        <div key={`settingItemNumber${index}`}>
+      {settingItems.map((item) => (
+        <div key={item.text}>
           <button
             onClick={() => setSetting(item.text)}
             className="flex w-full cursor-pointer items-center gap-4 border-b-2 border-purple-300 bg-white px-4 py-3 text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:border-purple-500 dark:bg-gray-850 dark:hover:bg-gray-900"

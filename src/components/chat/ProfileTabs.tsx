@@ -12,9 +12,9 @@ export default function ProfileTabs() {
   return (
     <div className="flex h-[calc(100%-12.75rem-2rem)] flex-col md:h-[calc(100%-13.25rem-2rem)]">
       <div className="flex w-full justify-between gap-2 rounded-sm bg-white px-4 py-1 dark:bg-gray-850 md:gap-8 md:px-8">
-        {tabs.map((tab, index) => (
+        {tabs.map((tab) => (
           <button
-            key={`tabItemNumber${index}`}
+            key={tab}
             className="group cursor-pointer"
             onClick={() => setActiveTab(tab)}
           >

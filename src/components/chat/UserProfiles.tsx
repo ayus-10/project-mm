@@ -5,6 +5,7 @@ import userProfilesJson from "../../assets/dummy_profiles.json";
 import { useEffect, useState } from "react";
 
 export type UserProfilesJson = {
+  id: string;
   username: string;
   profilePictureUrl: string;
   lastMessage: string;
@@ -55,7 +56,7 @@ export default function UserProfiles() {
             onChange={(e) => setSearch(e.target.value.toLowerCase())}
             placeholder="Search..."
             type="text"
-            className="w-full rounded-md bg-white p-2 shadow-black outline-none duration-200 ease-in-out hover:drop-shadow-md focus:drop-shadow-md dark:bg-gray-850"
+            className="w-full rounded-md bg-white p-2 pr-7 shadow-black outline-none duration-200 ease-in-out hover:drop-shadow-md focus:drop-shadow-md dark:bg-gray-850"
           />
           <IoSearch className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500" />
         </div>
@@ -75,9 +76,10 @@ export default function UserProfiles() {
         </button>
       </div>
       <div className="grow overflow-y-scroll">
-        {userProfiles.map((profile, index) => (
+        {userProfiles.map((profile) => (
           <UserProfileCard
-            key={`profileNumber${index}`}
+            key={profile.id}
+            id={profile.id}
             profilePictureUrl={profile.profilePictureUrl}
             username={profile.username}
             lastMessage={profile.lastMessage}

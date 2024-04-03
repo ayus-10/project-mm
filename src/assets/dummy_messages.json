@@ -1,5 +1,6 @@
 [
   {
+    "id": "message0",
     "username": "The Boss",
     "profilePictureUrl": "https://cdn.discordapp.com/avatars/986940340227432450/0a631fa4969b98de989be153d20e689f.webp?size=100",
     "sentTime": "27 Mar, 2024 09:00 AM",
@@ -7,6 +8,7 @@
     "receivedTime": "09:05 AM"
   },
   {
+    "id": "message1",
     "username": "John Doe",
     "profilePictureUrl": "https://cdn.discordapp.com/avatars/833573797809750066/2f4530153f0d992c760ff2ba115380b5.webp?size=100",
     "sentTime": "27 Mar, 2024 09:02 AM",
@@ -14,6 +16,7 @@
     "receivedTime": "09:07 AM"
   },
   {
+    "id": "message2",
     "username": "The Boss",
     "profilePictureUrl": "https://cdn.discordapp.com/avatars/986940340227432450/0a631fa4969b98de989be153d20e689f.webp?size=100",
     "sentTime": "27 Mar, 2024 09:05 AM",
@@ -21,6 +24,7 @@
     "receivedTime": "09:10 AM"
   },
   {
+    "id": "message3",
     "username": "John Doe",
     "profilePictureUrl": "https://cdn.discordapp.com/avatars/833573797809750066/2f4530153f0d992c760ff2ba115380b5.webp?size=100",
     "sentTime": "27 Mar, 2024 09:07 AM",
@@ -28,6 +32,7 @@
     "receivedTime": "09:12 AM"
   },
   {
+    "id": "message4",
     "username": "The Boss",
     "profilePictureUrl": "https://cdn.discordapp.com/avatars/986940340227432450/0a631fa4969b98de989be153d20e689f.webp?size=100",
     "sentTime": "27 Mar, 2024 09:10 AM",
@@ -35,6 +40,7 @@
     "receivedTime": "09:15 AM"
   },
   {
+    "id": "message5",
     "username": "The Boss",
     "profilePictureUrl": "https://cdn.discordapp.com/avatars/986940340227432450/0a631fa4969b98de989be153d20e689f.webp?size=100",
     "sentTime": "27 Mar, 2024 09:10 AM",
@@ -42,6 +48,7 @@
     "receivedTime": "09:15 AM"
   },
   {
+    "id": "message6",
     "username": "John Doe",
     "profilePictureUrl": "https://cdn.discordapp.com/avatars/833573797809750066/2f4530153f0d992c760ff2ba115380b5.webp?size=100",
     "sentTime": "27 Mar, 2024 09:14 AM",
@@ -49,6 +56,7 @@
     "receivedTime": "09:18 AM"
   },
   {
+    "id": "message7",
     "username": "The Boss",
     "profilePictureUrl": "https://cdn.discordapp.com/avatars/986940340227432450/0a631fa4969b98de989be153d20e689f.webp?size=100",
     "sentTime": "27 Mar, 2024 09:18 AM",
@@ -56,6 +64,7 @@
     "receivedTime": "09:22 AM"
   },
   {
+    "id": "message8",
     "username": "John Doe",
     "profilePictureUrl": "https://cdn.discordapp.com/avatars/833573797809750066/2f4530153f0d992c760ff2ba115380b5.webp?size=100",
     "sentTime": "27 Mar, 2024 09:20 AM",
@@ -63,6 +72,7 @@
     "receivedTime": "09:24 AM"
   },
   {
+    "id": "message9",
     "username": "John Doe",
     "profilePictureUrl": "https://cdn.discordapp.com/avatars/833573797809750066/2f4530153f0d992c760ff2ba115380b5.webp?size=100",
     "sentTime": "27 Mar, 2024 09:20 AM",

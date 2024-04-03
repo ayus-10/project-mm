@@ -7,6 +7,7 @@ import { HiOutlineEmojiHappy } from "react-icons/hi";
 import messageBodyJson from "../../assets/dummy_messages.json";
 
 export type MessageBodyJson = {
+  id: string;
   username: string;
   profilePictureUrl: string;
   sentTime: string;
@@ -48,9 +49,10 @@ export default function MessageBody({ search }: { search: string }) {
         ref={chatContainer}
         className="flex h-[calc(100dvh-5.5rem-7.5rem)] grow flex-col gap-6 overflow-y-scroll px-4 py-6 md:gap-8 lg:h-[calc(100dvh-5.5rem-5.25rem)]"
       >
-        {messageBody.map((message, index) => (
+        {messageBody.map((message) => (
           <MessageBox
-            key={`messageBoxNumber${index}`}
+            key={message.id}
+            id={message.id}
             align={
               message.username === loggedInUser.username ? "right" : "left"
             }
