@@ -44,6 +44,9 @@ export default function UserProfiles() {
     }
   }, [activeTab]);
 
+  const [selectedUserId, setSelectedUserId] = useState("");
+  useEffect(() => setSelectedUserId(""), [search, activeTab]);
+
   return (
     <div className="flex h-[calc(100%-12rem)] w-full grow flex-col">
       <div className="flex flex-col gap-1 py-1">
@@ -85,6 +88,8 @@ export default function UserProfiles() {
             lastMessage={profile.lastMessage}
             sentTime={profile.sentTime}
             unseenMessagesCount={profile.unseenMessagesCount}
+            selectedUserId={selectedUserId}
+            setSelectedUserId={setSelectedUserId}
           />
         ))}
       </div>
