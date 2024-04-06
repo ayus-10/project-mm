@@ -18,6 +18,7 @@ export type MessageBodyJson = {
 export default function MessageBody({ search }: { search: string }) {
   const chatContainer = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    // Scroll down to bottom most message
     if (chatContainer.current) {
       chatContainer.current.scrollTop = chatContainer.current.scrollHeight;
     }

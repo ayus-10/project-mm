@@ -56,7 +56,7 @@ export default function UserProfileCard(props: UserProfileCardProps) {
           className={`absolute right-0 top-1/2 -translate-y-1/2 group-hover:block ${id === selectedUserId ? "block" : "hidden"}`}
           onClick={() => setSelectedUserId(id === selectedUserId ? "" : id)}
         >
-          <HiDotsVertical className="rounded-full bg-gray-200 p-1 text-2xl text-purple-700 duration-200 ease-in-out hover:bg-gray-300 dark:bg-gray-900 dark:hover:bg-gray-800" />
+          <HiDotsVertical className="rounded-full bg-gray-300 p-1 text-2xl text-purple-700 duration-200 ease-in-out hover:bg-gray-200 dark:bg-gray-900 dark:hover:bg-gray-800" />
         </button>
         {selectedUserId === id && (
           <div className="absolute right-8 top-1/2 flex w-full -translate-y-1/2 flex-col gap-1 rounded-lg border-b-2 border-purple-700 bg-gray-300 py-2 dark:bg-gray-900">

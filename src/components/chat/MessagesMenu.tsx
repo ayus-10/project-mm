@@ -1,7 +1,7 @@
 import Image from "next/image";
-import UserProfiles from "@/components/chat/UserProfiles";
+import UserProfiles from "./UserProfiles";
 
-export default function ChatMenu() {
+export default function MessagesMenu() {
   const loggedInUser = {
     username: "The Boss",
     profilePictureUrl:
