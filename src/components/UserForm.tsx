@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import BannerImage from "../assets/account-banner.png";
@@ -8,6 +6,7 @@ import GoogleIcon from "../assets/google.ico";
 import { FormEvent, useState } from "react";
 import { LuChevronRight } from "react-icons/lu";
 import { FaEye } from "react-icons/fa";
+import { signIn } from "next-auth/react";
 
 type UserFormProps = {
   type: "login" | "signup";
@@ -50,7 +49,10 @@ export default function UserForm({ type }: UserFormProps) {
                 : "Welcome back 👋🏻"}
             </h2>
           </div>
-          <button className="mx-auto my-6 flex w-full items-center justify-center gap-1 rounded-full border-2 border-purple-200 bg-purple-200 px-5 py-3 text-purple-700 duration-300 ease-in-out hover:bg-transparent md:mx-0">
+          <button
+            onClick={() => signIn("google")}
+            className="mx-auto my-6 flex w-full items-center justify-center gap-1 rounded-full border-2 border-purple-200 bg-purple-200 px-5 py-3 text-purple-700 duration-300 ease-in-out hover:bg-transparent md:mx-0"
+          >
             <Image src={GoogleIcon} alt="Google Icon"></Image>
             <span>{`${
               type === "signup" ? "Sign up" : "Log in"
@@ -112,11 +114,11 @@ export default function UserForm({ type }: UserFormProps) {
             </button>
           </form>
           <p
-            className={`text-xs text-gray-500 ${
+            className={`text-center text-xs text-gray-500 ${
               type === "signup" ? "block" : "hidden"
             }`}
           >
-            <span>By Signing up to uBrand, means you agree to our </span>
+            <span>By Signing up, you agree to our </span>
             <Link href="#" className="underline">
               Privacy Policy
             </Link>

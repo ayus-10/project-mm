@@ -5,6 +5,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import MessagesMenu from "./MessagesMenu";
 import SettingsMenu from "./SettingsMenu";
 import { Dispatch, SetStateAction, useState } from "react";
+import { signOut } from "next-auth/react";
 
 type ChatNavigationProps = {
   showMenu: boolean;
@@ -47,7 +48,10 @@ export default function ChatNavigation(props: ChatNavigationProps) {
             className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-850 dark:hover:bg-gray-900"
           />
         </div>
-        <AiOutlineLogout className="cursor-pointer rounded-full p-2 text-4xl text-red-500 duration-200 ease-in-out hover:bg-gray-300 dark:hover:bg-gray-700" />
+        <AiOutlineLogout
+          onClick={() => signOut()}
+          className="cursor-pointer rounded-full p-2 text-4xl text-red-500 duration-200 ease-in-out hover:bg-gray-300 dark:hover:bg-gray-700"
+        />
       </nav>
       <div
         className={`absolute z-20 h-full grow bg-gray-200 duration-300 ease-in-out dark:bg-gray-800 md:static ${showMenu ? "left-[100%] md:block" : "-left-[100vw] md:hidden"}`}

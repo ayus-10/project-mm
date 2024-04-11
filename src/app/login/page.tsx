@@ -1,5 +1,7 @@
+"use client";
+
 import UserForm from "@/components/UserForm";
 
-export default function login() {
+export default function Login() {
   return <UserForm type="login" />;
 }
