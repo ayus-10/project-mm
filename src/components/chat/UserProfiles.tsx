@@ -1,10 +1,10 @@
 import UserProfileCard from "./UserProfileCard";
 import { IoSearch } from "react-icons/io5";
 import { BiSolidPlusCircle } from "react-icons/bi";
-import userProfilesJson from "../../assets/dummy_profiles.json";
+import userProfilesJSON from "../../assets/dummy_profiles.json";
 import { useEffect, useState } from "react";
 
-export type UserProfilesJson = {
+export type UserProfilesJSON = {
   id: string;
   username: string;
   profilePictureUrl: string;
@@ -17,30 +17,30 @@ type ActiveTab = "all" | "new";
 
 export default function UserProfiles() {
   const [userProfiles, setUserProfiles] =
-    useState<UserProfilesJson[]>(userProfilesJson);
+    useState<UserProfilesJSON[]>(userProfilesJSON);
 
   const [search, setSearch] = useState("");
   useEffect(() => {
     if (search) {
-      const filteredUserProfiles = userProfilesJson.filter((profile) =>
+      const filteredUserProfiles = userProfilesJSON.filter((profile) =>
         profile.username.toLowerCase().includes(search),
       );
       setUserProfiles(filteredUserProfiles);
       setActiveTab("all");
     } else {
-      setUserProfiles(userProfilesJson);
+      setUserProfiles(userProfilesJSON);
     }
   }, [search]);
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("all");
   useEffect(() => {
     if (activeTab === "new") {
-      const filteredUserProfiles = userProfilesJson.filter(
+      const filteredUserProfiles = userProfilesJSON.filter(
         (profile) => profile.unseenMessagesCount > 0,
       );
       setUserProfiles(filteredUserProfiles);
     } else {
-      setUserProfiles(userProfilesJson);
+      setUserProfiles(userProfilesJSON);
     }
   }, [activeTab]);
 

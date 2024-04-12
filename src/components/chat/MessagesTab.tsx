@@ -1,7 +1,7 @@
 import Image from "next/image";
 import UserProfiles from "./UserProfiles";
 
-export default function MessagesMenu() {
+export default function MessagesTab() {
   const loggedInUser = {
     username: "The Boss",
     profilePictureUrl:

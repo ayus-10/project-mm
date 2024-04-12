@@ -1,10 +1,10 @@
 import Image from "next/image";
-import { UserProfilesJson } from "./UserProfiles";
+import { UserProfilesJSON } from "./UserProfiles";
 import { HiDotsVertical } from "react-icons/hi";
 import { Dispatch, SetStateAction } from "react";
 import { MdBlock, MdDelete } from "react-icons/md";
 
-type UserProfileCardProps = UserProfilesJson & {
+type UserProfileCardProps = UserProfilesJSON & {
   selectedUserId: string;
   setSelectedUserId: Dispatch<SetStateAction<string>>;
 };

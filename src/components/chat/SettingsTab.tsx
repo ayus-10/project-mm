@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { FaBell, FaLock, FaMoon } from "react-icons/fa";
 import { FaShield } from "react-icons/fa6";
 
-export default function SettingsMenu() {
+export default function SettingsTab() {
   const settingItems = [
     {
       text: "Notifications",

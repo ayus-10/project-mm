@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { MessageBodyJson } from "./MessageBody";
+import { MessageBodyJSON } from "./MessageBody";
 
 type MessageBoxProps = {
   align: "left" | "right";
-} & MessageBodyJson;
+} & MessageBodyJSON;
 
 export default function MessageBox(props: MessageBoxProps) {
   const {

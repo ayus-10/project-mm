@@ -4,9 +4,9 @@ import { PiPaperPlaneTiltFill } from "react-icons/pi";
 import { IoMicOutline } from "react-icons/io5";
 import { RiAttachment2 } from "react-icons/ri";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
-import messageBodyJson from "../../assets/dummy_messages.json";
+import messageBodyJSON from "../../assets/dummy_messages.json";
 
-export type MessageBodyJson = {
+export type MessageBodyJSON = {
   id: string;
   username: string;
   profilePictureUrl: string;
@@ -25,16 +25,16 @@ export default function MessageBody({ search }: { search: string }) {
   }, []);
 
   const [messageBody, setMessageBody] =
-    useState<MessageBodyJson[]>(messageBodyJson);
+    useState<MessageBodyJSON[]>(messageBodyJSON);
 
   useEffect(() => {
     if (search) {
-      const filteredMessageBody = messageBodyJson.filter((message) =>
+      const filteredMessageBody = messageBodyJSON.filter((message) =>
         message.messageText.toLowerCase().includes(search),
       );
       setMessageBody(filteredMessageBody);
     } else {
-      setMessageBody(messageBodyJson);
+      setMessageBody(messageBodyJSON);
     }
   }, [search]);
 

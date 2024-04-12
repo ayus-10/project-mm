@@ -14,12 +14,14 @@ export type CurrentChatData = {
 export default function Chat() {
   const isMobileScreen = useMobileScreen(); // Returns true if screen width < 768px
 
-  const [showUserInfo, setShowUserInfo] = useState(false);
-  const [showMenu, setShowMenu] = useState(true);
+  const [showProfileInfo, setShowProfileInfo] = useState(false);
+  const [showNavigation, setShowNavigation] = useState(true);
 
-  function toggleUserInfoVisibility() {
-    setShowUserInfo(!showUserInfo);
-    if (isMobileScreen) setShowMenu(false);
+  function toggleProfileInfoVisibility() {
+    setShowProfileInfo(!showProfileInfo);
+    if (isMobileScreen) {
+      setShowNavigation(false);
+    }
   }
 
   const currentChat: CurrentChatData = {
@@ -32,19 +34,19 @@ export default function Chat() {
   return (
     <div className="flex h-dvh w-screen overflow-hidden bg-white text-gray-850 dark:bg-gray-900 dark:text-white">
       <ChatNavigation
-        showMenu={showMenu}
-        setShowMenu={setShowMenu}
+        showNavigation={showNavigation}
+        setShowNavigation={setShowNavigation}
         isMobileScreen={isMobileScreen}
-        setShowUserInfo={setShowUserInfo}
+        setShowProfileInfo={setShowProfileInfo}
       />
       <ChatBody
         currentChat={currentChat}
-        toggleUserInfoVisibility={toggleUserInfoVisibility}
+        toggleProfileInfoVisibility={toggleProfileInfoVisibility}
       />
       <ProfileInfo
         currentChat={currentChat}
-        showUserInfo={showUserInfo}
-        toggleUserInfoVisibility={toggleUserInfoVisibility}
+        showProfileInfo={showProfileInfo}
+        toggleProfileInfoVisibility={toggleProfileInfoVisibility}
       />
     </div>
   );

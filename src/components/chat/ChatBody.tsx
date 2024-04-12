@@ -8,11 +8,11 @@ import MessageBody from "./MessageBody";
 
 type ChatBodyProps = {
   currentChat: CurrentChatData;
-  toggleUserInfoVisibility: () => void;
+  toggleProfileInfoVisibility: () => void;
 };
 
 export default function ChatBody(props: ChatBodyProps) {
-  const { currentChat, toggleUserInfoVisibility } = props;
+  const { currentChat, toggleProfileInfoVisibility } = props;
 
   // Used for searching message in MessageBody component
   const [showSearch, setShowSearch] = useState(false);
@@ -37,7 +37,7 @@ export default function ChatBody(props: ChatBodyProps) {
             className="shrink-0 cursor-pointer rounded-full p-2 duration-200 ease-in-out hover:bg-purple-200 dark:hover:bg-gray-900"
           />
           <HiDotsVertical
-            onClick={toggleUserInfoVisibility}
+            onClick={toggleProfileInfoVisibility}
             className="shrink-0 cursor-pointer rounded-full p-2 duration-200 ease-in-out hover:bg-purple-200 dark:hover:bg-gray-900"
           />
         </div>
