@@ -1,10 +1,10 @@
 import UserProfileCard from "./UserProfileCard";
 import { IoSearch } from "react-icons/io5";
 import { BiSolidPlusCircle } from "react-icons/bi";
-import userProfilesJSON from "../../assets/dummy_profiles.json";
+import userProfilesArray from "../../assets/dummy_profiles.json";
 import { useEffect, useState } from "react";
 
-export type UserProfilesJSON = {
+export type UserProfilesArray = {
   id: string;
   username: string;
   profilePictureUrl: string;
@@ -17,35 +17,41 @@ type ActiveTab = "all" | "new";
 
 export default function UserProfiles() {
   const [userProfiles, setUserProfiles] =
-    useState<UserProfilesJSON[]>(userProfilesJSON);
+    useState<UserProfilesArray[]>(userProfilesArray);
 
   const [search, setSearch] = useState("");
+
+  const [activeTab, setActiveTab] = useState<ActiveTab>("all");
+
   useEffect(() => {
+    // Filter the user profiles array that matches with the value of search
     if (search) {
-      const filteredUserProfiles = userProfilesJSON.filter((profile) =>
+      const filteredUserProfiles = userProfilesArray.filter((profile) =>
         profile.username.toLowerCase().includes(search),
       );
       setUserProfiles(filteredUserProfiles);
-      setActiveTab("all");
+      setActiveTab("all"); // Set the active tab to "all" while searching
     } else {
-      setUserProfiles(userProfilesJSON);
+      setUserProfiles(userProfilesArray);
     }
   }, [search]);
 
-  const [activeTab, setActiveTab] = useState<ActiveTab>("all");
   useEffect(() => {
+    // Filter the user profiles array that has unseen messages count more than zero
     if (activeTab === "new") {
-      const filteredUserProfiles = userProfilesJSON.filter(
+      const filteredUserProfiles = userProfilesArray.filter(
         (profile) => profile.unseenMessagesCount > 0,
       );
       setUserProfiles(filteredUserProfiles);
     } else {
-      setUserProfiles(userProfilesJSON);
+      setUserProfiles(userProfilesArray);
     }
   }, [activeTab]);
 
+  // If a user is selected, a small popup will appear on their profile card with options to block and delete
   const [selectedUserId, setSelectedUserId] = useState("");
-  useEffect(() => setSelectedUserId(""), [search, activeTab]);
+
+  useEffect(() => setSelectedUserId(""), [search, activeTab]); // Unset the selected user while filtering
 
   return (
     <div className="flex h-[calc(100%-12rem)] w-full grow flex-col">
