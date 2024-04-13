@@ -1,22 +1,36 @@
+"use client";
+
 import { useState } from "react";
 import { HiDotsVertical } from "react-icons/hi";
 import { IoIosVideocam } from "react-icons/io";
 import { IoSearch } from "react-icons/io5";
 import { MdLocalPhone } from "react-icons/md";
 import { CurrentChatData } from "@/app/chat/page";
+import { useMobileScreen } from "@/hooks/useMobileScreen";
+import { useAppDispatch } from "@/redux/hooks";
+import { setNavigation, toggleProfileInfo } from "@/redux/slices/showMenuSlice";
 import MessageBody from "./MessageBody";
 
-type ChatBodyProps = {
+export default function ChatBody({
+  currentChat,
+}: {
   currentChat: CurrentChatData;
-  toggleProfileInfoVisibility: () => void;
-};
+}) {
+  const isMobileScreen = useMobileScreen();
 
-export default function ChatBody(props: ChatBodyProps) {
-  const { currentChat, toggleProfileInfoVisibility } = props;
+  const dispatch = useAppDispatch();
 
   // Used for searching message in MessageBody component
   const [showSearch, setShowSearch] = useState(false);
   const [search, setSearch] = useState("");
+
+  function toggleProfileInfoVisibility() {
+    dispatch(toggleProfileInfo());
+    if (isMobileScreen) {
+      // Both navigation and profile info can not be visible at the same time on mobile screens
+      dispatch(setNavigation(false));
+    }
+  }
 
   return (
     <div className="flex grow flex-col">

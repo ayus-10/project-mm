@@ -1,6 +1,3 @@
-"use client";
-import { useState } from "react";
-import { useMobileScreen } from "@/hooks/useMobileScreen";
 import ChatNavigation from "@/components/chat/ChatNavigation";
 import ChatBody from "@/components/chat/ChatBody";
 import ProfileInfo from "@/components/chat/ProfileInfo";
@@ -12,18 +9,6 @@ export type CurrentChatData = {
 };
 
 export default function Chat() {
-  const isMobileScreen = useMobileScreen(); // Returns true if screen width < 768px
-
-  const [showProfileInfo, setShowProfileInfo] = useState(false);
-  const [showNavigation, setShowNavigation] = useState(true);
-
-  function toggleProfileInfoVisibility() {
-    setShowProfileInfo(!showProfileInfo);
-    if (isMobileScreen) {
-      setShowNavigation(false);
-    }
-  }
-
   const currentChat: CurrentChatData = {
     username: "John Doe",
     profilePictureUrl:
@@ -33,21 +18,9 @@ export default function Chat() {
 
   return (
     <div className="flex h-dvh w-screen overflow-hidden bg-white text-gray-850 dark:bg-gray-900 dark:text-white">
-      <ChatNavigation
-        showNavigation={showNavigation}
-        setShowNavigation={setShowNavigation}
-        isMobileScreen={isMobileScreen}
-        setShowProfileInfo={setShowProfileInfo}
-      />
-      <ChatBody
-        currentChat={currentChat}
-        toggleProfileInfoVisibility={toggleProfileInfoVisibility}
-      />
-      <ProfileInfo
-        currentChat={currentChat}
-        showProfileInfo={showProfileInfo}
-        toggleProfileInfoVisibility={toggleProfileInfoVisibility}
-      />
+      <ChatNavigation />
+      <ChatBody currentChat={currentChat} />
+      <ProfileInfo currentChat={currentChat} />
     </div>
   );
 }

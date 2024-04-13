@@ -1,18 +1,21 @@
+"use client";
+
 import Image from "next/image";
 import { IoIosVideocam, IoMdClose } from "react-icons/io";
 import { IoMail } from "react-icons/io5";
 import { MdLocalPhone } from "react-icons/md";
-import ProfileTabs from "./ProfileTabs";
 import { CurrentChatData } from "@/app/chat/page";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setProfileInfo } from "@/redux/slices/showMenuSlice";
+import ProfileTabs from "./ProfileTabs";
 
-type ProfileInfoProps = {
+export default function ProfileInfo({
+  currentChat,
+}: {
   currentChat: CurrentChatData;
-  showProfileInfo: boolean;
-  toggleProfileInfoVisibility: () => void;
-};
-
-export default function ProfileInfo(props: ProfileInfoProps) {
-  const { currentChat, showProfileInfo, toggleProfileInfoVisibility } = props;
+}) {
+  const showProfileInfo = useAppSelector((state) => state.showMenu.profileInfo);
+  const dispatch = useAppDispatch();
 
   return (
     <div className="relative">
@@ -23,7 +26,7 @@ export default function ProfileInfo(props: ProfileInfoProps) {
           <h1 className="text-lg md:text-xl">Profile</h1>
           <IoMdClose
             className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-850 dark:hover:bg-gray-900"
-            onClick={toggleProfileInfoVisibility}
+            onClick={() => dispatch(setProfileInfo(false))}
           />
         </div>
         <div className="flex h-[calc(100dvh-5.5rem)] grow flex-col gap-4 px-6">

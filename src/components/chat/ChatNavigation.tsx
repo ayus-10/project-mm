@@ -1,43 +1,46 @@
+"use client";
+
 import { AiOutlineLogout } from "react-icons/ai";
 import { TbMessageDots } from "react-icons/tb";
 import { LuChevronLeft, LuMenu } from "react-icons/lu";
 import { IoSettingsOutline } from "react-icons/io5";
+import { useState } from "react";
+import { signOut } from "next-auth/react";
+import { useMobileScreen } from "@/hooks/useMobileScreen";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import {
+  setNavigation,
+  setProfileInfo,
+  toggleNavigation,
+} from "@/redux/slices/showMenuSlice";
 import MessagesTab from "./MessagesTab";
 import SettingsTab from "./SettingsTab";
-import { Dispatch, SetStateAction, useState } from "react";
-import { signOut } from "next-auth/react";
-
-type ChatNavigationProps = {
-  showNavigation: boolean;
-  setShowNavigation: Dispatch<SetStateAction<boolean>>;
-  isMobileScreen: boolean;
-  setShowProfileInfo: Dispatch<SetStateAction<boolean>>;
-};
 
 type ActiveTab = "chat" | "settings";
 
-export default function ChatNavigation(props: ChatNavigationProps) {
-  const {
-    showNavigation,
-    setShowNavigation,
-    isMobileScreen,
-    setShowProfileInfo,
-  } = props;
+export default function ChatNavigation() {
+  const isMobileScreen = useMobileScreen();
+
+  const showNavigation = useAppSelector((state) => state.showMenu.navigation);
+  const dispatch = useAppDispatch();
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("chat");
 
   function changeActiveTab(tab: ActiveTab) {
     setActiveTab(tab);
-    setShowNavigation(true);
-    if (isMobileScreen) {
-      setShowProfileInfo(false); // Both navigation and profile info can't be visible at the same time on mobile
-    }
+    dispatch(setNavigation(true)); // Show navigation when ever tab buttons are clicked
+    hideProfileInfo();
   }
 
   function toggleNavigationVisibility() {
-    setShowNavigation(!showNavigation);
+    dispatch(toggleNavigation());
+    hideProfileInfo();
+  }
+
+  function hideProfileInfo() {
+    // Both navigation and profile info can not be visible at the same time on mobile screens
     if (isMobileScreen) {
-      setShowProfileInfo(false); // Both navigation and profile info can't be visible at the same time on mobile
+      dispatch(setProfileInfo(false));
     }
   }
 
