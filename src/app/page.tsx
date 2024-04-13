@@ -1,10 +1,21 @@
 "use client";
 
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { HashLoader } from "react-spinners";
 
 export default function Home() {
   const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/chat");
+    } else if (status === "unauthenticated") {
+      router.push("/login");
+    }
+  }, [status]);
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center gap-4">

@@ -1,3 +1,6 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { redirect } from "next/navigation";
 import ChatNavigation from "@/components/chat/ChatNavigation";
 import ChatBody from "@/components/chat/ChatBody";
 import ProfileInfo from "@/components/chat/ProfileInfo";
@@ -8,7 +11,13 @@ export type CurrentChatData = {
   status: "Active" | "Inactive";
 };
 
-export default function Chat() {
+export default async function Chat() {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    redirect("/login");
+  }
+
   const currentChat: CurrentChatData = {
     username: "John Doe",
     profilePictureUrl:
