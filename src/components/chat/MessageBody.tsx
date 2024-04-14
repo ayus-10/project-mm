@@ -76,11 +76,11 @@ export default function MessageBody({ search }: { search: string }) {
               <RiAttachment2 />
             </div>
           </div>
-          <input
-            type="text"
+          <textarea
+            rows={1}
             placeholder="Message..."
-            className="z-0 w-full rounded-lg bg-gray-200 px-2 py-3 pr-14 text-lg shadow-black outline-none duration-200 ease-in-out hover:shadow-md focus:shadow-md dark:bg-gray-800 md:text-xl lg:pl-28"
-          />
+            className="flex w-full grow resize-none rounded-lg bg-gray-200 px-2 py-3 pr-14 text-lg shadow-black outline-none duration-200 ease-in-out hover:shadow-md focus:shadow-md dark:bg-gray-750 md:text-xl lg:pl-28"
+          ></textarea>
           <div className="absolute right-2 top-1/2 z-10 block -translate-y-1/2 cursor-pointer rounded-full bg-purple-300 p-2 text-2xl text-purple-700 duration-200 ease-in-out hover:bg-purple-500 hover:text-white">
             <PiPaperPlaneTiltFill />
           </div>

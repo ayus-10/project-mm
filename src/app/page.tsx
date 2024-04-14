@@ -15,7 +15,7 @@ export default function Home() {
     } else if (status === "unauthenticated") {
       router.push("/login");
     }
-  }, [status]);
+  }, [status, router]);
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center gap-4">

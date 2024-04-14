@@ -20,12 +20,12 @@ export default function ProfileInfo({
   return (
     <div className="relative">
       <div
-        className={`${showProfileInfo ? "right-0 md:flex" : "-right-[calc(100vw-4.25rem)] md:hidden"} absolute z-30 flex h-full w-[calc(100vw-4.25rem)] flex-col bg-gray-200 duration-300 ease-in-out dark:bg-gray-800 md:static md:w-[21.9rem]`}
+        className={`${showProfileInfo ? "right-0 md:flex" : "-right-[calc(100vw-4.25rem)] md:hidden"} absolute z-30 flex h-full w-[calc(100vw-4.25rem)] flex-col bg-gray-200 duration-300 ease-in-out dark:bg-gray-850 md:static md:w-[21.9rem]`}
       >
         <div className="flex h-[5.5rem] items-center justify-between px-6">
           <h1 className="text-lg md:text-xl">Profile</h1>
           <IoMdClose
-            className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-850 dark:hover:bg-gray-900"
+            className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-800 dark:text-purple-500 dark:hover:bg-gray-900"
             onClick={() => dispatch(setProfileInfo(false))}
           />
         </div>

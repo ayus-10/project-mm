@@ -25,7 +25,7 @@ export default function MessagesTab() {
           <div className="absolute bottom-1 right-1 h-4 w-4 rounded-full bg-green-500"></div>
         </div>
         <h1 className="text-xl md:text-2xl md:font-semibold">
-          {session?.user?.name}
+          {session?.user?.name || "Loading..."}
         </h1>
         <span className="rounded-lg bg-green-300 px-5 py-1 font-bold text-green-700">
           Active

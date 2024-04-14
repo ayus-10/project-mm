@@ -26,7 +26,7 @@ export default async function Chat() {
   };
 
   return (
-    <div className="flex h-dvh w-screen overflow-hidden bg-white text-gray-850 dark:bg-gray-900 dark:text-white">
+    <div className="flex h-dvh w-screen overflow-hidden bg-white text-gray-850 dark:bg-gray-800 dark:text-white">
       <ChatNavigation />
       <ChatBody currentChat={currentChat} />
       <ProfileInfo currentChat={currentChat} />

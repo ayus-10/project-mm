@@ -46,33 +46,33 @@ export default function ChatNavigation() {
 
   return (
     <div className="relative flex">
-      <nav className="relative z-30 flex h-full w-[4.25rem] flex-col justify-between bg-gray-200 p-4 dark:bg-gray-800">
+      <nav className="relative z-30 flex h-full w-[4.25rem] flex-col justify-between bg-gray-200 p-4 dark:bg-gray-850">
         <LuMenu
           onClick={toggleNavigationVisibility}
-          className="cursor-pointer rounded-full p-2 text-4xl duration-200 ease-in-out hover:bg-gray-300 dark:hover:bg-gray-700"
+          className="cursor-pointer rounded-full p-2 text-4xl duration-200 ease-in-out hover:bg-gray-300 dark:hover:bg-gray-800"
         />
         <div className="flex flex-col gap-2">
           <TbMessageDots
             onClick={() => changeActiveTab("chat")}
-            className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-850 dark:hover:bg-gray-900"
+            className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-800 dark:text-purple-500 dark:hover:bg-gray-900"
           />
           <IoSettingsOutline
             onClick={() => changeActiveTab("settings")}
-            className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-850 dark:hover:bg-gray-900"
+            className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-800 dark:text-purple-500 dark:hover:bg-gray-900"
           />
         </div>
         <AiOutlineLogout
           onClick={() => signOut()}
-          className="cursor-pointer rounded-full p-2 text-4xl text-red-500 duration-200 ease-in-out hover:bg-gray-300 dark:hover:bg-gray-700"
+          className="cursor-pointer rounded-full p-2 text-4xl text-red-500 duration-200 ease-in-out hover:bg-gray-300 dark:hover:bg-gray-800"
         />
       </nav>
       <div
-        className={`absolute z-20 h-full grow bg-gray-200 duration-300 ease-in-out dark:bg-gray-800 md:static ${showNavigation ? "left-[100%] md:block" : "-left-[100vw] md:hidden"}`}
+        className={`absolute z-20 h-full grow bg-gray-200 duration-300 ease-in-out dark:bg-gray-850 md:static ${showNavigation ? "left-[100%] md:block" : "-left-[100vw] md:hidden"}`}
       >
         <div className="flex h-[5.5rem] items-center gap-2 px-2 sm:px-6">
           <LuChevronLeft
             onClick={toggleNavigationVisibility}
-            className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-850 dark:hover:bg-gray-900"
+            className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-800 dark:text-purple-500 dark:hover:bg-gray-900"
           />
           <span className="text-lg capitalize md:text-xl">{activeTab}</span>
         </div>

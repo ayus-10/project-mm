@@ -11,7 +11,7 @@ export default function ProfileTabs() {
 
   return (
     <div className="flex h-[calc(100%-12.75rem-2rem)] flex-col md:h-[calc(100%-13.25rem-2rem)]">
-      <div className="flex w-full justify-between gap-2 rounded-sm bg-white px-4 py-1 dark:bg-gray-850 md:gap-8 md:px-8">
+      <div className="mb-4 flex w-full justify-between gap-2 rounded-sm bg-white px-4 py-1 dark:bg-gray-750 md:gap-8 md:px-8">
         {tabs.map((tab) => (
           <button
             key={tab}
@@ -34,7 +34,7 @@ function Attachment({ tab }: { tab: ActiveTab }) {
   switch (tab) {
     case "Media":
       return (
-        <div className="grid grid-cols-2 place-items-center gap-2 overflow-y-scroll py-4">
+        <div className="grid grid-cols-2 place-items-center gap-2 overflow-y-scroll">
           {Array.from({ length: 10 }).map((_, index) => (
             <Image
               key={`AttachedImage${index}`}
@@ -51,13 +51,13 @@ function Attachment({ tab }: { tab: ActiveTab }) {
       );
     case "Files":
       return (
-        <div className="overflow-y-scroll">
+        <div className="flex flex-col gap-2 overflow-y-scroll">
           {Array.from({ length: 10 }).map((_, index) => (
             <div
               key={`AttachedFile${index}`}
-              className="my-2 flex w-72 cursor-pointer items-center gap-1 rounded-md border-2 border-gray-300 bg-gray-300 px-2 py-1 duration-200 ease-in-out hover:bg-transparent dark:border-gray-700 dark:bg-gray-700 dark:hover:bg-transparent"
+              className="flex w-full cursor-pointer items-center gap-1 rounded-md border-2 border-gray-300 bg-gray-300 px-2 py-1 duration-200 ease-in-out hover:bg-transparent dark:border-gray-700 dark:bg-gray-700 dark:hover:bg-transparent md:w-72"
             >
-              <FaFile className="size-[2.5rem] text-red-500" />
+              <FaFile className="hidden size-[2.5rem] text-red-500 md:block" />
               <div className="flex w-[14rem] flex-col justify-center gap-2">
                 <h2 className="w-full truncate leading-4">filename.pdf</h2>
                 <div className="flex w-full justify-between gap-2">
@@ -75,12 +75,12 @@ function Attachment({ tab }: { tab: ActiveTab }) {
       );
     case "Links":
       return (
-        <div className="overflow-y-scroll">
+        <div className="flex flex-col gap-2 overflow-y-scroll">
           {Array.from({ length: 10 }).map((_, index) => (
             <Link
               href={"https://messenger-app-iota-two.vercel.app/chat"}
               key={`AttachedLink${index}`}
-              className="group my-2 flex w-72 cursor-pointer flex-col gap-2 rounded-md border-2 border-gray-300 bg-gray-300 px-2 py-1 duration-200 ease-in-out hover:bg-transparent dark:border-gray-700 dark:bg-gray-700 dark:hover:bg-transparent"
+              className="group flex w-full cursor-pointer flex-col gap-2 rounded-md border-2 border-gray-300 bg-gray-300 px-2 py-1 duration-200 ease-in-out hover:bg-transparent dark:border-gray-700 dark:bg-gray-700 dark:hover:bg-transparent md:w-72"
             >
               <span className="line-clamp-2 w-full leading-4 group-hover:underline">
                 https://messenger-app-iota-two.vercel.app/chat

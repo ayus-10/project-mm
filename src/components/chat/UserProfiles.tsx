@@ -1,8 +1,8 @@
 import UserProfileCard from "./UserProfileCard";
 import { IoSearch } from "react-icons/io5";
-import { BiSolidPlusCircle } from "react-icons/bi";
 import userProfilesArray from "../../assets/dummy_profiles.json";
 import { useEffect, useState } from "react";
+import { FiPlusCircle } from "react-icons/fi";
 
 export type UserProfilesArray = {
   id: string;
@@ -58,14 +58,14 @@ export default function UserProfiles() {
       <div className="flex flex-col gap-1 py-1">
         <div className="flex justify-between gap-4">
           <span className="font-semibold md:text-lg">Chats</span>
-          <BiSolidPlusCircle className="cursor-pointer rounded-full p-0.5 text-2xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:text-purple-500 dark:hover:bg-gray-900" />
+          <FiPlusCircle className="cursor-pointer rounded-full p-0.5 text-2xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:text-purple-500 dark:hover:bg-gray-750" />
         </div>
         <div className="relative w-full">
           <input
             onChange={(e) => setSearch(e.target.value.toLowerCase())}
             placeholder="Search..."
             type="text"
-            className="w-full rounded-md bg-white p-2 pr-7 shadow-black outline-none duration-200 ease-in-out hover:drop-shadow-md focus:drop-shadow-md dark:bg-gray-850"
+            className="w-full rounded-md bg-white p-2 pr-7 shadow-black outline-none duration-200 ease-in-out hover:drop-shadow-md focus:drop-shadow-md dark:bg-gray-750"
           />
           <IoSearch className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500" />
         </div>
@@ -73,13 +73,13 @@ export default function UserProfiles() {
       <div className="flex w-full gap-2 py-1">
         <button
           onClick={() => setActiveTab("all")}
-          className={`cursor-pointer font-medium duration-200 ease-in-out hover:text-purple-700 dark:hover:text-purple-500 ${activeTab === "all" && "text-purple-700 dark:text-purple-500"}`}
+          className={`cursor-pointer rounded-full border-2 border-purple-700 px-3 text-sm font-medium duration-200 ease-in-out hover:bg-purple-700 hover:text-white dark:border-purple-500 dark:hover:bg-purple-500 ${activeTab === "all" && "bg-purple-700 text-white dark:bg-purple-500"}`}
         >
           All
         </button>
         <button
           onClick={() => setActiveTab("new")}
-          className={`cursor-pointer font-medium duration-200 ease-in-out hover:text-purple-700 dark:hover:text-purple-500 ${activeTab === "new" && "text-purple-700 dark:text-purple-500"}`}
+          className={`cursor-pointer rounded-full border-2 border-purple-700 px-3 text-sm font-medium duration-200 ease-in-out hover:bg-purple-700 hover:text-white dark:border-purple-500 dark:hover:bg-purple-500 ${activeTab === "new" && "bg-purple-700 text-white dark:bg-purple-500"}`}
         >
           New
         </button>
