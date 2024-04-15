@@ -35,7 +35,7 @@ export default function MessageBox(props: MessageBoxProps) {
             {sentTime}
           </span>
           <div className="flex flex-col items-start gap-4 rounded-lg bg-gray-200 p-2 dark:bg-gray-850 lg:flex-row lg:items-end lg:px-4 lg:py-3">
-            <p className="text-sm md:text-base">{messageText}</p>
+            <p className="select-all text-sm md:text-base">{messageText}</p>
             <span className="text-right text-xs">{receivedTime}</span>
           </div>
         </div>

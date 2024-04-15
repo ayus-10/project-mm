@@ -4,6 +4,7 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { TbMessageDots } from "react-icons/tb";
 import { LuChevronLeft, LuMenu } from "react-icons/lu";
 import { IoSettingsOutline } from "react-icons/io5";
+import { LiaUserFriendsSolid } from "react-icons/lia";
 import { useState } from "react";
 import { signOut } from "next-auth/react";
 import { useMobileScreen } from "@/hooks/useMobileScreen";
@@ -15,8 +16,9 @@ import {
 } from "@/redux/slices/showMenuSlice";
 import MessagesTab from "./MessagesTab";
 import SettingsTab from "./SettingsTab";
+import FriendsTab from "./FriendsTab";
 
-type ActiveTab = "chat" | "settings";
+type ActiveTab = "messages" | "friends" | "settings";
 
 export default function ChatNavigation() {
   const isMobileScreen = useMobileScreen();
@@ -24,7 +26,7 @@ export default function ChatNavigation() {
   const showNavigation = useAppSelector((state) => state.showMenu.navigation);
   const dispatch = useAppDispatch();
 
-  const [activeTab, setActiveTab] = useState<ActiveTab>("chat");
+  const [activeTab, setActiveTab] = useState<ActiveTab>("messages");
 
   function changeActiveTab(tab: ActiveTab) {
     setActiveTab(tab);
@@ -53,7 +55,11 @@ export default function ChatNavigation() {
         />
         <div className="flex flex-col gap-2">
           <TbMessageDots
-            onClick={() => changeActiveTab("chat")}
+            onClick={() => changeActiveTab("messages")}
+            className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-800 dark:text-purple-500 dark:hover:bg-gray-900"
+          />
+          <LiaUserFriendsSolid
+            onClick={() => changeActiveTab("friends")}
             className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-800 dark:text-purple-500 dark:hover:bg-gray-900"
           />
           <IoSettingsOutline
@@ -77,7 +83,13 @@ export default function ChatNavigation() {
           <span className="text-lg capitalize md:text-xl">{activeTab}</span>
         </div>
         <div className="flex h-[calc(100dvh-5.5rem)] w-[calc(100vw-4.25rem)] max-w-[23.75rem] flex-col gap-4 px-2 sm:px-6 md:w-[40vw]">
-          {activeTab === "chat" ? <MessagesTab /> : <SettingsTab />}
+          {activeTab === "messages" ? (
+            <MessagesTab />
+          ) : activeTab === "settings" ? (
+            <SettingsTab />
+          ) : (
+            <FriendsTab />
+          )}
         </div>
       </div>
     </div>
