@@ -54,7 +54,7 @@ export default function UserProfiles() {
   useEffect(() => setSelectedUserId(""), [search, activeTab]); // Unset the selected user while filtering
 
   return (
-    <div className="flex h-[calc(100%-12rem)] w-full grow flex-col">
+    <div className="flex h-1 w-full grow flex-col">
       <div className="flex flex-col gap-1 py-1">
         <div className="flex justify-between gap-4">
           <span className="font-semibold md:text-lg">Chats</span>

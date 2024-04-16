@@ -29,7 +29,7 @@ export default function ProfileInfo({
             onClick={() => dispatch(setProfileInfo(false))}
           />
         </div>
-        <div className="flex h-[calc(100dvh-5.5rem)] grow flex-col gap-4 px-6">
+        <div className="flex h-1 grow flex-col gap-4 px-6">
           <div className="grid h-[12.75rem] place-items-center gap-1 py-2 md:h-[13.25rem]">
             <Image
               height={100}

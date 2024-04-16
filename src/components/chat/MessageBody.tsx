@@ -49,7 +49,7 @@ export default function MessageBody({ search }: { search: string }) {
     <div className="flex grow flex-col">
       <div
         ref={chatContainer}
-        className="flex h-[calc(100dvh-5.5rem-7.5rem)] grow flex-col gap-6 overflow-y-scroll px-4 py-6 md:gap-8 lg:h-[calc(100dvh-5.5rem-5.25rem)]"
+        className="flex h-1 grow flex-col gap-6 overflow-y-scroll px-4 py-6 md:gap-8"
       >
         {messageBody.map((message) => (
           <MessageBox

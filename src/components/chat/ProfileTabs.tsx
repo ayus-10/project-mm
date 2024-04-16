@@ -10,7 +10,7 @@ export default function ProfileTabs() {
   const [activeTab, setActiveTab] = useState<ActiveTab>("Media");
 
   return (
-    <div className="flex h-[calc(100%-12.75rem-2rem)] flex-col md:h-[calc(100%-13.25rem-2rem)]">
+    <div className="mb-4 flex h-1 grow flex-col">
       <div className="mb-4 flex w-full justify-between gap-2 rounded-sm bg-white px-4 py-1 dark:bg-gray-750 md:gap-8 md:px-8">
         {tabs.map((tab) => (
           <button
