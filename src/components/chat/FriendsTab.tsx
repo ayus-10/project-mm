@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { useState } from "react";
+import { FaCheck } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
+import { MdClose } from "react-icons/md";
 import { PiUserCirclePlusThin } from "react-icons/pi";
 
 type ActiveTab = "sent" | "recieved";
@@ -24,9 +26,9 @@ export default function FriendsTab() {
             <IoSearch />
           </button>
         </div>
-        <div className="flex h-16 items-center justify-center gap-1 rounded-lg bg-purple-200 px-2 dark:bg-gray-750">
-          <PiUserCirclePlusThin className="text-6xl text-purple-700 dark:text-white" />
-          <h2 className="text-lg leading-5 text-purple-700 dark:text-white md:text-xl md:leading-6">
+        <div className="flex h-16 items-center justify-center gap-2 rounded-lg bg-purple-200 px-3 dark:bg-gray-750">
+          <PiUserCirclePlusThin className="flex-shrink-0 text-5xl text-purple-700 dark:text-white" />
+          <h2 className="leading-5 text-purple-700 dark:text-white md:text-lg md:leading-6">
             Search for friends using email
           </h2>
         </div>
@@ -69,7 +71,7 @@ function UserProfileCard(props: UserProfileCardProps) {
 
   return (
     <div
-      className={`flex items-center gap-4 rounded-lg bg-gray-100 px-3 py-2 dark:bg-gray-750 ${type === "find" ? "h-16" : "h-auto"}`}
+      className={`flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2 dark:bg-gray-750 ${type === "find" ? "h-16" : "h-auto"}`}
     >
       <Image
         height={50}
@@ -80,27 +82,32 @@ function UserProfileCard(props: UserProfileCardProps) {
         alt="Profile picture"
         className="size-[50px] rounded-full"
       ></Image>
-      <div
-        className={`flex grow flex-col ${type !== "find" && "gap-2 md:gap-1"}`}
-      >
-        <div className="flex gap-2">
-          <div className="flex w-full flex-col">
-            <h2 className="text-lg font-semibold">John Doe</h2>
-          </div>
-        </div>
+      <div className="flex grow flex-col">
+        <h2 className="line-clamp-1 md:text-lg md:font-semibold">
+          Olivia Isabel Rodrigo
+        </h2>
         <div className="flex items-end justify-between gap-2">
           {type === "recieved" ? (
             <div className="flex gap-2">
-              <button className="rounded-full border-2 border-green-200 bg-green-200 px-3 py-0.5 font-semibold text-green-500 duration-200 ease-in-out hover:border-green-500 hover:bg-transparent md:py-1">
-                Accept
+              <button className="rounded-full border-2 border-green-200 bg-green-200 px-3 text-green-500 duration-200 ease-in-out hover:border-green-500 hover:bg-transparent">
+                <span className="hidden text-sm font-semibold md:inline">
+                  Accept
+                </span>
+                <FaCheck className="md:hidden" />
               </button>
-              <button className="rounded-full border-2 border-red-200 bg-red-200 px-3 py-0.5 font-semibold text-red-500 duration-200 ease-in-out hover:border-red-500 hover:bg-transparent md:py-1">
-                Reject
+              <button className="rounded-full border-2 border-red-200 bg-red-200 px-3 text-red-500 duration-200 ease-in-out hover:border-red-500 hover:bg-transparent">
+                <span className="hidden text-sm font-semibold md:inline">
+                  Reject
+                </span>
+                <MdClose className="md:hidden" />
               </button>
             </div>
           ) : type === "sent" ? (
-            <button className="rounded-full border-2 border-red-200 bg-red-200 px-3 py-0.5 font-semibold text-red-500 duration-200 ease-in-out hover:border-red-500 hover:bg-transparent md:py-1">
-              Cancel
+            <button className="rounded-full border-2 border-red-200 bg-red-200 px-3 text-red-500 duration-200 ease-in-out hover:border-red-500 hover:bg-transparent">
+              <span className="hidden text-sm font-semibold md:inline">
+                Cancel
+              </span>
+              <MdClose className="md:hidden" />
             </button>
           ) : (
             <button className="rounded-full bg-purple-700 px-2 font-semibold duration-200 ease-in-out hover:bg-purple-800 dark:bg-purple-500 dark:hover:bg-purple-600">
@@ -108,7 +115,9 @@ function UserProfileCard(props: UserProfileCardProps) {
             </button>
           )}
           {(type === "recieved" || type === "sent") && (
-            <span className="text-gray-500 dark:text-gray-400">1 day</span>
+            <span className="text-sm text-gray-500 dark:text-gray-400">
+              1 day
+            </span>
           )}
         </div>
       </div>

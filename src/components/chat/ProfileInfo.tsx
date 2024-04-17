@@ -20,7 +20,7 @@ export default function ProfileInfo({
   return (
     <div className="relative">
       <div
-        className={`${showProfileInfo ? "right-0 md:flex" : "-right-[calc(100vw-4.25rem)] md:hidden"} absolute z-30 flex h-full w-[calc(100vw-4.25rem)] flex-col bg-gray-200 duration-300 ease-in-out dark:bg-gray-850 md:static md:w-[21.9rem]`}
+        className={`${showProfileInfo ? "right-0 md:flex" : "-right-[calc(100vw-4.25rem)] md:hidden"} absolute z-30 flex h-full w-[calc(100vw-4.25rem)] flex-col border-gray-300 bg-gray-200 duration-300 ease-in-out dark:border-gray-700 dark:bg-gray-850 md:w-[21.9rem] md:border-l-[1px]`}
       >
         <div className="flex h-[5.5rem] items-center justify-between px-6">
           <h1 className="text-lg md:text-xl">Profile</h1>

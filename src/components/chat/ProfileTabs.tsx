@@ -51,7 +51,7 @@ function Attachment({ tab }: { tab: ActiveTab }) {
       );
     case "Files":
       return (
-        <div className="flex flex-col gap-2 overflow-y-scroll">
+        <div className="flex flex-col gap-2 overflow-x-hidden overflow-y-scroll">
           {Array.from({ length: 10 }).map((_, index) => (
             <div
               key={`AttachedFile${index}`}
@@ -75,7 +75,7 @@ function Attachment({ tab }: { tab: ActiveTab }) {
       );
     case "Links":
       return (
-        <div className="flex flex-col gap-2 overflow-y-scroll">
+        <div className="flex flex-col gap-2 overflow-x-hidden overflow-y-scroll">
           {Array.from({ length: 10 }).map((_, index) => (
             <Link
               href={"https://messenger-app-iota-two.vercel.app/chat"}
