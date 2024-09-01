@@ -1,30 +1,26 @@
-import type { Metadata } from "next";
+import { Metadata } from "next";
+import { ReactNode } from "react";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/providers/ThemeProvider";
-import AuthProvider from "@/providers/AuthProvider";
 import ReduxProvider from "@/providers/ReduxProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ManSiaa",
-  description: "Enjoy with ManSiaa Chating App. Real-Time communication.",
+  title: "MysterioMessazo",
+  description: "Messaging with a twist of mystery",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AuthProvider>
-          <ReduxProvider>
-            <ThemeProvider>{children}</ThemeProvider>
-          </ReduxProvider>
-        </AuthProvider>
+        <ReduxProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

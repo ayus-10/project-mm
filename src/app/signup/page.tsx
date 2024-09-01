@@ -1,14 +1,7 @@
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 import UserForm from "@/components/UserForm";
 
 export default async function Signup() {
-  const session = await getServerSession(authOptions);
+  // TODO: redirect if logged in
 
-  if (session) {
-    redirect("/chat");
-  }
-
-  return <UserForm type="signup" />;
+  return <UserForm formType="signup" />;
 }

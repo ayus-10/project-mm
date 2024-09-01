@@ -8,13 +8,12 @@ import GoogleIcon from "../assets/google.ico";
 import { FormEvent, useState } from "react";
 import { LuChevronRight } from "react-icons/lu";
 import { FaEye } from "react-icons/fa";
-import { signIn } from "next-auth/react";
 
 type UserFormProps = {
-  type: "login" | "signup";
+  formType: "login" | "signup";
 };
 
-export default function UserForm({ type }: UserFormProps) {
+export default function UserForm({ formType }: UserFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,31 +33,24 @@ export default function UserForm({ type }: UserFormProps) {
             className="mx-auto md:mx-0"
             priority
             src={MainLogo}
-          ></Image>
-          <div
-            className={`my-6 flex gap-2 text-center md:text-start ${
-              type === "signup" ? "flex-col" : "flex-col-reverse"
-            }`}
-          >
+          />
+          <div className="my-6 flex flex-col gap-2 text-center md:text-start">
             <h1 className="text-3xl font-semibold text-gray-800">
-              {type === "signup"
-                ? "Enjoy with Mansiaa Chating App"
+              {formType === "signup"
+                ? "Enjoy with MysterioMessazo"
                 : "Continue to your Account"}
             </h1>
             <h2 className="text-gray-500">
-              {type === "signup"
-                ? "Real-Time communication"
+              {formType === "signup"
+                ? "Real-time communication 🚀"
                 : "Welcome back 👋🏻"}
             </h2>
           </div>
-          <button
-            onClick={() => signIn("google")}
-            className="mx-auto my-6 flex w-full items-center justify-center gap-1 rounded-full border-2 border-purple-200 bg-purple-200 px-5 py-3 text-purple-700 duration-300 ease-in-out hover:bg-transparent md:mx-0"
-          >
+          <button className="mx-auto my-6 flex w-full items-center justify-center gap-1 rounded-full border-2 border-purple-200 bg-purple-200 px-5 py-3 text-purple-700 duration-300 ease-in-out hover:bg-transparent md:mx-0">
             <Image src={GoogleIcon} alt="Google Icon"></Image>
-            <span>{`${
-              type === "signup" ? "Sign up" : "Log in"
-            } with Google`}</span>
+            <span>
+              {formType === "signup" ? "Sign up" : "Log in"} with Google
+            </span>
           </button>
           <div className="flex items-center gap-2 ">
             <div className="h-[1px] grow bg-gray-300"></div>
@@ -75,9 +67,7 @@ export default function UserForm({ type }: UserFormProps) {
               />
               <label
                 className={`absolute left-2 z-10 text-sm text-purple-700 duration-300 ease-in-out peer-focus:top-0 peer-focus:translate-y-0 ${
-                  email === ""
-                    ? "top-1/2 -translate-y-1/2"
-                    : "top-0 translate-y-0"
+                  email ? "top-0 translate-y-0" : "top-1/2 -translate-y-1/2"
                 }`}
                 htmlFor="email"
               >
@@ -93,15 +83,13 @@ export default function UserForm({ type }: UserFormProps) {
               />
               <label
                 className={`absolute left-2 z-10 text-sm text-purple-700 duration-300 ease-in-out peer-focus:top-0 peer-focus:translate-y-0 ${
-                  password === ""
-                    ? "top-1/2 -translate-y-1/2"
-                    : "top-0 translate-y-0"
+                  password ? "top-0 translate-y-0" : "top-1/2 -translate-y-1/2"
                 }`}
                 htmlFor="password"
               >
                 Password
               </label>
-              {password !== "" && (
+              {password && (
                 <FaEye
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer text-lg text-gray-700"
@@ -110,36 +98,22 @@ export default function UserForm({ type }: UserFormProps) {
             </div>
             <button className="group flex items-center justify-center rounded-md bg-purple-700 px-3 py-4 text-white">
               <span className="text-lg">
-                {type === "signup" ? "Sign up" : "Log in"}
+                {formType === "signup" ? "Sign up" : "Log in"}
               </span>
               <LuChevronRight className="relative text-2xl duration-300 ease-in-out group-hover:translate-x-2" />
             </button>
           </form>
-          <p
-            className={`text-center text-xs text-gray-500 ${
-              type === "signup" ? "block" : "hidden"
-            }`}
-          >
-            <span>By Signing up, you agree to our </span>
-            <Link href="#" className="underline">
-              Privacy Policy
-            </Link>
-            <span> and </span>
-            <Link href="#" className="underline">
-              Terms of Service
-            </Link>
-          </p>
           <p className="my-2 text-center text-sm text-gray-500">
             <span>
-              {type === "signup"
+              {formType === "signup"
                 ? "Already have an account? "
                 : "Dont have an account? "}
             </span>
             <Link
-              href={type === "signup" ? "/login" : "/signup"}
+              href={formType === "signup" ? "/login" : "/signup"}
               className="font-semibold underline"
             >
-              {type === "signup" ? "Log in" : "GET STARTED - IT'S FREE"}
+              {formType === "signup" ? "Log in" : "Get Started"}
             </Link>
           </p>
         </div>
@@ -150,7 +124,7 @@ export default function UserForm({ type }: UserFormProps) {
             priority
             src={BannerImage}
             alt="Banner Image"
-          ></Image>
+          />
         </div>
       </div>
     </main>

@@ -1,6 +1,3 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { redirect } from "next/navigation";
 import ChatNavigation from "@/components/chat/ChatNavigation";
 import ChatBody from "@/components/chat/ChatBody";
 import ProfileInfo from "@/components/chat/ProfileInfo";
@@ -12,11 +9,7 @@ export type CurrentChatData = {
 };
 
 export default async function Chat() {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    redirect("/login");
-  }
+  // TODO: redirect if not logged in
 
   const currentChat: CurrentChatData = {
     username: "John Doe",
