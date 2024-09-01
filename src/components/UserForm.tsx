@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import BannerImage from "../assets/account-banner.png";
-import MainLogo from "../assets/logo.svg";
 import GoogleIcon from "../assets/google.ico";
 import { FormEvent, useState } from "react";
 import { LuChevronRight } from "react-icons/lu";
@@ -29,14 +28,6 @@ export default function UserForm({ formType }: UserFormProps) {
     <main className="mx-auto flex min-h-screen w-screen max-w-[1000px] items-center px-5 py-4">
       <div className="flex w-full flex-col md:flex-row md:justify-evenly lg:justify-between">
         <div className="md:w-[300px] lg:w-[450px]">
-          <Image
-            height={50}
-            width={174}
-            alt="Main Logo"
-            className="mx-auto md:mx-0"
-            priority
-            src={MainLogo}
-          />
           <div className="my-6 flex flex-col gap-2 text-center md:text-start">
             <h1 className="text-3xl font-semibold text-gray-800">
               {formType === SIGNUP
@@ -122,10 +113,11 @@ export default function UserForm({ formType }: UserFormProps) {
         </div>
         <div className="hidden md:block">
           <Image
-            height={600}
-            width={400}
+            height={525}
+            width={350}
             priority
             src={BannerImage}
+            className="h-[525px] w-[350px] rounded-lg"
             alt="Banner Image"
           />
         </div>
