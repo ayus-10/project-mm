@@ -12,7 +12,7 @@ export interface Message {
   messageText: string;
 }
 
-export default function MessagesBody({ search }: { search: string }) {
+export default function MessagesContainer({ search }: { search: string }) {
   const chatContainer = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (chatContainer.current) {

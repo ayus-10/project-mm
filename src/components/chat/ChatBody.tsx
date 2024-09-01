@@ -4,7 +4,7 @@ import { useState } from "react";
 import { IoIosVideocam } from "react-icons/io";
 import { IoSearch } from "react-icons/io5";
 import { MdLocalPhone } from "react-icons/md";
-import MessagesBody from "./MessagesBody";
+import MessagesContainer from "./MessagesContainer";
 
 export default function ChatBody() {
   const currentChat = {
@@ -41,7 +41,7 @@ export default function ChatBody() {
           className={`absolute left-0 top-[100%] w-full border-b-[3px] border-gray-500 bg-purple-100 p-2 outline-none duration-200 ease-in-out hover:border-purple-700 focus:border-purple-700 dark:bg-gray-700 dark:hover:border-purple-500 dark:focus:border-purple-500 md:px-3 md:py-2 md:text-lg ${showSearch ? "block" : "hidden"}`}
         />
       </div>
-      <MessagesBody search={search} />
+      <MessagesContainer search={search} />
     </div>
   );
 }

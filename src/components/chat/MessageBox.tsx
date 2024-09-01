@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Message } from "./MessagesBody";
+import { Message } from "./MessagesContainer";
 
 const LEFT = "left";
 const RIGHT = "right";
@@ -37,7 +37,7 @@ export default function MessageBox(props: MessageBoxProps) {
           <span className="p-1 text-xs text-gray-500 dark:text-gray-400 md:text-sm lg:p-0">
             {sentTime}
           </span>
-          <div className="runded-lg flex flex-col items-start gap-4 bg-gray-200 p-2 dark:bg-gray-850 lg:flex-row lg:items-end lg:px-4 lg:py-3">
+          <div className="flex flex-col items-start gap-4 rounded-lg bg-gray-200 p-2 dark:bg-gray-850 lg:flex-row lg:items-end lg:px-4 lg:py-3">
             <p className="select-all text-sm md:text-base">{messageText}</p>
             <span className="text-right text-xs">{receivedTime}</span>
           </div>
