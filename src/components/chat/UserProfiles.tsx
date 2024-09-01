@@ -1,57 +1,63 @@
 import UserProfileCard from "./UserProfileCard";
 import { IoSearch } from "react-icons/io5";
-import userProfilesArray from "../../assets/dummy_profiles.json";
+import allUserProfiles from "../../assets/dummy_profiles.json";
 import { useEffect, useState } from "react";
 import { FiPlusCircle } from "react-icons/fi";
 
-export type UserProfilesArray = {
+export interface UserProfile {
   id: string;
   username: string;
   profilePictureUrl: string;
   lastMessage: string;
   sentTime: string;
   unseenMessagesCount: number;
-};
+}
 
-type ActiveTab = "all" | "new";
+const ALL = "all";
+const NEW = "new";
+
+type ActiveTab = typeof ALL | typeof NEW;
 
 export default function UserProfiles() {
   const [userProfiles, setUserProfiles] =
-    useState<UserProfilesArray[]>(userProfilesArray);
+    useState<UserProfile[]>(allUserProfiles);
 
   const [search, setSearch] = useState("");
 
-  const [activeTab, setActiveTab] = useState<ActiveTab>("all");
+  const [activeTab, setActiveTab] = useState<ActiveTab>(ALL);
 
   useEffect(() => {
-    // Filter the user profiles array that matches with the value of search
+    setSelectedUserId("");
+
     if (search) {
-      const filteredUserProfiles = userProfilesArray.filter((profile) =>
+      const filteredUserProfiles = allUserProfiles.filter((profile) =>
         profile.username.toLowerCase().includes(search),
       );
       setUserProfiles(filteredUserProfiles);
-      setActiveTab("all"); // Set the active tab to "all" while searching
+
+      changeActiveTab(ALL);
     } else {
-      setUserProfiles(userProfilesArray);
+      setUserProfiles(allUserProfiles);
     }
   }, [search]);
 
   useEffect(() => {
-    // Filter the user profiles array that has unseen messages count more than zero
-    if (activeTab === "new") {
-      const filteredUserProfiles = userProfilesArray.filter(
+    if (activeTab === NEW) {
+      const filteredUserProfiles = allUserProfiles.filter(
         (profile) => profile.unseenMessagesCount > 0,
       );
       setUserProfiles(filteredUserProfiles);
     } else {
-      setUserProfiles(userProfilesArray);
+      setUserProfiles(allUserProfiles);
     }
   }, [activeTab]);
 
-  // If a user is selected, a small popup will appear on their profile card with options to block and delete
   const [selectedUserId, setSelectedUserId] = useState("");
 
-  useEffect(() => setSelectedUserId(""), [search, activeTab]); // Unset the selected user while filtering
+  function changeActiveTab(tab: ActiveTab) {
+    setActiveTab(tab);
+    setSelectedUserId("");
+  }
 
   return (
     <div className="flex h-1 w-full grow flex-col">
@@ -72,14 +78,14 @@ export default function UserProfiles() {
       </div>
       <div className="flex w-full gap-2 py-1">
         <button
-          onClick={() => setActiveTab("all")}
-          className={`cursor-pointer rounded-full border-2 border-purple-700 px-3 text-sm font-medium duration-200 ease-in-out hover:bg-purple-700 hover:text-white dark:border-purple-500 dark:hover:bg-purple-500 ${activeTab === "all" && "bg-purple-700 text-white dark:bg-purple-500"}`}
+          onClick={() => changeActiveTab(ALL)}
+          className={`cursor-pointer rounded-full border-2 border-purple-700 px-3 text-sm font-medium duration-200 ease-in-out hover:bg-purple-700 hover:text-white dark:border-purple-500 dark:hover:bg-purple-500 ${activeTab === ALL && "bg-purple-700 text-white dark:bg-purple-500"}`}
         >
           All
         </button>
         <button
-          onClick={() => setActiveTab("new")}
-          className={`cursor-pointer rounded-full border-2 border-purple-700 px-3 text-sm font-medium duration-200 ease-in-out hover:bg-purple-700 hover:text-white dark:border-purple-500 dark:hover:bg-purple-500 ${activeTab === "new" && "bg-purple-700 text-white dark:bg-purple-500"}`}
+          onClick={() => changeActiveTab(NEW)}
+          className={`cursor-pointer rounded-full border-2 border-purple-700 px-3 text-sm font-medium duration-200 ease-in-out hover:bg-purple-700 hover:text-white dark:border-purple-500 dark:hover:bg-purple-500 ${activeTab === NEW && "bg-purple-700 text-white dark:bg-purple-500"}`}
         >
           New
         </button>

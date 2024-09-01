@@ -70,10 +70,10 @@ function Settings({ tab }: { tab: string }) {
   }
 }
 
-type ToggleSwitchProps = {
+interface ToggleSwitchProps {
   parent: "Notifications" | "Theme";
   checked: boolean;
-};
+}
 
 function ToggleSwitch(props: ToggleSwitchProps) {
   const { parent, checked } = props;

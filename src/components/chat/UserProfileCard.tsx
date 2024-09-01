@@ -1,13 +1,13 @@
 import Image from "next/image";
-import { UserProfilesArray } from "./UserProfiles";
+import { UserProfile } from "./UserProfiles";
 import { HiDotsVertical } from "react-icons/hi";
 import { Dispatch, SetStateAction } from "react";
 import { MdBlock, MdDelete } from "react-icons/md";
 
-type UserProfileCardProps = UserProfilesArray & {
+interface UserProfileCardProps extends UserProfile {
   selectedUserId: string;
   setSelectedUserId: Dispatch<SetStateAction<string>>;
-};
+}
 
 export default function UserProfileCard(props: UserProfileCardProps) {
   const {
@@ -32,7 +32,7 @@ export default function UserProfileCard(props: UserProfileCardProps) {
         height={50}
         width={50}
         alt={`Profile picture of ${username}`}
-      ></Image>
+      />
       <div className="relative flex grow">
         <div className="flex grow flex-col">
           <h2 className="line-clamp-1 text-sm font-semibold md:text-base">

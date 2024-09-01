@@ -5,64 +5,49 @@ import { TbMessageDots } from "react-icons/tb";
 import { LuChevronLeft, LuMenu } from "react-icons/lu";
 import { IoSettingsOutline } from "react-icons/io5";
 import { LiaUserFriendsSolid } from "react-icons/lia";
-import { useState } from "react";
-import { useMobileScreen } from "@/hooks/useMobileScreen";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import {
-  setNavigation,
-  setProfileInfo,
-  toggleNavigation,
-} from "@/redux/slices/showMenuSlice";
+import { useEffect, useState } from "react";
 import MessagesTab from "./MessagesTab";
 import SettingsTab from "./SettingsTab";
 import FriendsTab from "./FriendsTab";
 
-type ActiveTab = "messages" | "friends" | "settings";
+const MESSAGES = "messages";
+const FRIENDS = "friends";
+const SETTINGS = "settings";
+
+type ActiveTab = typeof MESSAGES | typeof FRIENDS | typeof SETTINGS;
 
 export default function ChatNavigation() {
-  const isMobileScreen = useMobileScreen();
+  const [showNavigation, setShowNavigation] = useState(false);
 
-  const showNavigation = useAppSelector((state) => state.showMenu.navigation);
-  const dispatch = useAppDispatch();
+  const [activeTab, setActiveTab] = useState<ActiveTab>(MESSAGES);
 
-  const [activeTab, setActiveTab] = useState<ActiveTab>("messages");
+  useEffect(() => {
+    setShowNavigation(window.innerWidth >= 768);
+  }, [setShowNavigation]);
 
   function changeActiveTab(tab: ActiveTab) {
     setActiveTab(tab);
-    dispatch(setNavigation(true)); // Show navigation when ever tab buttons are clicked
-    hideProfileInfo();
-  }
-
-  function toggleNavigationVisibility() {
-    dispatch(toggleNavigation());
-    hideProfileInfo();
-  }
-
-  function hideProfileInfo() {
-    // Both navigation and profile info can not be visible at the same time on mobile screens
-    if (isMobileScreen) {
-      dispatch(setProfileInfo(false));
-    }
+    setShowNavigation(true);
   }
 
   return (
     <div className="relative flex">
       <nav className="relative z-30 flex h-full w-[4.25rem] flex-col justify-between bg-gray-200 p-4 dark:bg-gray-850">
         <LuMenu
-          onClick={toggleNavigationVisibility}
+          onClick={() => setShowNavigation((prev) => !prev)}
           className="cursor-pointer rounded-full p-2 text-4xl duration-200 ease-in-out hover:bg-gray-300 dark:hover:bg-gray-800"
         />
         <div className="flex flex-col gap-2">
           <TbMessageDots
-            onClick={() => changeActiveTab("messages")}
+            onClick={() => changeActiveTab(MESSAGES)}
             className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-800 dark:text-purple-500 dark:hover:bg-gray-900"
           />
           <LiaUserFriendsSolid
-            onClick={() => changeActiveTab("friends")}
+            onClick={() => changeActiveTab(FRIENDS)}
             className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-800 dark:text-purple-500 dark:hover:bg-gray-900"
           />
           <IoSettingsOutline
-            onClick={() => changeActiveTab("settings")}
+            onClick={() => changeActiveTab(SETTINGS)}
             className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-800 dark:text-purple-500 dark:hover:bg-gray-900"
           />
         </div>
@@ -73,21 +58,26 @@ export default function ChatNavigation() {
       >
         <div className="flex h-[5.5rem] items-center gap-2 px-2 sm:px-6">
           <LuChevronLeft
-            onClick={toggleNavigationVisibility}
+            onClick={() => setShowNavigation((prev) => !prev)}
             className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-800 dark:text-purple-500 dark:hover:bg-gray-900"
           />
           <span className="text-lg capitalize md:text-xl">{activeTab}</span>
         </div>
         <div className="flex h-[calc(100dvh-5.5rem)] w-[calc(100vw-4.25rem)] max-w-[23.75rem] flex-col gap-4 px-2 sm:px-6 md:w-[40vw]">
-          {activeTab === "messages" ? (
-            <MessagesTab />
-          ) : activeTab === "settings" ? (
-            <SettingsTab />
-          ) : (
-            <FriendsTab />
-          )}
+          <CurrentTab tab={activeTab} />
         </div>
       </div>
     </div>
   );
+}
+
+function CurrentTab({ tab }: { tab: ActiveTab }) {
+  switch (tab) {
+    case MESSAGES:
+      return <MessagesTab />;
+    case FRIENDS:
+      return <FriendsTab />;
+    case SETTINGS:
+      return <SettingsTab />;
+  }
 }

@@ -1,36 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { HiDotsVertical } from "react-icons/hi";
 import { IoIosVideocam } from "react-icons/io";
 import { IoSearch } from "react-icons/io5";
 import { MdLocalPhone } from "react-icons/md";
-import { CurrentChatData } from "@/app/chat/page";
-import { useMobileScreen } from "@/hooks/useMobileScreen";
-import { useAppDispatch } from "@/redux/hooks";
-import { setNavigation, toggleProfileInfo } from "@/redux/slices/showMenuSlice";
-import MessageBody from "./MessageBody";
+import MessagesBody from "./MessagesBody";
 
-export default function ChatBody({
-  currentChat,
-}: {
-  currentChat: CurrentChatData;
-}) {
-  const isMobileScreen = useMobileScreen();
+export default function ChatBody() {
+  const currentChat = {
+    username: "John Doe",
+    status: "Active",
+  };
 
-  const dispatch = useAppDispatch();
-
-  // Used for searching message in MessageBody component
   const [showSearch, setShowSearch] = useState(false);
   const [search, setSearch] = useState("");
-
-  function toggleProfileInfoVisibility() {
-    dispatch(toggleProfileInfo());
-    if (isMobileScreen) {
-      // Both navigation and profile info can not be visible at the same time on mobile screens
-      dispatch(setNavigation(false));
-    }
-  }
 
   return (
     <div className="flex grow flex-col">
@@ -50,10 +33,6 @@ export default function ChatBody({
             onClick={() => setShowSearch(!showSearch)}
             className="shrink-0 cursor-pointer rounded-full p-2 duration-200 ease-in-out hover:bg-purple-200 dark:hover:bg-gray-800"
           />
-          <HiDotsVertical
-            onClick={toggleProfileInfoVisibility}
-            className="shrink-0 cursor-pointer rounded-full p-2 duration-200 ease-in-out hover:bg-purple-200 dark:hover:bg-gray-800"
-          />
         </div>
         <input
           onChange={(e) => setSearch(e.target.value.toLowerCase())}
@@ -62,7 +41,7 @@ export default function ChatBody({
           className={`absolute left-0 top-[100%] w-full border-b-[3px] border-gray-500 bg-purple-100 p-2 outline-none duration-200 ease-in-out hover:border-purple-700 focus:border-purple-700 dark:bg-gray-700 dark:hover:border-purple-500 dark:focus:border-purple-500 md:px-3 md:py-2 md:text-lg ${showSearch ? "block" : "hidden"}`}
         />
       </div>
-      <MessageBody search={search} />
+      <MessagesBody search={search} />
     </div>
   );
 }

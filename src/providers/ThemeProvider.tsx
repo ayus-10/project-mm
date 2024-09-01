@@ -1,13 +1,12 @@
 "use client";
-import React from "react";
+
+import { ReactNode } from "react";
 import ThemeContext from "@/contexts/ThemeContext";
 import { useDarkTheme } from "@/hooks/useDarkTheme";
 
 export default function ThemeProvider({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{ children: ReactNode }>) {
   const [darkTheme, toggleTheme] = useDarkTheme();
 
   return (

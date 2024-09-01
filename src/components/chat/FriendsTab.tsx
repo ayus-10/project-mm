@@ -5,11 +5,15 @@ import { IoSearch } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
 import { PiUserCirclePlusThin } from "react-icons/pi";
 
-type ActiveTab = "sent" | "recieved";
+const SENT = "sent";
+const RECIEVED = "recieved";
+const FIND = "find";
+
+type ActiveTab = typeof SENT | typeof RECIEVED;
 
 export default function FriendsTab() {
-  const [activeTab, setActiveTab] = useState<ActiveTab>("recieved");
-  const [search, setSearch] = useState("");
+  const [activeTab, setActiveTab] = useState<ActiveTab>(RECIEVED);
+  const [_search, setSearch] = useState("");
 
   return (
     <div className="flex h-full flex-col gap-8">
@@ -37,24 +41,24 @@ export default function FriendsTab() {
         <h1 className="text-lg font-semibold md:text-xl">Friend requests</h1>
         <div className="relative flex justify-between gap-2 rounded-full bg-purple-200 p-2 dark:bg-gray-750">
           <button
-            onClick={() => setActiveTab("recieved")}
-            className={`w-full rounded-full bg-purple-300 px-4 py-1 duration-200 ease-in-out md:px-6 md:py-2 md:font-semibold ${activeTab === "recieved" ? "text-white" : "text-purple-700"}`}
+            onClick={() => setActiveTab(RECIEVED)}
+            className={`w-full rounded-full bg-purple-300 px-4 py-1 duration-200 ease-in-out md:px-6 md:py-2 md:font-semibold ${activeTab === RECIEVED ? "text-white" : "text-purple-700"}`}
           >
             <span className="relative z-30">Recieved</span>
           </button>
           <button
-            onClick={() => setActiveTab("sent")}
-            className={`w-full rounded-full bg-purple-300 px-4 py-1 duration-200 ease-in-out md:px-6 md:py-2 md:font-semibold ${activeTab === "sent" ? "text-white" : "text-purple-700"}`}
+            onClick={() => setActiveTab(SENT)}
+            className={`w-full rounded-full bg-purple-300 px-4 py-1 duration-200 ease-in-out md:px-6 md:py-2 md:font-semibold ${activeTab === SENT ? "text-white" : "text-purple-700"}`}
           >
             <span className="relative z-30">Sent</span>
           </button>
           <div
-            className={`absolute top-1/2 z-20 h-[calc(100%-1rem)] w-[calc(50%-0.5rem)] -translate-y-1/2 rounded-full bg-purple-700 duration-200 ease-in-out ${activeTab === "sent" ? "left-[50%]" : "left-[0.5rem]"}`}
+            className={`absolute top-1/2 z-20 h-[calc(100%-1rem)] w-[calc(50%-0.5rem)] -translate-y-1/2 rounded-full bg-purple-700 duration-200 ease-in-out ${activeTab === SENT ? "left-[50%]" : "left-[0.5rem]"}`}
           ></div>
         </div>
         <div className="my-2 mb-4 flex h-1 grow flex-col gap-4 overflow-y-scroll">
           {Array.from({ length: 10 }).map((_, index) => (
-            <UserProfileCard key={`UserProfile${index}`} type={activeTab} />
+            <FriendRequestCard key={`FriendRequest${index}`} tab={activeTab} />
           ))}
         </div>
       </div>
@@ -62,16 +66,16 @@ export default function FriendsTab() {
   );
 }
 
-type UserProfileCardProps = {
-  type: "find" | "recieved" | "sent";
-};
+interface FriendRequestCardProps {
+  tab: typeof FIND | typeof RECIEVED | typeof SENT;
+}
 
-function UserProfileCard(props: UserProfileCardProps) {
-  const { type } = props;
+function FriendRequestCard(props: FriendRequestCardProps) {
+  const { tab } = props;
 
   return (
     <div
-      className={`flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2 dark:bg-gray-750 ${type === "find" ? "h-16" : "h-auto"}`}
+      className={`flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2 dark:bg-gray-750 ${tab === FIND ? "h-16" : "h-auto"}`}
     >
       <Image
         height={50}
@@ -81,40 +85,14 @@ function UserProfileCard(props: UserProfileCardProps) {
         }
         alt="Profile picture"
         className="size-[50px] rounded-full"
-      ></Image>
+      />
       <div className="flex grow flex-col">
         <h2 className="line-clamp-1 md:text-lg md:font-semibold">
           Olivia Isabel Rodrigo
         </h2>
         <div className="flex items-end justify-between gap-2">
-          {type === "recieved" ? (
-            <div className="flex gap-2">
-              <button className="rounded-full border-2 border-green-200 bg-green-200 px-3 text-green-500 duration-200 ease-in-out hover:border-green-500 hover:bg-transparent">
-                <span className="hidden text-sm font-semibold md:inline">
-                  Accept
-                </span>
-                <FaCheck className="md:hidden" />
-              </button>
-              <button className="rounded-full border-2 border-red-200 bg-red-200 px-3 text-red-500 duration-200 ease-in-out hover:border-red-500 hover:bg-transparent">
-                <span className="hidden text-sm font-semibold md:inline">
-                  Reject
-                </span>
-                <MdClose className="md:hidden" />
-              </button>
-            </div>
-          ) : type === "sent" ? (
-            <button className="rounded-full border-2 border-red-200 bg-red-200 px-3 text-red-500 duration-200 ease-in-out hover:border-red-500 hover:bg-transparent">
-              <span className="hidden text-sm font-semibold md:inline">
-                Cancel
-              </span>
-              <MdClose className="md:hidden" />
-            </button>
-          ) : (
-            <button className="rounded-full bg-purple-700 px-2 font-semibold duration-200 ease-in-out hover:bg-purple-800 dark:bg-purple-500 dark:hover:bg-purple-600">
-              Add
-            </button>
-          )}
-          {(type === "recieved" || type === "sent") && (
+          <RequestAction tab={tab} />
+          {(tab === RECIEVED || tab === SENT) && (
             <span className="text-sm text-gray-500 dark:text-gray-400">
               1 day
             </span>
@@ -123,4 +101,43 @@ function UserProfileCard(props: UserProfileCardProps) {
       </div>
     </div>
   );
+}
+
+interface RequestActionProps {
+  tab: typeof FIND | typeof RECIEVED | typeof SENT;
+}
+
+function RequestAction({ tab }: RequestActionProps) {
+  switch (tab) {
+    case RECIEVED:
+      return (
+        <div className="flex gap-2">
+          <button className="rounded-full border-2 border-green-200 bg-green-200 px-3 text-green-500 duration-200 ease-in-out hover:border-green-500 hover:bg-transparent">
+            <span className="hidden text-sm font-semibold md:inline">
+              Accept
+            </span>
+            <FaCheck className="md:hidden" />
+          </button>
+          <button className="rounded-full border-2 border-red-200 bg-red-200 px-3 text-red-500 duration-200 ease-in-out hover:border-red-500 hover:bg-transparent">
+            <span className="hidden text-sm font-semibold md:inline">
+              Reject
+            </span>
+            <MdClose className="md:hidden" />
+          </button>
+        </div>
+      );
+    case SENT:
+      return (
+        <button className="rounded-full border-2 border-red-200 bg-red-200 px-3 text-red-500 duration-200 ease-in-out hover:border-red-500 hover:bg-transparent">
+          <span className="hidden text-sm font-semibold md:inline">Cancel</span>
+          <MdClose className="md:hidden" />
+        </button>
+      );
+    case FIND:
+      return (
+        <button className="rounded-full bg-purple-700 px-2 font-semibold duration-200 ease-in-out hover:bg-purple-800 dark:bg-purple-500 dark:hover:bg-purple-600">
+          Add
+        </button>
+      );
+  }
 }

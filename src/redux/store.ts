@@ -1,10 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import showMenuReducer from "./slices/showMenuSlice";
 
 export const store = configureStore({
-  reducer: {
-    showMenu: showMenuReducer,
-  },
+  reducer: {},
 });
 
 export type RootState = ReturnType<typeof store.getState>;

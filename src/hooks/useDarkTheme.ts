@@ -4,11 +4,11 @@ export const useDarkTheme = () => {
   const [darkTheme, setDarkTheme] = useState(false);
 
   useEffect(() => {
-    const dark_theme = localStorage.getItem("dark_theme");
-    if (dark_theme) {
-      setDarkTheme(JSON.parse(dark_theme));
+    const isDarkTheme = localStorage.getItem("DARK_THEME");
+    if (isDarkTheme) {
+      setDarkTheme(JSON.parse(isDarkTheme));
     }
-  }, []);
+  }, [setDarkTheme]);
 
   useEffect(() => {
     if (darkTheme) {
@@ -19,8 +19,8 @@ export const useDarkTheme = () => {
   }, [darkTheme]);
 
   const toggleTheme = () => {
-    setDarkTheme(!darkTheme);
-    localStorage.setItem("dark_theme", JSON.stringify(!darkTheme)); // Saving !darkTheme because the state will only be updated on next re-render
+    localStorage.setItem("DARK_THEME", JSON.stringify(!darkTheme));
+    setDarkTheme((prev) => !prev);
   };
 
   return [darkTheme, toggleTheme] as const;

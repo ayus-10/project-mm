@@ -4,7 +4,7 @@ import { useState } from "react";
 import { HashLoader } from "react-spinners";
 
 export default function Home() {
-  const [loggedIn, setLoggedIn] = useState<boolean | undefined>(undefined);
+  const [loggedIn, _setLoggedIn] = useState<boolean | undefined>(undefined);
 
   // TODO: redirect to '/chat' or '/login' accordingly
 

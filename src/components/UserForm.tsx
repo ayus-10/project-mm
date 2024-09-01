@@ -9,9 +9,12 @@ import { FormEvent, useState } from "react";
 import { LuChevronRight } from "react-icons/lu";
 import { FaEye } from "react-icons/fa";
 
-type UserFormProps = {
-  formType: "login" | "signup";
-};
+const LOGIN = "login";
+const SIGNUP = "signup";
+
+interface UserFormProps {
+  formType: typeof LOGIN | typeof SIGNUP;
+}
 
 export default function UserForm({ formType }: UserFormProps) {
   const [showPassword, setShowPassword] = useState(false);
@@ -36,20 +39,20 @@ export default function UserForm({ formType }: UserFormProps) {
           />
           <div className="my-6 flex flex-col gap-2 text-center md:text-start">
             <h1 className="text-3xl font-semibold text-gray-800">
-              {formType === "signup"
+              {formType === SIGNUP
                 ? "Enjoy with MysterioMessazo"
                 : "Continue to your Account"}
             </h1>
             <h2 className="text-gray-500">
-              {formType === "signup"
+              {formType === SIGNUP
                 ? "Real-time communication 🚀"
                 : "Welcome back 👋🏻"}
             </h2>
           </div>
           <button className="mx-auto my-6 flex w-full items-center justify-center gap-1 rounded-full border-2 border-purple-200 bg-purple-200 px-5 py-3 text-purple-700 duration-300 ease-in-out hover:bg-transparent md:mx-0">
-            <Image src={GoogleIcon} alt="Google Icon"></Image>
+            <Image src={GoogleIcon} alt="Google Icon" />
             <span>
-              {formType === "signup" ? "Sign up" : "Log in"} with Google
+              {formType === SIGNUP ? "Sign up" : "Log in"} with Google
             </span>
           </button>
           <div className="flex items-center gap-2 ">
@@ -98,22 +101,22 @@ export default function UserForm({ formType }: UserFormProps) {
             </div>
             <button className="group flex items-center justify-center rounded-md bg-purple-700 px-3 py-4 text-white">
               <span className="text-lg">
-                {formType === "signup" ? "Sign up" : "Log in"}
+                {formType === SIGNUP ? "Sign up" : "Log in"}
               </span>
               <LuChevronRight className="relative text-2xl duration-300 ease-in-out group-hover:translate-x-2" />
             </button>
           </form>
           <p className="my-2 text-center text-sm text-gray-500">
             <span>
-              {formType === "signup"
-                ? "Already have an account? "
-                : "Dont have an account? "}
+              {formType === LOGIN
+                ? "Dont have an account? "
+                : "Already have an account? "}
             </span>
             <Link
-              href={formType === "signup" ? "/login" : "/signup"}
+              href={formType === LOGIN ? "/signup" : "/login"}
               className="font-semibold underline"
             >
-              {formType === "signup" ? "Log in" : "Get Started"}
+              {formType === LOGIN ? "Get Started" : "Log in"}
             </Link>
           </p>
         </div>

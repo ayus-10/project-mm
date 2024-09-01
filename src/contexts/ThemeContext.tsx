@@ -1,9 +1,9 @@
 import { createContext } from "react";
 
-type ThemeContextValue = {
+interface ThemeContextValue {
   darkTheme: boolean;
   toggleTheme: () => void;
-};
+}
 
 const defaultValue = {
   darkTheme: false,

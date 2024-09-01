@@ -4,9 +4,9 @@ import { FaCircleUser } from "react-icons/fa6";
 
 export default function MessagesTab() {
   const currentUserData = {
-    username: "John Doe",
+    username: "The Boss",
     profilePictureUrl:
-      "https://cdn.discordapp.com/avatars/833573797809750066/2f4530153f0d992c760ff2ba115380b5.webp?size=100",
+      "https://cdn.discordapp.com/avatars/986940340227432450/91b1bc3903962aa7ee15caebef98c081.webp?size=100",
     status: "Active",
   };
 
