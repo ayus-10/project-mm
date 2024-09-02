@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: "Sign up - MysterioMessazo",
+  title: "Sign up - MysterioMessagez",
 };
 
 export default function SignupLayout({

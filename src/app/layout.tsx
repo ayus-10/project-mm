@@ -8,7 +8,7 @@ import ReduxProvider from "@/providers/ReduxProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "MysterioMessazo",
+  title: "MysterioMessagez",
   description: "Messaging with a twist of mystery",
 };
 

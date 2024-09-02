@@ -31,7 +31,7 @@ export default function UserForm({ formType }: UserFormProps) {
           <div className="my-6 flex flex-col gap-2 text-center md:text-start">
             <h1 className="text-3xl font-semibold text-gray-800">
               {formType === SIGNUP
-                ? "Enjoy with MysterioMessazo"
+                ? "Enjoy with MysterioMessagez"
                 : "Continue to your Account"}
             </h1>
             <h2 className="text-gray-500">
