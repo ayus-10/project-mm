@@ -12,7 +12,7 @@ export default function MessagesTab() {
 
   return (
     <>
-      <div className="grid h-48 place-items-center gap-1 py-2">
+      <div className="grid h-32 place-items-center gap-1 py-2">
         <div className="relative size-[100px]">
           {currentUserData.profilePictureUrl ? (
             <Image
@@ -31,9 +31,6 @@ export default function MessagesTab() {
         <h1 className="text-xl md:text-2xl md:font-semibold">
           {currentUserData.username}
         </h1>
-        <span className="rounded-lg bg-green-300 px-5 py-1 font-bold text-green-700">
-          Active
-        </span>
       </div>
       <UserProfiles />
     </>

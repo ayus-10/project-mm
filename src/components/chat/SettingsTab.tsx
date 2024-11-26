@@ -31,7 +31,9 @@ export default function SettingsTab() {
         <div key={item.text}>
           <button
             onClick={() => setSetting(item.text)}
-            className="flex w-full cursor-pointer items-center gap-4 border-b-2 border-purple-300 bg-white px-4 py-3 text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:border-purple-500 dark:bg-gray-750 dark:hover:bg-gray-800"
+            className={`flex w-full cursor-pointer items-center gap-4 border-b-2 border-purple-300 bg-white px-4 py-3 text-purple-700 duration-200 ease-in-out hover:bg-purple-100 dark:border-purple-500 dark:bg-gray-750 dark:hover:bg-gray-800 
+              ${setting === item.text ? "rounded-t-md" : "rounded-md"}
+            `}
           >
             <div className="text-purple-700 dark:text-purple-500">
               {item.icon}
@@ -39,7 +41,7 @@ export default function SettingsTab() {
             <span className="text-gray-850 dark:text-white">{item.text}</span>
           </button>
           {setting === item.text && (
-            <div className="bg-white dark:bg-gray-750">
+            <div className="rounded-b-md bg-white dark:bg-gray-750">
               <Settings tab={item.text} />
             </div>
           )}

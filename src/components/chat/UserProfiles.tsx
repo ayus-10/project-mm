@@ -2,7 +2,6 @@ import UserProfileCard from "./UserProfileCard";
 import { IoSearch } from "react-icons/io5";
 import allUserProfiles from "../../assets/dummy_profiles.json";
 import { useEffect, useState } from "react";
-import { FiPlusCircle } from "react-icons/fi";
 
 export interface UserProfile {
   id: string;
@@ -27,15 +26,13 @@ export default function UserProfiles() {
   const [activeTab, setActiveTab] = useState<ActiveTab>(ALL);
 
   useEffect(() => {
-    setSelectedUserId("");
-
     if (search) {
       const filteredUserProfiles = allUserProfiles.filter((profile) =>
         profile.username.toLowerCase().includes(search),
       );
       setUserProfiles(filteredUserProfiles);
 
-      changeActiveTab(ALL);
+      setActiveTab(ALL);
     } else {
       setUserProfiles(allUserProfiles);
     }
@@ -52,20 +49,9 @@ export default function UserProfiles() {
     }
   }, [activeTab]);
 
-  const [selectedUserId, setSelectedUserId] = useState("");
-
-  function changeActiveTab(tab: ActiveTab) {
-    setActiveTab(tab);
-    setSelectedUserId("");
-  }
-
   return (
     <div className="flex h-1 w-full grow flex-col">
       <div className="flex flex-col gap-1 py-1">
-        <div className="flex justify-between gap-4">
-          <span className="font-semibold md:text-lg">Chats</span>
-          <FiPlusCircle className="cursor-pointer rounded-full p-0.5 text-2xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:text-purple-500 dark:hover:bg-gray-750" />
-        </div>
         <div className="relative w-full">
           <input
             onChange={(e) => setSearch(e.target.value.toLowerCase())}
@@ -78,14 +64,14 @@ export default function UserProfiles() {
       </div>
       <div className="flex w-full gap-2 py-1">
         <button
-          onClick={() => changeActiveTab(ALL)}
-          className={`cursor-pointer rounded-full border-2 border-purple-700 px-3 text-sm font-medium duration-200 ease-in-out hover:bg-purple-700 hover:text-white dark:border-purple-500 dark:hover:bg-purple-500 ${activeTab === ALL && "bg-purple-700 text-white dark:bg-purple-500"}`}
+          onClick={() => setActiveTab(ALL)}
+          className={`cursor-pointer rounded-full bg-purple-300 px-3 text-sm font-medium text-white duration-200 ease-in-out hover:bg-purple-700 dark:hover:bg-purple-500 ${activeTab === ALL && "bg-purple-700 dark:bg-purple-500"}`}
         >
           All
         </button>
         <button
-          onClick={() => changeActiveTab(NEW)}
-          className={`cursor-pointer rounded-full border-2 border-purple-700 px-3 text-sm font-medium duration-200 ease-in-out hover:bg-purple-700 hover:text-white dark:border-purple-500 dark:hover:bg-purple-500 ${activeTab === NEW && "bg-purple-700 text-white dark:bg-purple-500"}`}
+          onClick={() => setActiveTab(NEW)}
+          className={`cursor-pointer rounded-full bg-purple-300 px-3 text-sm font-medium text-white duration-200 ease-in-out hover:bg-purple-700 dark:hover:bg-purple-500 ${activeTab === NEW && "bg-purple-700 dark:bg-purple-500"}`}
         >
           New
         </button>
@@ -100,8 +86,6 @@ export default function UserProfiles() {
             lastMessage={profile.lastMessage}
             sentTime={profile.sentTime}
             unseenMessagesCount={profile.unseenMessagesCount}
-            selectedUserId={selectedUserId}
-            setSelectedUserId={setSelectedUserId}
           />
         ))}
       </div>

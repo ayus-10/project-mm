@@ -38,7 +38,7 @@ export default function ChatBody() {
           onChange={(e) => setSearch(e.target.value.toLowerCase())}
           type="text"
           placeholder="Search for message..."
-          className={`absolute left-0 top-[100%] w-full border-b-[3px] border-gray-500 bg-purple-100 p-2 outline-none duration-200 ease-in-out hover:border-purple-700 focus:border-purple-700 dark:bg-gray-700 dark:hover:border-purple-500 dark:focus:border-purple-500 md:px-3 md:py-2 md:text-lg ${showSearch ? "block" : "hidden"}`}
+          className={`absolute left-0 top-[100%] w-full border-b-[3px] border-gray-500 bg-white p-2 outline-none duration-200 ease-in-out hover:border-purple-500 focus:border-purple-500 dark:bg-gray-700 dark:hover:border-purple-500 dark:focus:border-purple-500 md:px-3 md:py-2 md:text-lg ${showSearch ? "block" : "hidden"}`}
         />
       </div>
       <MessagesContainer search={search} />

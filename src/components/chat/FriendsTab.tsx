@@ -24,9 +24,9 @@ export default function FriendsTab() {
             onChange={(e) => setSearch(e.target.value.toLowerCase())}
             placeholder="Email..."
             type="text"
-            className="w-full rounded-full bg-white py-2 pl-4 pr-16 shadow-black outline-none duration-200 ease-in-out hover:drop-shadow-md focus:drop-shadow-md dark:bg-gray-750"
+            className="w-full rounded-lg bg-white py-2 pl-4 pr-16 shadow-black outline-none duration-200 ease-in-out hover:drop-shadow-md focus:drop-shadow-md dark:bg-gray-750"
           />
-          <button className="absolute right-0 top-1/2 flex h-full w-14 -translate-y-1/2 items-center justify-center rounded-full bg-purple-700 px-2 text-xl text-white duration-200 ease-in-out hover:bg-purple-800">
+          <button className="absolute right-0 top-1/2 flex h-full w-14 -translate-y-1/2 items-center justify-center rounded-lg bg-purple-700 px-2 text-xl text-white duration-200 ease-in-out hover:bg-purple-800">
             <IoSearch />
           </button>
         </div>
@@ -39,24 +39,24 @@ export default function FriendsTab() {
       </div>
       <div className="flex h-full flex-col gap-2">
         <h1 className="text-lg font-semibold md:text-xl">Friend requests</h1>
-        <div className="relative flex justify-between gap-2 rounded-full bg-purple-200 p-2 dark:bg-gray-750">
+        <div className="relative flex justify-between gap-2 rounded-lg bg-purple-200 p-2 dark:bg-gray-750">
           <button
             onClick={() => setActiveTab(RECIEVED)}
-            className={`w-full rounded-full bg-purple-300 px-4 py-1 duration-200 ease-in-out md:px-6 md:py-2 md:font-semibold ${activeTab === RECIEVED ? "text-white" : "text-purple-700"}`}
+            className={`w-full rounded-lg bg-purple-300 px-4 py-1 duration-200 ease-in-out md:px-6 md:py-2 md:font-semibold ${activeTab === RECIEVED ? "text-white" : "text-purple-700"}`}
           >
             <span className="relative z-30">Recieved</span>
           </button>
           <button
             onClick={() => setActiveTab(SENT)}
-            className={`w-full rounded-full bg-purple-300 px-4 py-1 duration-200 ease-in-out md:px-6 md:py-2 md:font-semibold ${activeTab === SENT ? "text-white" : "text-purple-700"}`}
+            className={`w-full rounded-lg bg-purple-300 px-4 py-1 duration-200 ease-in-out md:px-6 md:py-2 md:font-semibold ${activeTab === SENT ? "text-white" : "text-purple-700"}`}
           >
             <span className="relative z-30">Sent</span>
           </button>
           <div
-            className={`absolute top-1/2 z-20 h-[calc(100%-1rem)] w-[calc(50%-0.5rem)] -translate-y-1/2 rounded-full bg-purple-700 duration-200 ease-in-out ${activeTab === SENT ? "left-[50%]" : "left-[0.5rem]"}`}
+            className={`absolute top-1/2 z-20 h-[calc(100%-1rem)] w-[calc(50%-0.5rem)] -translate-y-1/2 rounded-lg bg-purple-700 duration-200 ease-in-out ${activeTab === SENT ? "left-[50%]" : "left-[0.5rem]"}`}
           ></div>
         </div>
-        <div className="my-2 mb-4 flex h-1 grow flex-col gap-4 overflow-y-scroll">
+        <div className="my-2 mb-4 flex h-1 grow flex-col gap-2 overflow-y-scroll">
           {Array.from({ length: 10 }).map((_, index) => (
             <FriendRequestCard key={`FriendRequest${index}`} tab={activeTab} />
           ))}

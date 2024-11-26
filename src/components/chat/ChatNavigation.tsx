@@ -1,7 +1,7 @@
 "use client";
 
 import { AiOutlineLogout } from "react-icons/ai";
-import { TbMessageDots } from "react-icons/tb";
+import { PiChatCircleText } from "react-icons/pi";
 import { LuChevronLeft, LuMenu } from "react-icons/lu";
 import { IoSettingsOutline } from "react-icons/io5";
 import { LiaUserFriendsSolid } from "react-icons/lia";
@@ -38,17 +38,17 @@ export default function ChatNavigation() {
           className="cursor-pointer rounded-full p-2 text-4xl duration-200 ease-in-out hover:bg-gray-300 dark:hover:bg-gray-800"
         />
         <div className="flex flex-col gap-2">
-          <TbMessageDots
+          <PiChatCircleText
             onClick={() => changeActiveTab(MESSAGES)}
-            className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-800 dark:text-purple-500 dark:hover:bg-gray-900"
+            className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-700 hover:text-white dark:bg-gray-800 dark:text-purple-500 dark:hover:bg-purple-500 dark:hover:text-white"
           />
           <LiaUserFriendsSolid
             onClick={() => changeActiveTab(FRIENDS)}
-            className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-800 dark:text-purple-500 dark:hover:bg-gray-900"
+            className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-700 hover:text-white dark:bg-gray-800 dark:text-purple-500 dark:hover:bg-purple-500 dark:hover:text-white"
           />
           <IoSettingsOutline
             onClick={() => changeActiveTab(SETTINGS)}
-            className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-800 dark:text-purple-500 dark:hover:bg-gray-900"
+            className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-700 hover:text-white dark:bg-gray-800 dark:text-purple-500 dark:hover:bg-purple-500 dark:hover:text-white"
           />
         </div>
         <AiOutlineLogout className="cursor-pointer rounded-full p-2 text-4xl text-red-500 duration-200 ease-in-out hover:bg-gray-300 dark:hover:bg-gray-800" />
@@ -59,7 +59,7 @@ export default function ChatNavigation() {
         <div className="flex h-[5.5rem] items-center gap-2 px-2 sm:px-6">
           <LuChevronLeft
             onClick={() => setShowNavigation((prev) => !prev)}
-            className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-300 dark:bg-gray-800 dark:text-purple-500 dark:hover:bg-gray-900"
+            className="cursor-pointer rounded-lg bg-purple-200 p-2 text-4xl text-purple-700 duration-200 ease-in-out hover:bg-purple-700 hover:text-white dark:bg-gray-800 dark:text-purple-500 dark:hover:bg-purple-500 dark:hover:text-white"
           />
           <span className="text-lg capitalize md:text-xl">{activeTab}</span>
         </div>
