@@ -9,6 +9,7 @@ import MessagesContainer from "./MessagesContainer";
 export default function ChatBody() {
   const currentChat = {
     username: "John Doe",
+    email: "johndoe@example.com",
     status: "Active",
   };
 
@@ -19,9 +20,13 @@ export default function ChatBody() {
     <div className="flex grow flex-col">
       <div className="relative flex h-[5.5rem] w-full items-center justify-between bg-gray-100 px-2 py-4 dark:bg-gray-750 md:px-6">
         <div>
-          <h1 className="text-xl md:text-2xl md:font-semibold">
-            {currentChat.username}
-          </h1>
+          <div className="flex flex-col md:flex-row md:items-center">
+            <h1 className="text-base md:text-xl">{currentChat.username}</h1>
+            <span className="hidden px-1 text-3xl text-neutral-400 dark:text-neutral-500 md:block">
+              &middot;
+            </span>
+            <h1 className="text-sm md:text-xl">{currentChat.email}</h1>
+          </div>
           <p className="text-xs text-gray-500 dark:text-gray-400 md:text-sm">
             {currentChat.status}
           </p>

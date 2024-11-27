@@ -26,9 +26,8 @@ export default function MessagesTab() {
           ) : (
             <FaCircleUser className="text-[100px]" />
           )}
-          <div className="absolute bottom-1 right-1 h-4 w-4 rounded-full bg-green-500"></div>
         </div>
-        <h1 className="text-xl md:text-2xl md:font-semibold">
+        <h1 className="text-lg md:text-xl md:font-semibold">
           {currentUserData.username}
         </h1>
       </div>

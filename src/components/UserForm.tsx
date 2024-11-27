@@ -83,12 +83,12 @@ export default function UserForm({ formType }: UserFormProps) {
               >
                 Password
               </label>
-              {password && (
+              {password ? (
                 <FaEye
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer text-lg text-gray-700"
                 />
-              )}
+              ) : null}
             </div>
             <button className="group flex items-center justify-center rounded-md bg-purple-700 px-3 py-4 text-white">
               <span className="text-lg">

@@ -40,11 +40,11 @@ export default function SettingsTab() {
             </div>
             <span className="text-gray-850 dark:text-white">{item.text}</span>
           </button>
-          {setting === item.text && (
+          {setting === item.text ? (
             <div className="rounded-b-md bg-white dark:bg-gray-750">
               <Settings tab={item.text} />
             </div>
-          )}
+          ) : null}
         </div>
       ))}
     </div>
