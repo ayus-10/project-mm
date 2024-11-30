@@ -1,10 +1,10 @@
-import Image from "next/image";
 import { FormEvent, useMemo, useRef, useState } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
 import { PiUserCirclePlusThin } from "react-icons/pi";
 import allUserProfiles from "../../assets/dummy_profiles.json";
+import DefaultProfilePicture from "./DefaultProfilePicture";
 
 const SENT = "sent";
 const RECIEVED = "recieved";
@@ -121,7 +121,6 @@ interface FriendRequestCardProps {
   tab: typeof FIND | typeof RECIEVED | typeof SENT;
   user: {
     username: string;
-    profilePictureUrl: string;
     email: string;
     requestSent: string;
   };
@@ -133,13 +132,7 @@ function FriendRequestCard(props: FriendRequestCardProps) {
   return (
     <div className="flex flex-col gap-2 rounded-lg bg-gray-100 px-3 py-2 dark:bg-gray-750">
       <div className="flex gap-2">
-        <Image
-          height={50}
-          width={50}
-          src={user.profilePictureUrl}
-          alt={user.username}
-          className="size-[50px] rounded-full"
-        />
+        <DefaultProfilePicture />
         <div>
           <h2 className="line-clamp-1 md:text-lg md:font-semibold">
             {user.username}

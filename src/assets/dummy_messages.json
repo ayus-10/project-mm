@@ -2,7 +2,6 @@
   {
     "id": "message0",
     "username": "The Boss",
-    "profilePictureUrl": "https://cdn.discordapp.com/avatars/986940340227432450/91b1bc3903962aa7ee15caebef98c081.webp?size=100",
     "sentTime": "27 Mar, 2024 09:00 AM",
     "messageText": "Morning everyone!",
     "receivedTime": "09:05 AM"
@@ -10,7 +9,6 @@
   {
     "id": "message1",
     "username": "John Doe",
-    "profilePictureUrl": "https://cdn.discordapp.com/avatars/833573797809750066/2f4530153f0d992c760ff2ba115380b5.webp?size=100",
     "sentTime": "27 Mar, 2024 09:02 AM",
     "messageText": "Good morning, Boss! How are you today?",
     "receivedTime": "09:07 AM"
@@ -18,7 +16,6 @@
   {
     "id": "message2",
     "username": "The Boss",
-    "profilePictureUrl": "https://cdn.discordapp.com/avatars/986940340227432450/91b1bc3903962aa7ee15caebef98c081.webp?size=100",
     "sentTime": "27 Mar, 2024 09:05 AM",
     "messageText": "I'm doing well, thank you! How about you?",
     "receivedTime": "09:10 AM"
@@ -26,7 +23,6 @@
   {
     "id": "message3",
     "username": "John Doe",
-    "profilePictureUrl": "https://cdn.discordapp.com/avatars/833573797809750066/2f4530153f0d992c760ff2ba115380b5.webp?size=100",
     "sentTime": "27 Mar, 2024 09:07 AM",
     "messageText": "I'm doing great, thanks for asking! Ready to tackle the day?",
     "receivedTime": "09:12 AM"
@@ -34,7 +30,6 @@
   {
     "id": "message4",
     "username": "The Boss",
-    "profilePictureUrl": "https://cdn.discordapp.com/avatars/986940340227432450/91b1bc3903962aa7ee15caebef98c081.webp?size=100",
     "sentTime": "27 Mar, 2024 09:10 AM",
     "messageText": "Absolutely!",
     "receivedTime": "09:15 AM"
@@ -42,7 +37,6 @@
   {
     "id": "message5",
     "username": "The Boss",
-    "profilePictureUrl": "https://cdn.discordapp.com/avatars/986940340227432450/91b1bc3903962aa7ee15caebef98c081.webp?size=100",
     "sentTime": "27 Mar, 2024 09:10 AM",
     "messageText": "Let's make it a productive one.",
     "receivedTime": "09:15 AM"
@@ -50,7 +44,6 @@
   {
     "id": "message6",
     "username": "John Doe",
-    "profilePictureUrl": "https://cdn.discordapp.com/avatars/833573797809750066/2f4530153f0d992c760ff2ba115380b5.webp?size=100",
     "sentTime": "27 Mar, 2024 09:14 AM",
     "messageText": "Morning Boss! I've got some ideas for the upcoming project. Can we discuss them later?",
     "receivedTime": "09:18 AM"
@@ -58,7 +51,6 @@
   {
     "id": "message7",
     "username": "The Boss",
-    "profilePictureUrl": "https://cdn.discordapp.com/avatars/986940340227432450/91b1bc3903962aa7ee15caebef98c081.webp?size=100",
     "sentTime": "27 Mar, 2024 09:18 AM",
     "messageText": "Of course, John! Let's schedule a meeting for later today. How about 2 PM?",
     "receivedTime": "09:22 AM"
@@ -66,7 +58,6 @@
   {
     "id": "message8",
     "username": "John Doe",
-    "profilePictureUrl": "https://cdn.discordapp.com/avatars/833573797809750066/2f4530153f0d992c760ff2ba115380b5.webp?size=100",
     "sentTime": "27 Mar, 2024 09:20 AM",
     "messageText": "2 PM works for me.",
     "receivedTime": "09:24 AM"
@@ -74,7 +65,6 @@
   {
     "id": "message9",
     "username": "John Doe",
-    "profilePictureUrl": "https://cdn.discordapp.com/avatars/833573797809750066/2f4530153f0d992c760ff2ba115380b5.webp?size=100",
     "sentTime": "27 Mar, 2024 09:20 AM",
     "messageText": "Looking forward to it!",
     "receivedTime": "09:24 AM"

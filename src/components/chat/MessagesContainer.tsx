@@ -6,7 +6,6 @@ import allMessages from "../../assets/dummy_messages.json";
 export interface Message {
   id: string;
   username: string;
-  profilePictureUrl: string;
   sentTime: string;
   receivedTime: string;
   messageText: string;
@@ -33,11 +32,7 @@ export default function MessagesContainer({ search }: { search: string }) {
     }
   }, [search]);
 
-  const loggedInUser = {
-    username: "The Boss",
-    profilePictureUrl:
-      "https://cdn.discordapp.com/avatars/986940340227432450/91b1bc3903962aa7ee15caebef98c081.webp?size=100",
-  };
+  const loggedInUser = "The Boss"; // TODO: replace
 
   return (
     <div className="flex grow flex-col">
@@ -49,11 +44,8 @@ export default function MessagesContainer({ search }: { search: string }) {
           <MessageBox
             key={message.id}
             id={message.id}
-            align={
-              message.username === loggedInUser.username ? "right" : "left"
-            }
+            align={message.username === loggedInUser ? "right" : "left"}
             username={message.username}
-            profilePictureUrl={message.profilePictureUrl}
             sentTime={message.sentTime}
             receivedTime={message.receivedTime}
             messageText={message.messageText}

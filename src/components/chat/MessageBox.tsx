@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { Message } from "./MessagesContainer";
+import DefaultProfilePicture from "./DefaultProfilePicture";
 
 const LEFT = "left";
 const RIGHT = "right";
@@ -9,14 +9,7 @@ interface MessageBoxProps extends Message {
 }
 
 export default function MessageBox(props: MessageBoxProps) {
-  const {
-    align,
-    username,
-    profilePictureUrl,
-    sentTime,
-    receivedTime,
-    messageText,
-  } = props;
+  const { align, sentTime, receivedTime, messageText } = props;
 
   return (
     <div
@@ -25,14 +18,7 @@ export default function MessageBox(props: MessageBoxProps) {
       <div
         className={`flex w-1/2 items-start gap-2 md:gap-3 lg:items-center ${align === LEFT ? "flex-row" : "flex-row-reverse"}`}
       >
-        <Image
-          priority
-          alt={`Profile picture of ${username}`}
-          src={profilePictureUrl}
-          height={50}
-          width={50}
-          className="hidden rounded-full lg:block"
-        />
+        <DefaultProfilePicture />
         <div className="flex flex-col">
           <span className="p-1 text-xs text-gray-500 dark:text-gray-400 md:text-sm lg:p-0">
             {sentTime}

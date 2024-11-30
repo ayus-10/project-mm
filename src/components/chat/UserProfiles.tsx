@@ -1,13 +1,12 @@
-import Image from "next/image";
 import { MdDelete } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
 import allUserProfiles from "../../assets/dummy_profiles.json";
 import { useEffect, useState } from "react";
+import DefaultProfilePicture from "./DefaultProfilePicture";
 
 export interface UserProfile {
   id: string;
   username: string;
-  profilePictureUrl: string;
   lastMessage: string;
   sentTime: string;
   unseenMessagesCount: number;
@@ -82,7 +81,6 @@ export default function UserProfiles() {
           <UserProfileCard
             key={profile.id}
             id={profile.id}
-            profilePictureUrl={profile.profilePictureUrl}
             username={profile.username}
             lastMessage={profile.lastMessage}
             sentTime={profile.sentTime}
@@ -95,13 +93,7 @@ export default function UserProfiles() {
 }
 
 function UserProfileCard(props: UserProfile) {
-  const {
-    profilePictureUrl,
-    username,
-    lastMessage,
-    sentTime,
-    unseenMessagesCount,
-  } = props;
+  const { username, lastMessage, sentTime, unseenMessagesCount } = props;
 
   function trim(str: string) {
     return str.split(" ").join("");
@@ -109,14 +101,7 @@ function UserProfileCard(props: UserProfile) {
 
   return (
     <div className="group my-3 flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg px-2 py-1 shadow-black duration-200 ease-in-out hover:bg-white hover:shadow-md dark:hover:bg-gray-750">
-      <Image
-        priority
-        src={profilePictureUrl}
-        className="size-[50px] rounded-full"
-        height={50}
-        width={50}
-        alt={`Profile picture of ${username}`}
-      />
+      <DefaultProfilePicture />
       <div className="relative flex grow">
         <div className="flex grow flex-col">
           <h2 className="line-clamp-1 text-sm font-semibold md:text-base">
