@@ -7,6 +7,8 @@ import GoogleIcon from "../assets/google.ico";
 import { FormEvent, useState } from "react";
 import { LuChevronRight } from "react-icons/lu";
 import { FaEye } from "react-icons/fa";
+import fetchPost from "@/requests/fetchPost";
+import { useRouter } from "next/navigation";
 
 const LOGIN = "login";
 const SIGNUP = "signup";
@@ -15,13 +17,73 @@ interface UserFormProps {
   formType: typeof LOGIN | typeof SIGNUP;
 }
 
+interface LoginResponse {
+  accessToken: string;
+}
+
+interface SignupResponse {
+  accessToken: string;
+}
+
 export default function UserForm({ formType }: UserFormProps) {
   const [showPassword, setShowPassword] = useState(false);
+
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  const router = useRouter();
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    let apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+    if (!apiUrl) {
+      console.error("API URL not found");
+      return;
+    }
+
+    if (formType === LOGIN) {
+      apiUrl += "/Auth";
+
+      const { error, data } = await fetchPost<LoginResponse>(apiUrl, {
+        Email: email,
+        Password: password,
+      });
+
+      if (error) {
+        alert(error);
+      }
+
+      if (data) {
+        localStorage.setItem("ACCESS_TOKEN", data.accessToken);
+        router.push("/chat");
+      }
+
+      return;
+    }
+
+    if (formType === SIGNUP) {
+      apiUrl += "/Users";
+
+      const { error, data } = await fetchPost<SignupResponse>(apiUrl, {
+        Email: email,
+        Password: password,
+        FullName: fullName,
+      });
+
+      if (error) {
+        alert(error);
+      }
+
+      if (data) {
+        localStorage.setItem("ACCESS_TOKEN", data.accessToken);
+        router.push("/chat");
+      }
+
+      return;
+    }
   }
 
   return (
@@ -68,6 +130,26 @@ export default function UserForm({ formType }: UserFormProps) {
                 Email
               </label>
             </div>
+            {formType === SIGNUP ? (
+              <div className="relative flex flex-col-reverse">
+                <input
+                  onChange={(e) => setFullName(e.target.value)}
+                  id="fullName"
+                  className="peer rounded-md border-2 border-purple-700 bg-gray-100 px-2 py-4 outline-none duration-300 ease-in-out focus:bg-purple-100"
+                  type="text"
+                />
+                <label
+                  className={`absolute left-2 z-10 text-sm text-purple-700 duration-300 ease-in-out peer-focus:top-0 peer-focus:translate-y-0 ${
+                    fullName
+                      ? "top-0 translate-y-0"
+                      : "top-1/2 -translate-y-1/2"
+                  }`}
+                  htmlFor="fullName"
+                >
+                  Full Name
+                </label>
+              </div>
+            ) : null}
             <div className="relative flex flex-col-reverse">
               <input
                 onChange={(e) => setPassword(e.target.value)}
