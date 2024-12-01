@@ -1,7 +1,7 @@
-import ChatNavigation from "@/components/chat/ChatNavigation";
-import ChatBody from "@/components/chat/ChatBody";
+import ChatNavigation from "../components/ChatNavigation";
+import ChatBody from "../components/ChatBody";
 
-export default async function Chat() {
+export default function Chat() {
   // TODO: redirect if not logged in
 
   return (

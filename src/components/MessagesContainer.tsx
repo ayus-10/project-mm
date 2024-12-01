@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import MessageBox from "./MessageBox";
 import { PiPaperPlaneTiltFill } from "react-icons/pi";
-import allMessages from "../../assets/dummy_messages.json";
+import allMessages from "../assets/dummy_messages.json";
 
 export interface Message {
   id: string;
@@ -24,7 +24,7 @@ export default function MessagesContainer({ search }: { search: string }) {
   useEffect(() => {
     if (search) {
       const filteredMessages = allMessages.filter((message) =>
-        message.messageText.toLowerCase().includes(search),
+        message.messageText.toLowerCase().includes(search)
       );
       setMessages(filteredMessages);
     } else {

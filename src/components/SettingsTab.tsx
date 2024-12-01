@@ -1,4 +1,4 @@
-import ThemeContext from "@/contexts/ThemeContext";
+import ThemeContext from "../contexts/ThemeContext";
 import { useContext, useState } from "react";
 import { FaBell, FaLock, FaMoon } from "react-icons/fa";
 import { FaShield } from "react-icons/fa6";

@@ -1,6 +1,6 @@
 import { MdDelete } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
-import allUserProfiles from "../../assets/dummy_profiles.json";
+import allUserProfiles from "../assets/dummy_profiles.json";
 import { useEffect, useState } from "react";
 import DefaultProfilePicture from "./DefaultProfilePicture";
 
@@ -28,7 +28,7 @@ export default function UserProfiles() {
   useEffect(() => {
     if (search) {
       const filteredUserProfiles = allUserProfiles.filter((profile) =>
-        profile.username.toLowerCase().includes(search),
+        profile.username.toLowerCase().includes(search)
       );
       setUserProfiles(filteredUserProfiles);
 
@@ -41,7 +41,7 @@ export default function UserProfiles() {
   useEffect(() => {
     if (activeTab === NEW) {
       const filteredUserProfiles = allUserProfiles.filter(
-        (profile) => profile.unseenMessagesCount > 0,
+        (profile) => profile.unseenMessagesCount > 0
       );
       setUserProfiles(filteredUserProfiles);
     } else {
@@ -65,13 +65,21 @@ export default function UserProfiles() {
       <div className="flex w-full gap-2 py-1">
         <button
           onClick={() => setActiveTab(ALL)}
-          className={`cursor-pointer rounded-full px-3 text-sm font-medium text-white duration-200 ease-in-out hover:bg-purple-700 dark:hover:bg-purple-500 ${activeTab === ALL ? "bg-purple-700 dark:bg-purple-500" : "bg-purple-300"}`}
+          className={`cursor-pointer rounded-full px-3 text-sm font-medium text-white duration-200 ease-in-out hover:bg-purple-700 dark:hover:bg-purple-500 ${
+            activeTab === ALL
+              ? "bg-purple-700 dark:bg-purple-500"
+              : "bg-purple-300"
+          }`}
         >
           All
         </button>
         <button
           onClick={() => setActiveTab(NEW)}
-          className={`cursor-pointer rounded-full px-3 text-sm font-medium text-white duration-200 ease-in-out hover:bg-purple-700 dark:hover:bg-purple-500 ${activeTab === NEW ? "bg-purple-700 dark:bg-purple-500" : "bg-purple-300"}`}
+          className={`cursor-pointer rounded-full px-3 text-sm font-medium text-white duration-200 ease-in-out hover:bg-purple-700 dark:hover:bg-purple-500 ${
+            activeTab === NEW
+              ? "bg-purple-700 dark:bg-purple-500"
+              : "bg-purple-300"
+          }`}
         >
           New
         </button>

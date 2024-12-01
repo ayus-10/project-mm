@@ -13,10 +13,14 @@ export default function MessageBox(props: MessageBoxProps) {
 
   return (
     <div
-      className={`flex w-full ${align === RIGHT ? "justify-end" : "justify-start"}`}
+      className={`flex w-full ${
+        align === RIGHT ? "justify-end" : "justify-start"
+      }`}
     >
       <div
-        className={`flex w-1/2 items-start gap-2 md:gap-3 lg:items-center ${align === LEFT ? "flex-row" : "flex-row-reverse"}`}
+        className={`flex w-1/2 items-start gap-2 md:gap-3 lg:items-center ${
+          align === LEFT ? "flex-row" : "flex-row-reverse"
+        }`}
       >
         <DefaultProfilePicture />
         <div className="flex flex-col">

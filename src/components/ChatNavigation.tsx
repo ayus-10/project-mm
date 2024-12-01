@@ -1,5 +1,3 @@
-"use client";
-
 import { AiOutlineLogout } from "react-icons/ai";
 import { PiChatCircleText } from "react-icons/pi";
 import { LuChevronLeft, LuMenu } from "react-icons/lu";
@@ -54,7 +52,9 @@ export default function ChatNavigation() {
         <AiOutlineLogout className="cursor-pointer rounded-full p-2 text-4xl text-red-500 duration-200 ease-in-out hover:bg-gray-300 dark:hover:bg-gray-800" />
       </nav>
       <div
-        className={`absolute z-20 h-full grow bg-gray-200 duration-300 ease-in-out dark:bg-gray-850 md:static ${showNavigation ? "left-[100%] md:block" : "-left-[100vw] md:hidden"}`}
+        className={`absolute z-20 h-full grow bg-gray-200 duration-300 ease-in-out dark:bg-gray-850 md:static ${
+          showNavigation ? "left-[100%] md:block" : "-left-[100vw] md:hidden"
+        }`}
       >
         <div className="flex h-[5.5rem] items-center gap-2 px-2 sm:px-6">
           <LuChevronLeft

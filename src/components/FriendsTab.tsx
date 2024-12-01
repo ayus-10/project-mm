@@ -3,8 +3,9 @@ import { FaCheck } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
 import { PiUserCirclePlusThin } from "react-icons/pi";
-import allUserProfiles from "../../assets/dummy_profiles.json";
+import allUserProfiles from "../assets/dummy_profiles.json";
 import DefaultProfilePicture from "./DefaultProfilePicture";
+import { IoMdAdd } from "react-icons/io";
 
 const SENT = "sent";
 const RECIEVED = "recieved";
@@ -91,7 +92,9 @@ export default function FriendsTab() {
             <span className="relative z-30">Sent</span>
           </button>
           <div
-            className={`absolute top-1/2 z-20 h-[calc(100%-1rem)] w-[calc(50%-0.5rem)] -translate-y-1/2 rounded-lg bg-purple-700 duration-200 ease-in-out ${activeTab === SENT ? "left-[50%]" : "left-[0.5rem]"}`}
+            className={`absolute top-1/2 z-20 h-[calc(100%-1rem)] w-[calc(50%-0.5rem)] -translate-y-1/2 rounded-lg bg-purple-700 duration-200 ease-in-out ${
+              activeTab === SENT ? "left-[50%]" : "left-[0.5rem]"
+            }`}
           ></div>
         </div>
         <div className="my-2 mb-4 flex h-1 grow flex-col gap-2 overflow-y-scroll">
@@ -188,6 +191,7 @@ function RequestAction({ tab }: RequestActionProps) {
           <span className="hidden text-sm font-semibold md:inline">
             Add friend
           </span>
+          <IoMdAdd className="md:hidden" />
         </button>
       );
   }

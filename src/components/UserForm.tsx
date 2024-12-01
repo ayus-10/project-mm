@@ -1,14 +1,11 @@
-"use client";
-
-import Image from "next/image";
-import Link from "next/link";
-import BannerImage from "../assets/account-banner.png";
-import GoogleIcon from "../assets/google.ico";
 import { FormEvent, useState } from "react";
-import { LuChevronRight } from "react-icons/lu";
+import { Link, useNavigate } from "react-router-dom";
+import GoogleIcon from "../assets/google.ico";
+import BannerImage from "../assets/account-banner.png";
+import fetchPost from "../requests/fetchPost";
+import { API_URL } from "../config";
 import { FaEye } from "react-icons/fa";
-import fetchPost from "@/requests/fetchPost";
-import { useRouter } from "next/navigation";
+import { LuChevronRight } from "react-icons/lu";
 
 const LOGIN = "login";
 const SIGNUP = "signup";
@@ -32,12 +29,12 @@ export default function UserForm({ formType }: UserFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const router = useRouter();
+  const navigate = useNavigate();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    let apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    let apiUrl = API_URL;
 
     if (!apiUrl) {
       console.error("API URL not found");
@@ -47,10 +44,16 @@ export default function UserForm({ formType }: UserFormProps) {
     if (formType === LOGIN) {
       apiUrl += "/Auth";
 
-      const { error, data } = await fetchPost<LoginResponse>(apiUrl, {
+      const res = await fetchPost<LoginResponse>(apiUrl, {
         Email: email,
         Password: password,
       });
+
+      if (!res) {
+        return;
+      }
+
+      const { error, data } = res;
 
       if (error) {
         alert(error);
@@ -58,7 +61,7 @@ export default function UserForm({ formType }: UserFormProps) {
 
       if (data) {
         localStorage.setItem("ACCESS_TOKEN", data.accessToken);
-        router.push("/chat");
+        navigate("/chat");
       }
 
       return;
@@ -67,11 +70,17 @@ export default function UserForm({ formType }: UserFormProps) {
     if (formType === SIGNUP) {
       apiUrl += "/Users";
 
-      const { error, data } = await fetchPost<SignupResponse>(apiUrl, {
+      const res = await fetchPost<SignupResponse>(apiUrl, {
         Email: email,
         Password: password,
         FullName: fullName,
       });
+
+      if (!res) {
+        return;
+      }
+
+      const { error, data } = res;
 
       if (error) {
         alert(error);
@@ -79,7 +88,7 @@ export default function UserForm({ formType }: UserFormProps) {
 
       if (data) {
         localStorage.setItem("ACCESS_TOKEN", data.accessToken);
-        router.push("/chat");
+        navigate("/chat");
       }
 
       return;
@@ -103,7 +112,7 @@ export default function UserForm({ formType }: UserFormProps) {
             </h2>
           </div>
           <button className="mx-auto my-6 flex w-full items-center justify-center gap-1 rounded-full border-2 border-purple-200 bg-purple-200 px-5 py-3 text-purple-700 duration-300 ease-in-out hover:bg-transparent md:mx-0">
-            <Image src={GoogleIcon} alt="Google Icon" />
+            <img src={GoogleIcon} alt="Google Icon" />
             <span>
               {formType === SIGNUP ? "Sign up" : "Log in"} with Google
             </span>
@@ -186,7 +195,7 @@ export default function UserForm({ formType }: UserFormProps) {
                 : "Already have an account? "}
             </span>
             <Link
-              href={formType === LOGIN ? "/signup" : "/login"}
+              to={formType === LOGIN ? "/signup" : "/login"}
               className="font-semibold underline"
             >
               {formType === LOGIN ? "Get Started" : "Log in"}
@@ -194,10 +203,7 @@ export default function UserForm({ formType }: UserFormProps) {
           </p>
         </div>
         <div className="hidden md:block">
-          <Image
-            height={525}
-            width={350}
-            priority
+          <img
             src={BannerImage}
             className="h-[525px] w-[350px] rounded-lg"
             alt="Banner Image"
