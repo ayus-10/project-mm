@@ -2,8 +2,7 @@ import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../assets/google.ico";
 import BannerImage from "../assets/account-banner.png";
-import fetchPost from "../requests/fetchPost";
-import { API_URL } from "../config";
+import fetchMagic from "../requests/fetchMagic";
 import { FaEye } from "react-icons/fa";
 import { LuChevronRight } from "react-icons/lu";
 
@@ -34,20 +33,13 @@ export default function UserForm({ formType }: UserFormProps) {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    let apiUrl = API_URL;
-
-    if (!apiUrl) {
-      console.error("API URL not found");
-      return;
-    }
-
     if (formType === LOGIN) {
-      apiUrl += "/Auth";
-
-      const res = await fetchPost<LoginResponse>(apiUrl, {
+      const payload = {
         Email: email,
         Password: password,
-      });
+      };
+
+      const res = await fetchMagic<LoginResponse>("/api/Auth", "POST", payload);
 
       if (!res) {
         return;
@@ -68,13 +60,17 @@ export default function UserForm({ formType }: UserFormProps) {
     }
 
     if (formType === SIGNUP) {
-      apiUrl += "/Users";
-
-      const res = await fetchPost<SignupResponse>(apiUrl, {
+      const payload = {
         Email: email,
         Password: password,
         FullName: fullName,
-      });
+      };
+
+      const res = await fetchMagic<SignupResponse>(
+        "/api/Users",
+        "POST",
+        payload,
+      );
 
       if (!res) {
         return;
