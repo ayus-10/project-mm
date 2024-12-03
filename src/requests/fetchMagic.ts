@@ -1,3 +1,5 @@
+import { ACCESS_TOKEN } from "../constants";
+
 type RequestMethod = "POST" | "GET" | "PATCH" | "PUT" | "DELETE";
 
 export default async function fetchMagic<T>(
@@ -7,7 +9,7 @@ export default async function fetchMagic<T>(
   authHeaders?: boolean,
 ) {
   try {
-    const accessToken = localStorage.getItem("ACCESS_TOKEN");
+    const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
     const requestHeaders = {
       "Content-Type": "application/json",

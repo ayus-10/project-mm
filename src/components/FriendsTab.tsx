@@ -7,14 +7,15 @@ import allUserProfiles from "../assets/dummy_profiles.json";
 import DefaultProfilePicture from "./DefaultProfilePicture";
 import { IoMdAdd } from "react-icons/io";
 
-const SENT = "sent";
-const RECIEVED = "recieved";
-const FIND = "find";
+const SENT = "SENT";
+const RECEIVED = "RECEIVED";
+const FIND = "FIND";
 
-type ActiveTab = typeof SENT | typeof RECIEVED;
+type ActiveTab = "SENT" | "RECEIVED";
+type FriendRequestCardType = "FIND" | "RECEIVED" | "SENT";
 
 export default function FriendsTab() {
-  const [activeTab, setActiveTab] = useState<ActiveTab>(RECIEVED);
+  const [activeTab, setActiveTab] = useState<ActiveTab>(RECEIVED);
 
   const [search, setSearch] = useState("");
 
@@ -76,9 +77,9 @@ export default function FriendsTab() {
         <h1 className="text-lg font-semibold md:text-xl">Friend requests</h1>
         <div className="relative flex justify-between gap-2 rounded-lg bg-purple-200 p-2 dark:bg-gray-750">
           <button
-            onClick={() => setActiveTab(RECIEVED)}
+            onClick={() => setActiveTab(RECEIVED)}
             className={`w-full rounded-lg bg-purple-300 px-4 py-1 duration-200 ease-in-out md:px-6 md:py-2 md:font-semibold ${
-              activeTab === RECIEVED ? "text-white" : "text-purple-700"
+              activeTab === RECEIVED ? "text-white" : "text-purple-700"
             }`}
           >
             <span className="relative z-30">Recieved</span>
@@ -121,7 +122,7 @@ function SearchFriendsResult({ notFound }: { notFound: boolean }) {
 }
 
 interface FriendRequestCardProps {
-  tab: typeof FIND | typeof RECIEVED | typeof SENT;
+  tab: FriendRequestCardType;
   user: {
     username: string;
     email: string;
@@ -156,12 +157,12 @@ function FriendRequestCard(props: FriendRequestCardProps) {
 }
 
 interface RequestActionProps {
-  tab: typeof FIND | typeof RECIEVED | typeof SENT;
+  tab: FriendRequestCardType;
 }
 
 function RequestAction({ tab }: RequestActionProps) {
   switch (tab) {
-    case RECIEVED:
+    case RECEIVED:
       return (
         <div className="flex gap-2">
           <button className="rounded-full border-2 border-green-200 bg-green-200 px-3 text-green-500 duration-200 ease-in-out hover:border-green-500 hover:bg-transparent">

@@ -3,6 +3,7 @@ import { useAppDispatch } from "../redux/hooks";
 import { setAuthenticatedUser } from "../redux/slices/authenticatedUserSlice";
 import fetchMagic from "../requests/fetchMagic";
 import refreshTokens from "../requests/refreshTokens";
+import { GET } from "../constants";
 
 interface AuthResponse {
   email: string;
@@ -10,8 +11,6 @@ interface AuthResponse {
 }
 
 export default function useAuthentication() {
-  // TODO: redirect to '/chat' or '/login' accordingly
-
   const dispatch = useAppDispatch();
 
   const setStates = (email: string | undefined, fullName: string | undefined) =>
@@ -23,7 +22,7 @@ export default function useAuthentication() {
     );
 
   const fetchAuth = () =>
-    fetchMagic<AuthResponse>("/api/Auth", "GET", undefined, true);
+    fetchMagic<AuthResponse>("/api/Auth", GET, undefined, true);
 
   useEffect(() => {
     async function authenticateUser() {

@@ -12,10 +12,10 @@ export interface UserProfile {
   unseenMessagesCount: number;
 }
 
-const ALL = "all";
-const NEW = "new";
+const ALL = "ALL";
+const NEW = "NEW";
 
-type ActiveTab = typeof ALL | typeof NEW;
+type ActiveTab = "ALL" | "NEW";
 
 export default function UserProfiles() {
   const [userProfiles, setUserProfiles] =
@@ -28,7 +28,7 @@ export default function UserProfiles() {
   useEffect(() => {
     if (search) {
       const filteredUserProfiles = allUserProfiles.filter((profile) =>
-        profile.username.toLowerCase().includes(search)
+        profile.username.toLowerCase().includes(search),
       );
       setUserProfiles(filteredUserProfiles);
 
@@ -41,7 +41,7 @@ export default function UserProfiles() {
   useEffect(() => {
     if (activeTab === NEW) {
       const filteredUserProfiles = allUserProfiles.filter(
-        (profile) => profile.unseenMessagesCount > 0
+        (profile) => profile.unseenMessagesCount > 0,
       );
       setUserProfiles(filteredUserProfiles);
     } else {

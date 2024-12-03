@@ -1,11 +1,11 @@
 import { Message } from "./MessagesContainer";
 import DefaultProfilePicture from "./DefaultProfilePicture";
 
-const LEFT = "left";
-const RIGHT = "right";
+const LEFT = "LEFT";
+const RIGHT = "RIGHT";
 
 interface MessageBoxProps extends Message {
-  align: typeof LEFT | typeof RIGHT;
+  align: "LEFT" | "RIGHT";
 }
 
 export default function MessageBox(props: MessageBoxProps) {

@@ -6,5 +6,5 @@ export default function Login() {
   useAuthentication();
   useRedirect();
 
-  return <UserForm formType="login" />;
+  return <UserForm formType="LOGIN" />;
 }

@@ -6,5 +6,5 @@ export default function Signup() {
   useAuthentication();
   useRedirect();
 
-  return <UserForm formType="signup" />;
+  return <UserForm formType="SIGNUP" />;
 }

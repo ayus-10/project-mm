@@ -5,12 +5,13 @@ import BannerImage from "../assets/account-banner.png";
 import fetchMagic from "../requests/fetchMagic";
 import { FaEye } from "react-icons/fa";
 import { LuChevronRight } from "react-icons/lu";
+import { ACCESS_TOKEN, POST } from "../constants";
 
-const LOGIN = "login";
-const SIGNUP = "signup";
+const LOGIN = "LOGIN";
+const SIGNUP = "SIGNUP";
 
 interface UserFormProps {
-  formType: typeof LOGIN | typeof SIGNUP;
+  formType: "LOGIN" | "SIGNUP";
 }
 
 interface LoginResponse {
@@ -39,7 +40,7 @@ export default function UserForm({ formType }: UserFormProps) {
         Password: password,
       };
 
-      const res = await fetchMagic<LoginResponse>("/api/Auth", "POST", payload);
+      const res = await fetchMagic<LoginResponse>("/api/Auth", POST, payload);
 
       if (!res) {
         return;
@@ -52,7 +53,7 @@ export default function UserForm({ formType }: UserFormProps) {
       }
 
       if (data) {
-        localStorage.setItem("ACCESS_TOKEN", data.accessToken);
+        localStorage.setItem(ACCESS_TOKEN, data.accessToken);
         navigate("/chat");
       }
 
@@ -66,11 +67,7 @@ export default function UserForm({ formType }: UserFormProps) {
         FullName: fullName,
       };
 
-      const res = await fetchMagic<SignupResponse>(
-        "/api/Users",
-        "POST",
-        payload,
-      );
+      const res = await fetchMagic<SignupResponse>("/api/Users", POST, payload);
 
       if (!res) {
         return;
@@ -83,7 +80,7 @@ export default function UserForm({ formType }: UserFormProps) {
       }
 
       if (data) {
-        localStorage.setItem("ACCESS_TOKEN", data.accessToken);
+        localStorage.setItem(ACCESS_TOKEN, data.accessToken);
         navigate("/chat");
       }
 

@@ -8,11 +8,11 @@ import MessagesTab from "./MessagesTab";
 import SettingsTab from "./SettingsTab";
 import FriendsTab from "./FriendsTab";
 
-const MESSAGES = "messages";
-const FRIENDS = "friends";
-const SETTINGS = "settings";
+const MESSAGES = "MESSAGES";
+const FRIENDS = "FRIENDS";
+const SETTINGS = "SETTINGS";
 
-type ActiveTab = typeof MESSAGES | typeof FRIENDS | typeof SETTINGS;
+type ActiveTab = "MESSAGES" | "FRIENDS" | "SETTINGS";
 
 export default function ChatNavigation() {
   const [showNavigation, setShowNavigation] = useState(false);
