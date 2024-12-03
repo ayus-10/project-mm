@@ -30,16 +30,14 @@ export default function useAuthentication() {
       try {
         const res = await fetchAuth();
         if (!res) return;
-        const { data, error } = res;
-        if (data) {
-          setStates(data.email, data.fullName);
+        if (res.data) {
+          setStates(res.data.email, res.data.fullName);
         }
-        if (error) {
+        if (res.error) {
           await refreshTokens();
 
           const newRes = await fetchAuth();
           if (!newRes) return;
-
           setStates(newRes.data?.email, newRes.data?.fullName);
         }
       } catch (error) {
