@@ -1,7 +1,7 @@
 [
   {
     "id": "user0",
-    "username": "John Doe",
+    "fullName": "John Doe",
     "lastMessage": "Looking forward to it!",
     "sentTime": "09:20 AM",
     "unseenMessagesCount": 0,
@@ -10,7 +10,7 @@
   },
   {
     "id": "user1",
-    "username": "Emma Smith",
+    "fullName": "Emma Smith",
     "lastMessage": "Just finished a big project!",
     "sentTime": "02:20 AM",
     "unseenMessagesCount": 2,
@@ -19,7 +19,7 @@
   },
   {
     "id": "user2",
-    "username": "Michael Taylor",
+    "fullName": "Michael Taylor",
     "lastMessage": "Ready for the weekend!",
     "sentTime": "12:20 AM",
     "unseenMessagesCount": 3,
@@ -28,7 +28,7 @@
   },
   {
     "id": "user3",
-    "username": "Sarah Wilson",
+    "fullName": "Sarah Wilson",
     "lastMessage": "Does anyone have plans for tonight?",
     "sentTime": "11:20 AM",
     "unseenMessagesCount": 1,
@@ -37,7 +37,7 @@
   },
   {
     "id": "user4",
-    "username": "David Martinez",
+    "fullName": "David Martinez",
     "lastMessage": "Just finished a great book!",
     "sentTime": "Yesterday",
     "unseenMessagesCount": 0,
@@ -46,7 +46,7 @@
   },
   {
     "id": "user5",
-    "username": "Jessica Jones",
+    "fullName": "Jessica Jones",
     "lastMessage": "Just got home from a concert!",
     "sentTime": "03:33 PM",
     "unseenMessagesCount": 4,
@@ -55,7 +55,7 @@
   },
   {
     "id": "user6",
-    "username": "Olivia Garcia",
+    "fullName": "Olivia Garcia",
     "lastMessage": "Just got back from a jog!",
     "sentTime": "Yesterday",
     "unseenMessagesCount": 0,
@@ -64,7 +64,7 @@
   },
   {
     "id": "user7",
-    "username": "Alex Johnson",
+    "fullName": "Alex Johnson",
     "lastMessage": "Ready for some Netflix!",
     "sentTime": "02:33 AM",
     "unseenMessagesCount": 5,
@@ -73,7 +73,7 @@
   },
   {
     "id": "user8",
-    "username": "Emily Brown",
+    "fullName": "Emily Brown",
     "lastMessage": "Morning Boss!",
     "sentTime": "07:33 AM",
     "unseenMessagesCount": 0,

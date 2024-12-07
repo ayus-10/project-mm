@@ -1,4 +1,4 @@
-import { FormEvent, useMemo, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
@@ -6,6 +6,8 @@ import { PiUserCirclePlusThin } from "react-icons/pi";
 import allUserProfiles from "../assets/dummy_profiles.json";
 import DefaultProfilePicture from "./DefaultProfilePicture";
 import { IoMdAdd } from "react-icons/io";
+import findFriend from "../requests/findFriend";
+import { IUser } from "../interfaces/IUser";
 
 const SENT = "SENT";
 const RECEIVED = "RECEIVED";
@@ -18,18 +20,10 @@ export default function FriendsTab() {
   const [activeTab, setActiveTab] = useState<ActiveTab>(RECEIVED);
 
   const [search, setSearch] = useState("");
-
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const [profileNotFound, setProfileNotFound] = useState(false);
-
-  const userProfileFound = useMemo(() => {
-    const profile = allUserProfiles.find((p) => p.email === search);
-    if (!profile && search) {
-      setProfileNotFound(true);
-    }
-    return profile;
-  }, [search]);
+  const [profile, setProfile] = useState<IUser | undefined>(undefined);
+  const [errorMessage, setErrorMessage] = useState("");
 
   function searchUserProfile(e: FormEvent) {
     e.preventDefault();
@@ -47,9 +41,26 @@ export default function FriendsTab() {
   }
 
   function clearSearchStates() {
-    setProfileNotFound(false);
+    setErrorMessage("");
     setSearch("");
+    setProfile(undefined);
   }
+
+  useEffect(() => {
+    if (!search) return;
+    async function find() {
+      const res = await findFriend(search);
+
+      if (res?.data) {
+        setProfile(res.data);
+      }
+
+      if (res?.error) {
+        setErrorMessage(res.error);
+      }
+    }
+    find();
+  }, [search]);
 
   return (
     <div className="flex h-full flex-col gap-8">
@@ -67,10 +78,10 @@ export default function FriendsTab() {
             {search ? <MdClose /> : <IoSearch />}
           </button>
         </form>
-        {userProfileFound ? (
-          <FriendRequestCard tab={FIND} user={userProfileFound} />
+        {profile ? (
+          <FriendRequestCard tab={FIND} user={profile} />
         ) : (
-          <SearchFriendsResult notFound={profileNotFound} />
+          <SearchFriendsResult error={errorMessage} />
         )}
       </div>
       <div className="flex h-full flex-col gap-2">
@@ -108,14 +119,12 @@ export default function FriendsTab() {
   );
 }
 
-function SearchFriendsResult({ notFound }: { notFound: boolean }) {
+function SearchFriendsResult({ error }: { error: string }) {
   return (
     <div className="flex h-16 items-center justify-center gap-2 rounded-lg bg-purple-200 px-3 dark:bg-gray-750">
       <PiUserCirclePlusThin className="flex-shrink-0 text-5xl text-purple-700 dark:text-white" />
       <h2 className="leading-5 text-purple-700 dark:text-white md:text-lg md:leading-6">
-        {notFound
-          ? "No user found with that email"
-          : "Search for friends using email"}
+        {error ? error : "Search for friends using email"}
       </h2>
     </div>
   );
@@ -124,9 +133,9 @@ function SearchFriendsResult({ notFound }: { notFound: boolean }) {
 interface FriendRequestCardProps {
   tab: FriendRequestCardType;
   user: {
-    username: string;
+    fullName: string;
     email: string;
-    requestSent: string;
+    requestSent?: string;
   };
 }
 
@@ -139,14 +148,14 @@ function FriendRequestCard(props: FriendRequestCardProps) {
         <DefaultProfilePicture />
         <div>
           <h2 className="line-clamp-1 md:text-lg md:font-semibold">
-            {user.username}
+            {user.fullName}
           </h2>
           <h2 className="line-clamp-1 text-sm md:text-base">{user.email}</h2>
         </div>
       </div>
       <div className="flex items-end justify-between gap-2">
         <RequestAction tab={tab} />
-        {tab !== FIND ? (
+        {user.requestSent ? (
           <span className="text-sm text-gray-500 dark:text-gray-400">
             {user.requestSent}
           </span>

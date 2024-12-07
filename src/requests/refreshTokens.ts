@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN, GET } from "../constants";
+import { ACCESS_TOKEN, POST } from "../constants";
 import fetchMagic from "./fetchMagic";
 
 interface AccessTokenInterface {
@@ -6,7 +6,7 @@ interface AccessTokenInterface {
 }
 
 export default async function refreshTokens() {
-  const res = await fetchMagic<AccessTokenInterface>("/api/Auth/refresh", GET);
+  const res = await fetchMagic<AccessTokenInterface>("/api/Auth/refresh", POST);
   if (res?.data?.accessToken) {
     localStorage.setItem(ACCESS_TOKEN, res.data.accessToken);
   }
