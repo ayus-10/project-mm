@@ -8,6 +8,8 @@ import DefaultProfilePicture from "./DefaultProfilePicture";
 import { IoMdAdd } from "react-icons/io";
 import findFriend from "../requests/findFriend";
 import { IUser } from "../interfaces/IUser";
+import { IFriend } from "../interfaces/IFriend";
+import getFriendRequests from "../requests/getFriendRequests";
 
 const SENT = "SENT";
 const RECEIVED = "RECEIVED";
@@ -24,6 +26,9 @@ export default function FriendsTab() {
 
   const [profile, setProfile] = useState<IUser | undefined>(undefined);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const [sentRequests, setSentRequests] = useState<IFriend[]>();
+  const [receivedRequests, setReceivedRequests] = useState<IFriend[]>();
 
   function searchUserProfile(e: FormEvent) {
     e.preventDefault();
@@ -61,6 +66,18 @@ export default function FriendsTab() {
     }
     find();
   }, [search]);
+
+  useEffect(() => {
+    async function getRequests() {
+      const res = await getFriendRequests();
+
+      if (res) {
+        setSentRequests(res.sent);
+        setReceivedRequests(res.received);
+      }
+    }
+    getRequests();
+  }, []);
 
   return (
     <div className="flex h-full flex-col gap-8">
@@ -124,7 +141,7 @@ function SearchFriendsResult({ error }: { error: string }) {
     <div className="flex h-16 items-center justify-center gap-2 rounded-lg bg-purple-200 px-3 dark:bg-gray-750">
       <PiUserCirclePlusThin className="flex-shrink-0 text-5xl text-purple-700 dark:text-white" />
       <h2 className="leading-5 text-purple-700 dark:text-white md:text-lg md:leading-6">
-        {error ? error : "Search for friends using email"}
+        {error ? error : "Search for friends using email."}
       </h2>
     </div>
   );
