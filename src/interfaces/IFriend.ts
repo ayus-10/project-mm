@@ -1,4 +1,5 @@
 export interface IFriend {
+  friendId: string;
   senderId: string;
   senderEmail: string;
   senderFullName: string;

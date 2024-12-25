@@ -1,10 +1,10 @@
-import { Message } from "./MessagesContainer";
+import { IMessage } from "../interfaces/IMessage";
 import DefaultProfilePicture from "./DefaultProfilePicture";
 
 const LEFT = "LEFT";
 const RIGHT = "RIGHT";
 
-interface MessageBoxProps extends Message {
+interface MessageBoxProps extends IMessage {
   align: "LEFT" | "RIGHT";
 }
 

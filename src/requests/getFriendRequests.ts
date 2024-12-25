@@ -10,7 +10,7 @@ interface FriendRequests {
 export default async function getFriendRequests() {
   try {
     const res = await fetchMagic<FriendRequests>(
-      "/api/Friends",
+      "/api/Friends/requests",
       GET,
       undefined,
       true,

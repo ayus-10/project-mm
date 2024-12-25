@@ -4,9 +4,9 @@ import allUserProfiles from "../assets/dummy_profiles.json";
 import { useEffect, useState } from "react";
 import DefaultProfilePicture from "./DefaultProfilePicture";
 
-export interface UserProfile {
+interface UserChatProfile {
   id: string;
-  username: string;
+  fullName: string;
   lastMessage: string;
   sentTime: string;
   unseenMessagesCount: number;
@@ -18,8 +18,7 @@ const NEW = "NEW";
 type ActiveTab = "ALL" | "NEW";
 
 export default function UserProfiles() {
-  const [userProfiles, setUserProfiles] =
-    useState<UserProfile[]>(allUserProfiles);
+  const [userProfiles, setUserProfiles] = useState(allUserProfiles);
 
   const [search, setSearch] = useState("");
 
@@ -28,7 +27,7 @@ export default function UserProfiles() {
   useEffect(() => {
     if (search) {
       const filteredUserProfiles = allUserProfiles.filter((profile) =>
-        profile.username.toLowerCase().includes(search),
+        profile.fullName.toLowerCase().includes(search),
       );
       setUserProfiles(filteredUserProfiles);
 
@@ -89,7 +88,7 @@ export default function UserProfiles() {
           <UserProfileCard
             key={profile.id}
             id={profile.id}
-            username={profile.username}
+            fullName={profile.fullName}
             lastMessage={profile.lastMessage}
             sentTime={profile.sentTime}
             unseenMessagesCount={profile.unseenMessagesCount}
@@ -100,8 +99,8 @@ export default function UserProfiles() {
   );
 }
 
-function UserProfileCard(props: UserProfile) {
-  const { username, lastMessage, sentTime, unseenMessagesCount } = props;
+function UserProfileCard(props: UserChatProfile) {
+  const { fullName, lastMessage, sentTime, unseenMessagesCount } = props;
 
   function trim(str: string) {
     return str.split(" ").join("");
@@ -113,7 +112,7 @@ function UserProfileCard(props: UserProfile) {
       <div className="relative flex grow">
         <div className="flex grow flex-col">
           <h2 className="line-clamp-1 text-sm font-semibold md:text-base">
-            {username}
+            {fullName}
           </h2>
           <p className="line-clamp-1 text-xs text-gray-600 dark:text-gray-400 md:text-sm">
             {lastMessage}

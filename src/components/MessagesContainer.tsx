@@ -4,14 +4,6 @@ import { PiPaperPlaneTiltFill } from "react-icons/pi";
 import allMessages from "../assets/dummy_messages.json";
 import { useAppSelector } from "../redux/hooks";
 
-export interface Message {
-  id: string;
-  email: string;
-  sentTime: string;
-  receivedTime: string;
-  messageText: string;
-}
-
 export default function MessagesContainer({ search }: { search: string }) {
   const chatContainer = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -20,7 +12,7 @@ export default function MessagesContainer({ search }: { search: string }) {
     }
   }, [chatContainer]);
 
-  const [messages, setMessages] = useState<Message[]>(allMessages);
+  const [messages, setMessages] = useState(allMessages);
 
   useEffect(() => {
     if (search) {
