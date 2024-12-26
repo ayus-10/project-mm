@@ -1,9 +1,8 @@
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
 import { PiUserCirclePlusThin } from "react-icons/pi";
-import allUserProfiles from "../assets/dummy_profiles.json";
 import DefaultProfilePicture from "./DefaultProfilePicture";
 import { IoMdAdd } from "react-icons/io";
 import { IUser } from "../interfaces/IUser";
@@ -35,9 +34,15 @@ export default function FriendsTab() {
   const [sentRequests, setSentRequests] = useState<IFriend[]>();
   const [receivedRequests, setReceivedRequests] = useState<IFriend[]>();
 
-  const axiosWithAuth = axios.create({
-    headers: { Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}` },
-  });
+  const axiosWithAuth = useMemo(
+    () =>
+      axios.create({
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+        },
+      }),
+    [],
+  );
 
   function searchUserProfile(e: FormEvent) {
     e.preventDefault();
@@ -75,7 +80,7 @@ export default function FriendsTab() {
     }
 
     if (search) find();
-  }, [search]);
+  }, [search, axiosWithAuth]);
 
   useEffect(() => {
     async function getRequests() {
@@ -87,7 +92,7 @@ export default function FriendsTab() {
     }
 
     getRequests();
-  }, []);
+  }, [axiosWithAuth]);
 
   return (
     <div className="flex h-full flex-col gap-8">
@@ -105,11 +110,8 @@ export default function FriendsTab() {
             {search ? <MdClose /> : <IoSearch />}
           </button>
         </form>
-        {profile ? (
-          <FriendRequestCard tab={FIND} user={profile} />
-        ) : (
-          <SearchFriendsResult error={errorMessage} />
-        )}
+        <FriendRequestCard tab={FIND} user={profile} />
+        <SearchFriendsResult error={errorMessage} show={!profile} />
       </div>
       <div className="flex h-full flex-col gap-2">
         <h1 className="text-lg font-semibold md:text-xl">Friend requests</h1>
@@ -134,32 +136,77 @@ export default function FriendsTab() {
             className={`absolute top-1/2 z-20 h-[calc(100%-1rem)] w-[calc(50%-0.5rem)] -translate-y-1/2 rounded-lg bg-purple-700 duration-200 ease-in-out ${
               activeTab === SENT ? "left-[50%]" : "left-[0.5rem]"
             }`}
-          ></div>
+          />
         </div>
         <div className="my-2 mb-4 flex h-1 grow flex-col gap-2 overflow-y-scroll">
-          {allUserProfiles.map((p) => (
-            <FriendRequestCard key={p.id} tab={activeTab} user={p} />
-          ))}
+          <FriendRequestList
+            sent={sentRequests}
+            received={receivedRequests}
+            tab={activeTab}
+          />
         </div>
       </div>
     </div>
   );
 }
 
-function SearchFriendsResult({ error }: { error: string }) {
-  return (
-    <div className="flex h-16 items-center justify-center gap-2 rounded-lg bg-purple-200 px-3 dark:bg-gray-750">
-      <PiUserCirclePlusThin className="flex-shrink-0 text-5xl text-purple-700 dark:text-white" />
-      <h2 className="leading-5 text-purple-700 dark:text-white md:text-lg md:leading-6">
-        {error ? error : "Search for friends using email."}
-      </h2>
-    </div>
-  );
+interface FriendRequestListProps {
+  sent?: IFriend[];
+  received?: IFriend[];
+  tab: ActiveTab;
+}
+
+function FriendRequestList(props: FriendRequestListProps) {
+  const { tab, received, sent } = props;
+
+  if (tab === SENT && sent) {
+    return (
+      <>
+        {sent.map((s) => (
+          <FriendRequestCard
+            key={s.friendId}
+            tab={tab}
+            user={{ email: s.receiverEmail, fullName: s.receiverFullName }}
+          />
+        ))}
+      </>
+    );
+  }
+  if (tab === RECEIVED && received) {
+    return (
+      <>
+        {received.map((r) => (
+          <FriendRequestCard
+            key={r.friendId}
+            tab={tab}
+            user={{ email: r.senderEmail, fullName: r.senderFullName }}
+          />
+        ))}
+      </>
+    );
+  }
+}
+
+interface SearchFriendsResultProps {
+  error: string;
+  show: boolean;
+}
+
+function SearchFriendsResult({ error, show }: SearchFriendsResultProps) {
+  if (show)
+    return (
+      <div className="flex h-16 items-center justify-center gap-2 rounded-lg bg-purple-200 px-3 dark:bg-gray-750">
+        <PiUserCirclePlusThin className="flex-shrink-0 text-5xl text-purple-700 dark:text-white" />
+        <h2 className="leading-5 text-purple-700 dark:text-white md:text-lg md:leading-6">
+          {error ? error : "Search for friends using email."}
+        </h2>
+      </div>
+    );
 }
 
 interface FriendRequestCardProps {
   tab: FriendRequestCardType;
-  user: {
+  user?: {
     fullName: string;
     email: string;
     requestSent?: string;
@@ -169,27 +216,28 @@ interface FriendRequestCardProps {
 function FriendRequestCard(props: FriendRequestCardProps) {
   const { tab, user } = props;
 
-  return (
-    <div className="flex flex-col gap-2 rounded-lg bg-gray-100 px-3 py-2 dark:bg-gray-750">
-      <div className="flex gap-2">
-        <DefaultProfilePicture />
-        <div>
-          <h2 className="line-clamp-1 md:text-lg md:font-semibold">
-            {user.fullName}
-          </h2>
-          <h2 className="line-clamp-1 text-sm md:text-base">{user.email}</h2>
+  if (user)
+    return (
+      <div className="flex flex-col gap-2 rounded-lg bg-gray-100 px-3 py-2 dark:bg-gray-750">
+        <div className="flex gap-2">
+          <DefaultProfilePicture />
+          <div>
+            <h2 className="line-clamp-1 md:text-lg md:font-semibold">
+              {user.fullName}
+            </h2>
+            <h2 className="line-clamp-1 text-sm md:text-base">{user.email}</h2>
+          </div>
+        </div>
+        <div className="flex items-end justify-between gap-2">
+          <RequestAction tab={tab} />
+          {user.requestSent ? (
+            <span className="text-sm text-gray-500 dark:text-gray-400">
+              {user.requestSent}
+            </span>
+          ) : null}
         </div>
       </div>
-      <div className="flex items-end justify-between gap-2">
-        <RequestAction tab={tab} />
-        {user.requestSent ? (
-          <span className="text-sm text-gray-500 dark:text-gray-400">
-            {user.requestSent}
-          </span>
-        ) : null}
-      </div>
-    </div>
-  );
+    );
 }
 
 interface RequestActionProps {
