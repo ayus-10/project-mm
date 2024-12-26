@@ -1,26 +1,25 @@
 import { ReactNode, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../redux/hooks";
+import { useLocation, useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 import useAuthentication from "../hooks/useAuthentication";
 
 export default function AuthGuard({
   children,
 }: Readonly<{ children: ReactNode }>) {
-  useAuthentication();
+  const isLoggedIn = useAuthentication();
 
   const navigate = useNavigate();
 
-  const { email, fullName } = useAppSelector(
-    (state) => state.authenticatedUserSlice,
-  );
-
-  const isLoggedIn = typeof email === "string" && typeof fullName === "string";
+  const { pathname } = useLocation();
+  const isProtectedPath = pathname.startsWith("/chat");
 
   useEffect(() => {
-    if (email === null && fullName === null) navigate("/login");
-  }, [navigate, email, fullName]);
+    if (isLoggedIn === false && isProtectedPath) {
+      navigate("/login");
+    }
+  }, [navigate, isLoggedIn, isProtectedPath]);
 
-  if (isLoggedIn) return children;
+  if (isLoggedIn || !isProtectedPath) return children;
+
   return <Loading />;
 }

@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import GoogleIcon from "../assets/google.ico";
 import BannerImage from "../assets/account-banner.png";
 import { FaEye } from "react-icons/fa";
@@ -29,8 +29,6 @@ export default function UserForm({ formType }: UserFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate();
-
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -48,7 +46,7 @@ export default function UserForm({ formType }: UserFormProps) {
         );
 
         localStorage.setItem(ACCESS_TOKEN, data.accessToken);
-        navigate("/chat");
+        window.location.href = "/chat";
       }
       if (formType === LOGIN) {
         const payload = {
@@ -59,7 +57,7 @@ export default function UserForm({ formType }: UserFormProps) {
         const { data } = await axios.post<LoginResponse>("/api/Auth", payload);
 
         localStorage.setItem(ACCESS_TOKEN, data.accessToken);
-        navigate("/chat");
+        window.location.href = "/chat";
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {

@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch } from "../redux/hooks";
 import { setAuthenticatedUser } from "../redux/slices/authenticatedUserSlice";
 import refreshTokens from "../requests/refreshTokens";
-import { axiosWithAuth } from "../requests/axiosWithAuth";
 import axios from "axios";
+import { ACCESS_TOKEN } from "../constants";
 
 interface AuthResponse {
   email: string;
@@ -11,19 +11,30 @@ interface AuthResponse {
 }
 
 export default function useAuthentication() {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(undefined);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     async function authenticateUser() {
-      const setStates = (email?: string, fullName?: string) =>
+      const setStates = (email?: string, fullName?: string) => {
         dispatch(
           setAuthenticatedUser({
             email: email ?? null,
             fullName: fullName ?? null,
           }),
         );
+        setIsLoggedIn(
+          typeof email === "string" && typeof fullName === "string",
+        );
+      };
 
-      const fetchAuth = () => axiosWithAuth.get<AuthResponse>("/api/Auth");
+      const fetchAuth = () =>
+        axios.get<AuthResponse>("/api/Auth", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+          },
+        });
 
       try {
         const response = await fetchAuth();
@@ -42,5 +53,7 @@ export default function useAuthentication() {
     }
 
     authenticateUser();
-  }, []);
+  }, [dispatch]);
+
+  return isLoggedIn;
 }

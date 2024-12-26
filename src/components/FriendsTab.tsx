@@ -8,8 +8,8 @@ import DefaultProfilePicture from "./DefaultProfilePicture";
 import { IoMdAdd } from "react-icons/io";
 import { IUser } from "../interfaces/IUser";
 import { IFriend } from "../interfaces/IFriend";
-import { axiosWithAuth } from "../requests/axiosWithAuth";
 import axios from "axios";
+import { ACCESS_TOKEN } from "../constants";
 
 const SENT = "SENT";
 const RECEIVED = "RECEIVED";
@@ -34,6 +34,10 @@ export default function FriendsTab() {
 
   const [sentRequests, setSentRequests] = useState<IFriend[]>();
   const [receivedRequests, setReceivedRequests] = useState<IFriend[]>();
+
+  const axiosWithAuth = axios.create({
+    headers: { Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}` },
+  });
 
   function searchUserProfile(e: FormEvent) {
     e.preventDefault();

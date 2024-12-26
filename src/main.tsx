@@ -5,15 +5,18 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import ReduxProvider from "./providers/ReduxProvider";
 import ThemeProvider from "./providers/ThemeProvider";
+import AuthGuard from "./guards/AuthGuard";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <ReduxProvider>
         <ThemeProvider>
-          <App />
+          <AuthGuard>
+            <App />
+          </AuthGuard>
         </ThemeProvider>
       </ReduxProvider>
     </BrowserRouter>
-  </StrictMode>
+  </StrictMode>,
 );
