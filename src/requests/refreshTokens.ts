@@ -1,13 +1,13 @@
-import { ACCESS_TOKEN, POST } from "../constants";
-import fetchMagic from "./fetchMagic";
+import axios from "axios";
+import { ACCESS_TOKEN } from "../constants";
 
 interface AccessTokenResponse {
   accessToken: string;
 }
 
 export default async function refreshTokens() {
-  const res = await fetchMagic<AccessTokenResponse>("/api/Auth/refresh", POST);
-  if (res?.data?.accessToken) {
-    localStorage.setItem(ACCESS_TOKEN, res.data.accessToken);
+  const { data } = await axios.post<AccessTokenResponse>("/api/Auth/refresh");
+  if (data.accessToken) {
+    localStorage.setItem(ACCESS_TOKEN, data.accessToken);
   }
 }

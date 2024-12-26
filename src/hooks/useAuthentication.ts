@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useAppDispatch } from "../redux/hooks";
 import { setAuthenticatedUser } from "../redux/slices/authenticatedUserSlice";
-import fetchMagic from "../requests/fetchMagic";
 import refreshTokens from "../requests/refreshTokens";
-import { GET } from "../constants";
+import { axiosWithAuth } from "../requests/axiosWithAuth";
+import axios from "axios";
 
 interface AuthResponse {
   email: string;
@@ -13,34 +13,31 @@ interface AuthResponse {
 export default function useAuthentication() {
   const dispatch = useAppDispatch();
 
-  const setStates = (email: string | undefined, fullName: string | undefined) =>
-    dispatch(
-      setAuthenticatedUser({
-        email: email ?? null,
-        fullName: fullName ?? null,
-      }),
-    );
-
-  const fetchAuth = () =>
-    fetchMagic<AuthResponse>("/api/Auth", GET, undefined, true);
-
   useEffect(() => {
     async function authenticateUser() {
-      try {
-        const res = await fetchAuth();
-        if (!res) return;
-        if (res.data) {
-          setStates(res.data.email, res.data.fullName);
-        }
-        if (res.error) {
-          await refreshTokens();
+      const setStates = (email?: string, fullName?: string) =>
+        dispatch(
+          setAuthenticatedUser({
+            email: email ?? null,
+            fullName: fullName ?? null,
+          }),
+        );
 
-          const newRes = await fetchAuth();
-          if (!newRes) return;
-          setStates(newRes.data?.email, newRes.data?.fullName);
-        }
+      const fetchAuth = () => axiosWithAuth.get<AuthResponse>("/api/Auth");
+
+      try {
+        const response = await fetchAuth();
+        setStates(response.data.email, response.data.fullName);
       } catch (error) {
-        console.error("Unable to authenticate: ", error);
+        if (axios.isAxiosError(error)) {
+          try {
+            await refreshTokens();
+            const newResponse = await fetchAuth();
+            setStates(newResponse.data.email, newResponse.data.fullName);
+          } catch {
+            setStates();
+          }
+        }
       }
     }
 

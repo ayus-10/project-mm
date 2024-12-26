@@ -2,10 +2,10 @@ import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../assets/google.ico";
 import BannerImage from "../assets/account-banner.png";
-import fetchMagic from "../requests/fetchMagic";
 import { FaEye } from "react-icons/fa";
 import { LuChevronRight } from "react-icons/lu";
-import { ACCESS_TOKEN, POST } from "../constants";
+import { ACCESS_TOKEN } from "../constants";
+import axios from "axios";
 
 const LOGIN = "LOGIN";
 const SIGNUP = "SIGNUP";
@@ -34,57 +34,37 @@ export default function UserForm({ formType }: UserFormProps) {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (formType === LOGIN) {
-      const payload = {
-        Email: email,
-        Password: password,
-      };
+    try {
+      if (formType === SIGNUP) {
+        const payload = {
+          Email: email,
+          Password: password,
+          FullName: fullName,
+        };
 
-      const res = await fetchMagic<LoginResponse>("/api/Auth", POST, payload);
+        const { data } = await axios.post<SignupResponse>(
+          "/api/Users",
+          payload,
+        );
 
-      if (!res) {
-        return;
-      }
-
-      const { error, data } = res;
-
-      if (error) {
-        alert(error);
-      }
-
-      if (data) {
         localStorage.setItem(ACCESS_TOKEN, data.accessToken);
         navigate("/chat");
       }
+      if (formType === LOGIN) {
+        const payload = {
+          Email: email,
+          Password: password,
+        };
 
-      return;
-    }
+        const { data } = await axios.post<LoginResponse>("/api/Auth", payload);
 
-    if (formType === SIGNUP) {
-      const payload = {
-        Email: email,
-        Password: password,
-        FullName: fullName,
-      };
-
-      const res = await fetchMagic<SignupResponse>("/api/Users", POST, payload);
-
-      if (!res) {
-        return;
-      }
-
-      const { error, data } = res;
-
-      if (error) {
-        alert(error);
-      }
-
-      if (data) {
         localStorage.setItem(ACCESS_TOKEN, data.accessToken);
         navigate("/chat");
       }
-
-      return;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data);
+      }
     }
   }
 

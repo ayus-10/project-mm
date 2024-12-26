@@ -6,10 +6,10 @@ import { PiUserCirclePlusThin } from "react-icons/pi";
 import allUserProfiles from "../assets/dummy_profiles.json";
 import DefaultProfilePicture from "./DefaultProfilePicture";
 import { IoMdAdd } from "react-icons/io";
-import findFriend from "../requests/findFriend";
 import { IUser } from "../interfaces/IUser";
 import { IFriend } from "../interfaces/IFriend";
-import getFriendRequests from "../requests/getFriendRequests";
+import { axiosWithAuth } from "../requests/axiosWithAuth";
+import axios from "axios";
 
 const SENT = "SENT";
 const RECEIVED = "RECEIVED";
@@ -17,6 +17,11 @@ const FIND = "FIND";
 
 type ActiveTab = "SENT" | "RECEIVED";
 type FriendRequestCardType = "FIND" | "RECEIVED" | "SENT";
+
+interface FriendRequests {
+  sent: IFriend[];
+  received: IFriend[];
+}
 
 export default function FriendsTab() {
   const [activeTab, setActiveTab] = useState<ActiveTab>(RECEIVED);
@@ -52,30 +57,31 @@ export default function FriendsTab() {
   }
 
   useEffect(() => {
-    if (!search) return;
     async function find() {
-      const res = await findFriend(search);
-
-      if (res?.data) {
-        setProfile(res.data);
-      }
-
-      if (res?.error) {
-        setErrorMessage(res.error);
+      try {
+        const { data } = await axiosWithAuth.get<IUser>(
+          `/api/Friends/find?email=${search}`,
+        );
+        setProfile(data);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          setErrorMessage(error.response?.data);
+        }
       }
     }
-    find();
+
+    if (search) find();
   }, [search]);
 
   useEffect(() => {
     async function getRequests() {
-      const res = await getFriendRequests();
-
-      if (res) {
-        setSentRequests(res.sent);
-        setReceivedRequests(res.received);
-      }
+      const { data } = await axiosWithAuth.get<FriendRequests>(
+        "/api/Friends/requests",
+      );
+      setSentRequests(data.sent);
+      setReceivedRequests(data.received);
     }
+
     getRequests();
   }, []);
 

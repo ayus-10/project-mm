@@ -1,13 +1,10 @@
 import { HashLoader } from "react-spinners";
-import useAuthentication from "../hooks/useAuthentication";
 import { useAppSelector } from "../redux/hooks";
-import useRedirect from "../hooks/useRedirect";
+import useAuthentication from "../hooks/useAuthentication";
 
-export default function Home() {
-  const { fullName } = useAppSelector((state) => state.authenticatedUserSlice);
-
+export default function Loading() {
   useAuthentication();
-  useRedirect();
+  const { fullName } = useAppSelector((state) => state.authenticatedUserSlice);
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center gap-4">
