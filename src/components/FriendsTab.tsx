@@ -9,8 +9,9 @@ import { IUser } from "../interfaces/IUser";
 import { IFriend } from "../interfaces/IFriend";
 import axios from "axios";
 import { ACCESS_TOKEN } from "../constants";
-import { MoonLoader } from "react-spinners";
+import { BeatLoader, MoonLoader } from "react-spinners";
 import refreshTokens from "../requests/refreshTokens";
+import { create } from "zustand";
 
 const SENT = "SENT";
 const RECEIVED = "RECEIVED";
@@ -24,16 +25,45 @@ interface FriendRequests {
   received: IFriend[];
 }
 
+interface FriendRequestSent {
+  request: IFriend;
+}
+
+interface UserProfileStore {
+  search: string;
+  setSearch: (value: string) => void;
+  profile: IUser | undefined;
+  setProfile: (profile: IUser | undefined) => void;
+}
+
+const useUserProfileStore = create<UserProfileStore>((set) => ({
+  search: "",
+  setSearch: (value) => set({ search: value }),
+  profile: undefined,
+  setProfile: (profile) => set({ profile }),
+}));
+
+interface FriendRequestStore {
+  sentRequests: IFriend[] | undefined;
+  setSentRequests: (requests: IFriend[] | undefined) => void;
+}
+
+const useFriendRequestStore = create<FriendRequestStore>((set) => ({
+  sentRequests: undefined,
+  setSentRequests: (requests) => set({ sentRequests: requests }),
+}));
+
 export default function FriendsTab() {
   const [activeTab, setActiveTab] = useState<ActiveTab>(RECEIVED);
 
-  const [search, setSearch] = useState("");
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const [profile, setProfile] = useState<IUser | undefined>(undefined);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const [sentRequests, setSentRequests] = useState<IFriend[]>();
+  const { search, profile, setSearch, setProfile } = useUserProfileStore();
+
+  const { sentRequests, setSentRequests } = useFriendRequestStore();
+
   const [receivedRequests, setReceivedRequests] = useState<IFriend[]>();
 
   const [loadingRequests, setLoadingRequests] = useState(false);
@@ -96,7 +126,7 @@ export default function FriendsTab() {
     }
 
     if (search) find();
-  }, [search, axiosWithAuth]);
+  }, [search, axiosWithAuth, setProfile]);
 
   useEffect(() => {
     async function getRequests() {
@@ -120,7 +150,7 @@ export default function FriendsTab() {
     }
 
     getRequests();
-  }, [axiosWithAuth]);
+  }, [axiosWithAuth, setSentRequests]);
 
   return (
     <div className="flex h-full flex-col gap-8">
@@ -206,13 +236,17 @@ function FriendRequestList(props: FriendRequestListProps) {
   }
 
   return (
-    <div className="my-2 mb-4 flex h-1 grow flex-col gap-2 overflow-y-auto">
+    <div className="my-2 mb-4 flex h-1 grow flex-col items-center gap-2 overflow-y-auto">
       {showSent
         ? sent.map((s) => (
             <FriendRequestCard
               key={s.friendId}
               tab={tab}
-              user={{ email: s.receiverEmail, fullName: s.receiverFullName }}
+              user={{
+                email: s.receiverEmail,
+                fullName: s.receiverFullName,
+                id: "",
+              }}
             />
           ))
         : showReceived
@@ -220,7 +254,11 @@ function FriendRequestList(props: FriendRequestListProps) {
               <FriendRequestCard
                 key={r.friendId}
                 tab={tab}
-                user={{ email: r.senderEmail, fullName: r.senderFullName }}
+                user={{
+                  email: r.senderEmail,
+                  fullName: r.senderFullName,
+                  id: "",
+                }}
               />
             ))
           : "No requests found."}
@@ -253,6 +291,7 @@ function SearchFriendsResult(props: SearchFriendsResultProps) {
 interface FriendRequestCardProps {
   tab: FriendRequestCardType;
   user?: {
+    id: string;
     fullName: string;
     email: string;
     requestSent?: string;
@@ -264,7 +303,7 @@ function FriendRequestCard(props: FriendRequestCardProps) {
 
   if (user)
     return (
-      <div className="flex flex-col gap-2 rounded-lg bg-gray-100 px-3 py-2 dark:bg-gray-750">
+      <div className="flex w-full flex-col gap-2 rounded-lg bg-gray-100 px-3 py-2 dark:bg-gray-750">
         <div className="flex gap-2">
           <DefaultProfilePicture />
           <div>
@@ -275,7 +314,7 @@ function FriendRequestCard(props: FriendRequestCardProps) {
           </div>
         </div>
         <div className="flex items-end justify-between gap-2">
-          <RequestAction tab={tab} />
+          <RequestAction tab={tab} userId={user.id} />
           {user.requestSent ? (
             <span className="text-sm text-gray-500 dark:text-gray-400">
               {user.requestSent}
@@ -288,9 +327,61 @@ function FriendRequestCard(props: FriendRequestCardProps) {
 
 interface RequestActionProps {
   tab: FriendRequestCardType;
+  userId: string;
 }
 
-function RequestAction({ tab }: RequestActionProps) {
+function RequestAction({ tab, userId }: RequestActionProps) {
+  const axiosWithAuth = axios.create({
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+    },
+  });
+
+  const { setProfile, setSearch } = useUserProfileStore();
+
+  const { sentRequests, setSentRequests } = useFriendRequestStore();
+
+  const [added, setAdded] = useState<boolean | undefined>(false);
+
+  async function addFriend() {
+    const sendRequest = () =>
+      axiosWithAuth.post<FriendRequestSent>("/api/Friends", {
+        ReceiverId: userId,
+      });
+
+    const handleResponse = (request: IFriend) => {
+      setAdded(true);
+      if (sentRequests) setSentRequests([...sentRequests, request]);
+    };
+
+    try {
+      setAdded(undefined);
+      const { data } = await sendRequest();
+      handleResponse(data.request);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        try {
+          await refreshTokens();
+          const { data } = await sendRequest();
+          handleResponse(data.request);
+        } catch {
+          setAdded(false);
+        }
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (!added) return;
+
+    const timeoutId = setTimeout(() => {
+      setProfile(undefined);
+      setSearch("");
+    }, 3000);
+
+    return () => clearTimeout(timeoutId);
+  }, [added, setProfile, setSearch]);
+
   switch (tab) {
     case RECEIVED:
       return (
@@ -318,12 +409,25 @@ function RequestAction({ tab }: RequestActionProps) {
       );
     case FIND:
       return (
-        <button className="rounded-full border-2 border-purple-200 bg-purple-200 px-3 text-purple-500 duration-200 ease-in-out hover:border-purple-500 hover:bg-transparent">
+        <button
+          disabled={added !== false}
+          onClick={addFriend}
+          className="rounded-full border-2 border-purple-200 bg-purple-200 px-3 text-purple-500 duration-200 ease-in-out hover:border-purple-500 hover:bg-transparent"
+        >
           <span className="hidden text-sm font-semibold md:inline">
-            Add friend
+            <RequestProcessing show={added === undefined} />
+            {added === true
+              ? "Request sent"
+              : added === false
+                ? "Add friend"
+                : null}
           </span>
           <IoMdAdd className="md:hidden" />
         </button>
       );
   }
+}
+
+function RequestProcessing({ show }: { show: boolean }) {
+  if (show) return <BeatLoader size={10} color="#9333ea" />;
 }
