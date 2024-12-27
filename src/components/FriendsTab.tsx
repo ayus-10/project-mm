@@ -9,6 +9,8 @@ import { IUser } from "../interfaces/IUser";
 import { IFriend } from "../interfaces/IFriend";
 import axios from "axios";
 import { ACCESS_TOKEN } from "../constants";
+import { MoonLoader } from "react-spinners";
+import refreshTokens from "../requests/refreshTokens";
 
 const SENT = "SENT";
 const RECEIVED = "RECEIVED";
@@ -33,6 +35,9 @@ export default function FriendsTab() {
 
   const [sentRequests, setSentRequests] = useState<IFriend[]>();
   const [receivedRequests, setReceivedRequests] = useState<IFriend[]>();
+
+  const [loadingRequests, setLoadingRequests] = useState(false);
+  const [loadingProfile, setLoadingProfile] = useState(false);
 
   const axiosWithAuth = useMemo(
     () =>
@@ -67,15 +72,26 @@ export default function FriendsTab() {
 
   useEffect(() => {
     async function find() {
+      const sendRequest = () =>
+        axiosWithAuth.get<IUser>(`/api/Friends/find?email=${search}`);
+
       try {
-        const { data } = await axiosWithAuth.get<IUser>(
-          `/api/Friends/find?email=${search}`,
-        );
+        setLoadingProfile(true);
+        const { data } = await sendRequest();
         setProfile(data);
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          setErrorMessage(error.response?.data);
+          try {
+            await refreshTokens();
+            const { data } = await sendRequest();
+            setProfile(data);
+          } catch (newError) {
+            if (axios.isAxiosError(newError))
+              setErrorMessage(newError.response?.data);
+          }
         }
+      } finally {
+        setLoadingProfile(false);
       }
     }
 
@@ -84,11 +100,23 @@ export default function FriendsTab() {
 
   useEffect(() => {
     async function getRequests() {
-      const { data } = await axiosWithAuth.get<FriendRequests>(
-        "/api/Friends/requests",
-      );
-      setSentRequests(data.sent);
-      setReceivedRequests(data.received);
+      const sendRequest = () =>
+        axiosWithAuth.get<FriendRequests>("/api/Friends/requests");
+
+      try {
+        setLoadingRequests(true);
+        const { data } = await sendRequest();
+        setSentRequests(data.sent);
+        setReceivedRequests(data.received);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          const { data } = await sendRequest();
+          setSentRequests(data.sent);
+          setReceivedRequests(data.received);
+        }
+      } finally {
+        setLoadingRequests(false);
+      }
     }
 
     getRequests();
@@ -111,7 +139,11 @@ export default function FriendsTab() {
           </button>
         </form>
         <FriendRequestCard tab={FIND} user={profile} />
-        <SearchFriendsResult error={errorMessage} show={!profile} />
+        <SearchFriendsResult
+          error={errorMessage}
+          show={!profile}
+          isLoading={loadingProfile}
+        />
       </div>
       <div className="flex h-full flex-col gap-2">
         <h1 className="text-lg font-semibold md:text-xl">Friend requests</h1>
@@ -138,13 +170,12 @@ export default function FriendsTab() {
             }`}
           />
         </div>
-        <div className="my-2 mb-4 flex h-1 grow flex-col gap-2 overflow-y-scroll">
-          <FriendRequestList
-            sent={sentRequests}
-            received={receivedRequests}
-            tab={activeTab}
-          />
-        </div>
+        <FriendRequestList
+          sent={sentRequests}
+          received={receivedRequests}
+          tab={activeTab}
+          isLoading={loadingRequests}
+        />
       </div>
     </div>
   );
@@ -154,51 +185,66 @@ interface FriendRequestListProps {
   sent?: IFriend[];
   received?: IFriend[];
   tab: ActiveTab;
+  isLoading: boolean;
 }
 
 function FriendRequestList(props: FriendRequestListProps) {
-  const { tab, received, sent } = props;
+  const { tab, received, sent, isLoading } = props;
 
-  if (tab === SENT && sent) {
+  const isValidArray = (arr: IFriend[] | undefined): arr is IFriend[] =>
+    Array.isArray(arr) && arr.length > 0;
+
+  const showSent = tab === SENT && isValidArray(sent);
+  const showReceived = tab === RECEIVED && isValidArray(received);
+
+  if (isLoading) {
     return (
-      <>
-        {sent.map((s) => (
-          <FriendRequestCard
-            key={s.friendId}
-            tab={tab}
-            user={{ email: s.receiverEmail, fullName: s.receiverFullName }}
-          />
-        ))}
-      </>
+      <div className="flex h-full w-full items-center justify-center">
+        <MoonLoader color="#9333ea" />
+      </div>
     );
   }
-  if (tab === RECEIVED && received) {
-    return (
-      <>
-        {received.map((r) => (
-          <FriendRequestCard
-            key={r.friendId}
-            tab={tab}
-            user={{ email: r.senderEmail, fullName: r.senderFullName }}
-          />
-        ))}
-      </>
-    );
-  }
+
+  return (
+    <div className="my-2 mb-4 flex h-1 grow flex-col gap-2 overflow-y-auto">
+      {showSent
+        ? sent.map((s) => (
+            <FriendRequestCard
+              key={s.friendId}
+              tab={tab}
+              user={{ email: s.receiverEmail, fullName: s.receiverFullName }}
+            />
+          ))
+        : showReceived
+          ? received.map((r) => (
+              <FriendRequestCard
+                key={r.friendId}
+                tab={tab}
+                user={{ email: r.senderEmail, fullName: r.senderFullName }}
+              />
+            ))
+          : "No requests found."}
+    </div>
+  );
 }
 
 interface SearchFriendsResultProps {
   error: string;
   show: boolean;
+  isLoading: boolean;
 }
 
-function SearchFriendsResult({ error, show }: SearchFriendsResultProps) {
+function SearchFriendsResult(props: SearchFriendsResultProps) {
+  const { show, isLoading, error } = props;
+
   if (show)
     return (
       <div className="flex h-16 items-center justify-center gap-2 rounded-lg bg-purple-200 px-3 dark:bg-gray-750">
         <PiUserCirclePlusThin className="flex-shrink-0 text-5xl text-purple-700 dark:text-white" />
         <h2 className="leading-5 text-purple-700 dark:text-white md:text-lg md:leading-6">
-          {error ? error : "Search for friends using email."}
+          {isLoading
+            ? "Searching, please wait..."
+            : error || "Search for friends using email."}
         </h2>
       </div>
     );
