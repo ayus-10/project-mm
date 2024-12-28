@@ -7,7 +7,7 @@ import DefaultProfilePicture from "./DefaultProfilePicture";
 import { IoMdAdd } from "react-icons/io";
 import { IUser } from "../interfaces/IUser";
 import { IFriend } from "../interfaces/IFriend";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { ACCESS_TOKEN } from "../constants";
 import { BeatLoader, MoonLoader } from "react-spinners";
 import refreshTokens from "../requests/refreshTokens";
@@ -45,12 +45,16 @@ const useUserProfileStore = create<UserProfileStore>((set) => ({
 
 interface FriendRequestStore {
   sentRequests: IFriend[] | undefined;
+  receivedRequests: IFriend[] | undefined;
   setSentRequests: (requests: IFriend[] | undefined) => void;
+  setReceivedRequests: (requests: IFriend[] | undefined) => void;
 }
 
 const useFriendRequestStore = create<FriendRequestStore>((set) => ({
   sentRequests: undefined,
+  receivedRequests: undefined,
   setSentRequests: (requests) => set({ sentRequests: requests }),
+  setReceivedRequests: (requests) => set({ receivedRequests: requests }),
 }));
 
 export default function FriendsTab() {
@@ -62,9 +66,12 @@ export default function FriendsTab() {
 
   const { search, profile, setSearch, setProfile } = useUserProfileStore();
 
-  const { sentRequests, setSentRequests } = useFriendRequestStore();
-
-  const [receivedRequests, setReceivedRequests] = useState<IFriend[]>();
+  const {
+    sentRequests,
+    setSentRequests,
+    receivedRequests,
+    setReceivedRequests,
+  } = useFriendRequestStore();
 
   const [loadingRequests, setLoadingRequests] = useState(false);
   const [loadingProfile, setLoadingProfile] = useState(false);
@@ -150,7 +157,7 @@ export default function FriendsTab() {
     }
 
     getRequests();
-  }, [axiosWithAuth, setSentRequests]);
+  }, [axiosWithAuth, setSentRequests, setReceivedRequests]);
 
   return (
     <div className="flex h-full flex-col gap-8">
@@ -245,7 +252,7 @@ function FriendRequestList(props: FriendRequestListProps) {
               user={{
                 email: s.receiverEmail,
                 fullName: s.receiverFullName,
-                id: "",
+                id: s.receiverId,
               }}
             />
           ))
@@ -257,7 +264,7 @@ function FriendRequestList(props: FriendRequestListProps) {
                 user={{
                   email: r.senderEmail,
                   fullName: r.senderFullName,
-                  id: "",
+                  id: r.senderId,
                 }}
               />
             ))
@@ -339,15 +346,23 @@ function RequestAction({ tab, userId }: RequestActionProps) {
 
   const { setProfile, setSearch } = useUserProfileStore();
 
-  const { sentRequests, setSentRequests } = useFriendRequestStore();
+  const {
+    sentRequests,
+    setSentRequests,
+    receivedRequests,
+    setReceivedRequests,
+  } = useFriendRequestStore();
 
   const [added, setAdded] = useState<boolean | undefined>(false);
+  const [accepted, setAccepted] = useState<boolean | undefined>(false);
+  const [rejected, setRejected] = useState<boolean | undefined>(false);
+  const [canceled, setCanceled] = useState<boolean | undefined>(false);
 
   async function addFriend() {
     const sendRequest = () =>
-      axiosWithAuth.post<FriendRequestSent>("/api/Friends", {
-        ReceiverId: userId,
-      });
+      axiosWithAuth.post<FriendRequestSent>(
+        "/api/Friends?receiverId=" + userId,
+      );
 
     const handleResponse = (request: IFriend) => {
       setAdded(true);
@@ -371,6 +386,71 @@ function RequestAction({ tab, userId }: RequestActionProps) {
     }
   }
 
+  async function acceptRequest() {
+    const sendRequest = () =>
+      axiosWithAuth.patch("/api/Friends/accept?senderId=" + userId);
+
+    const handleResponse = () => {
+      setAccepted(true);
+      if (receivedRequests)
+        setReceivedRequests(
+          receivedRequests.filter((r) => r.senderId !== userId),
+        );
+    };
+
+    await handleRequest(sendRequest, handleResponse, setAccepted);
+  }
+
+  async function rejectRequest() {
+    const sendRequest = () =>
+      axiosWithAuth.patch("/api/Friends/reject?senderId=" + userId);
+
+    const handleResponse = () => {
+      setRejected(true);
+      if (receivedRequests)
+        setReceivedRequests(
+          receivedRequests.filter((r) => r.senderId !== userId),
+        );
+    };
+
+    await handleRequest(sendRequest, handleResponse, setRejected);
+  }
+
+  async function cancelRequest() {
+    const sendRequest = () =>
+      axiosWithAuth.delete("/api/Friends/?receiverId=" + userId);
+
+    const handleResponse = () => {
+      setCanceled(true);
+      if (sentRequests)
+        setSentRequests(sentRequests.filter((r) => r.receiverId !== userId));
+    };
+
+    await handleRequest(sendRequest, handleResponse, setCanceled);
+  }
+
+  async function handleRequest(
+    sendRequest: () => Promise<AxiosResponse<any, any>>,
+    handleResponse: () => void,
+    setState: (value: React.SetStateAction<boolean | undefined>) => void,
+  ) {
+    try {
+      setState(undefined);
+      await sendRequest();
+      handleResponse();
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        try {
+          await refreshTokens();
+          await sendRequest();
+          handleResponse();
+        } catch {
+          setState(false);
+        }
+      }
+    }
+  }
+
   useEffect(() => {
     if (!added) return;
 
@@ -386,24 +466,41 @@ function RequestAction({ tab, userId }: RequestActionProps) {
     case RECEIVED:
       return (
         <div className="flex gap-2">
-          <button className="rounded-full border-2 border-green-200 bg-green-200 px-3 text-green-500 duration-200 ease-in-out hover:border-green-500 hover:bg-transparent">
-            <span className="hidden text-sm font-semibold md:inline">
-              Accept
-            </span>
+          <button
+            onClick={acceptRequest}
+            className="rounded-full border-2 border-green-200 bg-green-200 px-3 text-green-500 duration-200 ease-in-out hover:border-green-500 hover:bg-transparent"
+          >
+            <ButtonContent
+              color="#22c55e"
+              label={{ active: "Accepted", inactive: "Accept" }}
+              status={accepted}
+            />
             <FaCheck className="md:hidden" />
           </button>
-          <button className="rounded-full border-2 border-red-200 bg-red-200 px-3 text-red-500 duration-200 ease-in-out hover:border-red-500 hover:bg-transparent">
-            <span className="hidden text-sm font-semibold md:inline">
-              Reject
-            </span>
+          <button
+            onClick={rejectRequest}
+            className="rounded-full border-2 border-red-200 bg-red-200 px-3 text-red-500 duration-200 ease-in-out hover:border-red-500 hover:bg-transparent"
+          >
+            <ButtonContent
+              color="#ef4444"
+              label={{ active: "Rejected", inactive: "Reject" }}
+              status={rejected}
+            />
             <MdClose className="md:hidden" />
           </button>
         </div>
       );
     case SENT:
       return (
-        <button className="rounded-full border-2 border-red-200 bg-red-200 px-3 text-red-500 duration-200 ease-in-out hover:border-red-500 hover:bg-transparent">
-          <span className="hidden text-sm font-semibold md:inline">Cancel</span>
+        <button
+          onClick={cancelRequest}
+          className="rounded-full border-2 border-red-200 bg-red-200 px-3 text-red-500 duration-200 ease-in-out hover:border-red-500 hover:bg-transparent"
+        >
+          <ButtonContent
+            color="#ef4444"
+            label={{ active: "Canceled", inactive: "Cancel" }}
+            status={canceled}
+          />
           <MdClose className="md:hidden" />
         </button>
       );
@@ -414,20 +511,33 @@ function RequestAction({ tab, userId }: RequestActionProps) {
           onClick={addFriend}
           className="rounded-full border-2 border-purple-200 bg-purple-200 px-3 text-purple-500 duration-200 ease-in-out hover:border-purple-500 hover:bg-transparent"
         >
-          <span className="hidden text-sm font-semibold md:inline">
-            <RequestProcessing show={added === undefined} />
-            {added === true
-              ? "Request sent"
-              : added === false
-                ? "Add friend"
-                : null}
-          </span>
+          <ButtonContent
+            color="#9333ea"
+            label={{ active: "Request sent", inactive: "Add friend" }}
+            status={added}
+          />
           <IoMdAdd className="md:hidden" />
         </button>
       );
   }
 }
 
-function RequestProcessing({ show }: { show: boolean }) {
-  if (show) return <BeatLoader size={10} color="#9333ea" />;
+interface ButtonContentProps {
+  status: boolean | undefined;
+  color: string;
+  label: { active: string; inactive: string };
+}
+
+function ButtonContent({ status, color, label }: ButtonContentProps) {
+  return (
+    <span className="hidden text-sm font-semibold md:inline">
+      {status === true ? (
+        label.active
+      ) : status === false ? (
+        label.inactive
+      ) : (
+        <BeatLoader size={10} color={color} />
+      )}
+    </span>
+  );
 }
