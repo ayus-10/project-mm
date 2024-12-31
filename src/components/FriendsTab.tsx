@@ -430,7 +430,7 @@ function RequestAction({ tab, userId }: RequestActionProps) {
   }
 
   async function handleRequest(
-    sendRequest: () => Promise<AxiosResponse<any, any>>,
+    sendRequest: () => Promise<AxiosResponse<unknown, unknown>>,
     handleResponse: () => void,
     setState: (value: React.SetStateAction<boolean | undefined>) => void,
   ) {
