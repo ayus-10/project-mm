@@ -1,25 +1,25 @@
 import { Dispatch, SetStateAction } from "react";
 import { ActiveTab } from "./types";
 
-interface SpecialButtonProps {
+interface TabSwitchButtonProps {
+  currentTab: ActiveTab;
   activeTab: ActiveTab;
   setActiveTab: Dispatch<SetStateAction<ActiveTab>>;
-  text: string;
 }
 
-export default function SpecialButton(props: SpecialButtonProps) {
-  const { activeTab, setActiveTab, text } = props;
+export default function TabSwitchButton(props: TabSwitchButtonProps) {
+  const { activeTab, setActiveTab, currentTab } = props;
 
   return (
     <button
-      onClick={() => setActiveTab("NEW")}
+      onClick={() => setActiveTab(currentTab)}
       className={`cursor-pointer rounded-full px-3 text-sm font-medium text-white duration-200 ease-in-out hover:bg-purple-700 dark:hover:bg-purple-500 ${
-        activeTab === "NEW"
+        activeTab === currentTab
           ? "bg-purple-700 dark:bg-purple-500"
           : "bg-purple-300"
       }`}
     >
-      {text}
+      {currentTab}
     </button>
   );
 }

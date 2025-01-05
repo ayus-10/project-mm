@@ -143,7 +143,7 @@ export default function RequestAction({ tab, userId }: RequestActionProps) {
     const timeoutId = setTimeout(() => {
       setProfile(undefined);
       setSearch("");
-    }, 3000);
+    }, 1000);
 
     return () => clearTimeout(timeoutId);
   }, [added, setProfile, setSearch]);

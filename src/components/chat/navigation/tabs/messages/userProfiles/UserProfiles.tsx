@@ -5,7 +5,7 @@ import allUserProfiles from "../../../../../../assets/dummy_profiles.json";
 import { ActiveTab } from "./types";
 
 import UserProfileCard from "./UserProfileCard";
-import SpecialButton from "./SpecialButton";
+import TabSwitchButton from "./TabSwitchButton";
 
 export default function UserProfiles() {
   const [userProfiles, setUserProfiles] = useState(allUserProfiles);
@@ -52,15 +52,15 @@ export default function UserProfiles() {
         </div>
       </div>
       <div className="flex w-full gap-2 py-1">
-        <SpecialButton
+        <TabSwitchButton
           activeTab={activeTab}
           setActiveTab={setActiveTab}
-          text="All"
+          currentTab="ALL"
         />
-        <SpecialButton
+        <TabSwitchButton
           activeTab={activeTab}
           setActiveTab={setActiveTab}
-          text="New"
+          currentTab="NEW"
         />
       </div>
       <div className="grow overflow-y-scroll">
