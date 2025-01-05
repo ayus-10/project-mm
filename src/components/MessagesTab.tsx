@@ -1,11 +1,12 @@
 import UserProfiles from "./UserProfiles";
 import DefaultProfilePicture from "./DefaultProfilePicture";
-import { useAppSelector } from "../redux/hooks";
+import { useContext } from "react";
+import { AuthenticatedUserContext } from "../contexts/AuthenticatedUserContext";
 
 export default function MessagesTab() {
-  const { email, fullName } = useAppSelector(
-    (state) => state.authenticatedUserSlice,
-  );
+  const {
+    user: { email, fullName },
+  } = useContext(AuthenticatedUserContext);
 
   return (
     <>

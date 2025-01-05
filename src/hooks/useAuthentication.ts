@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "../redux/hooks";
-import { setAuthenticatedUser } from "../redux/slices/authenticatedUserSlice";
+import { useContext, useEffect, useState } from "react";
 import refreshTokens from "../requests/refreshTokens";
 import axios from "axios";
 import { ACCESS_TOKEN } from "../constants";
+import { AuthenticatedUserContext } from "../contexts/AuthenticatedUserContext";
 
 interface AuthResponse {
   email: string;
@@ -13,17 +12,15 @@ interface AuthResponse {
 export default function useAuthentication() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(undefined);
 
-  const dispatch = useAppDispatch();
+  const { setUser } = useContext(AuthenticatedUserContext);
 
   useEffect(() => {
     async function authenticateUser() {
       const setStates = (email?: string, fullName?: string) => {
-        dispatch(
-          setAuthenticatedUser({
-            email: email ?? null,
-            fullName: fullName ?? null,
-          }),
-        );
+        setUser({
+          email: email ?? null,
+          fullName: fullName ?? null,
+        });
         setIsLoggedIn(
           typeof email === "string" && typeof fullName === "string",
         );
@@ -53,7 +50,7 @@ export default function useAuthentication() {
     }
 
     authenticateUser();
-  }, [dispatch]);
+  }, [setUser]);
 
   return isLoggedIn;
 }

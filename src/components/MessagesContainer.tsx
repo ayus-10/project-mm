@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import MessageBox from "./MessageBox";
 import { PiPaperPlaneTiltFill } from "react-icons/pi";
 import allMessages from "../assets/dummy_messages.json";
-import { useAppSelector } from "../redux/hooks";
+import { AuthenticatedUserContext } from "../contexts/AuthenticatedUserContext";
 
 export default function MessagesContainer({ search }: { search: string }) {
   const chatContainer = useRef<HTMLDivElement>(null);
@@ -25,9 +25,9 @@ export default function MessagesContainer({ search }: { search: string }) {
     }
   }, [search]);
 
-  const loggedInUser = useAppSelector(
-    (state) => state.authenticatedUserSlice.email,
-  );
+  const {
+    user: { email: loggedInUser },
+  } = useContext(AuthenticatedUserContext);
 
   return (
     <div className="flex grow flex-col">
