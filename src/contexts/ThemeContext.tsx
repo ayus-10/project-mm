@@ -5,11 +5,7 @@ interface ThemeContextValue {
   toggleTheme: () => void;
 }
 
-const defaultValue = {
+export const ThemeContext = createContext<ThemeContextValue>({
   darkTheme: false,
   toggleTheme: () => {},
-};
-
-const ThemeContext = createContext<ThemeContextValue>(defaultValue);
-
-export default ThemeContext;
+});

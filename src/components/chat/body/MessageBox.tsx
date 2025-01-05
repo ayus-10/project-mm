@@ -1,8 +1,5 @@
-import { IMessage } from "../interfaces/IMessage";
-import DefaultProfilePicture from "./DefaultProfilePicture";
-
-const LEFT = "LEFT";
-const RIGHT = "RIGHT";
+import { IMessage } from "../../../interfaces/IMessage";
+import DefaultProfilePicture from "../../DefaultProfilePicture";
 
 interface MessageBoxProps extends IMessage {
   align: "LEFT" | "RIGHT";
@@ -14,12 +11,12 @@ export default function MessageBox(props: MessageBoxProps) {
   return (
     <div
       className={`flex w-full ${
-        align === RIGHT ? "justify-end" : "justify-start"
+        align === "RIGHT" ? "justify-end" : "justify-start"
       }`}
     >
       <div
         className={`flex w-1/2 items-start gap-2 md:gap-3 lg:items-center ${
-          align === LEFT ? "flex-row" : "flex-row-reverse"
+          align === "LEFT" ? "flex-row" : "flex-row-reverse"
         }`}
       >
         <DefaultProfilePicture />

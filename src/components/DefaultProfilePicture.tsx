@@ -1,4 +1,4 @@
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle as UserIcon } from "react-icons/fa";
 
 export default function DefaultProfilePicture({
   largeSize,
@@ -11,7 +11,7 @@ export default function DefaultProfilePicture({
         largeSize ? "size-[100px]" : "size-[50px]"
       }`}
     >
-      <FaUserCircle className={largeSize ? "size-[100px]" : "size-[50px]"} />
+      <UserIcon className={largeSize ? "size-[100px]" : "size-[50px]"} />
     </div>
   );
 }

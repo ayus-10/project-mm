@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { IoIosVideocam } from "react-icons/io";
-import { IoSearch } from "react-icons/io5";
-import { MdLocalPhone } from "react-icons/md";
+
+import { IoIosVideocam as VideoCallIcon } from "react-icons/io";
+import { IoSearch as SearchMessageIcon } from "react-icons/io5";
+import { MdLocalPhone as AudioCallIcon } from "react-icons/md";
+
 import MessagesContainer from "./MessagesContainer";
 
 export default function ChatBody() {
@@ -30,9 +32,9 @@ export default function ChatBody() {
           </p>
         </div>
         <div className="flex text-4xl text-purple-700 dark:text-purple-500 md:gap-2">
-          <IoIosVideocam className="shrink-0 cursor-pointer rounded-full p-2 duration-200 ease-in-out hover:bg-purple-200 dark:hover:bg-gray-800" />
-          <MdLocalPhone className="shrink-0 cursor-pointer rounded-full p-2 duration-200 ease-in-out hover:bg-purple-200 dark:hover:bg-gray-800" />
-          <IoSearch
+          <VideoCallIcon className="shrink-0 cursor-pointer rounded-full p-2 duration-200 ease-in-out hover:bg-purple-200 dark:hover:bg-gray-800" />
+          <AudioCallIcon className="shrink-0 cursor-pointer rounded-full p-2 duration-200 ease-in-out hover:bg-purple-200 dark:hover:bg-gray-800" />
+          <SearchMessageIcon
             onClick={() => setShowSearch(!showSearch)}
             className="shrink-0 cursor-pointer rounded-full p-2 duration-200 ease-in-out hover:bg-purple-200 dark:hover:bg-gray-800"
           />

@@ -1,8 +1,10 @@
 import { useContext, useEffect, useRef, useState } from "react";
+
+import { PiPaperPlaneTiltFill as SendMessageIcon } from "react-icons/pi";
+import allMessages from "../../../assets/dummy_messages.json";
+
+import { AuthenticatedUserContext } from "../../../contexts/AuthenticatedUserContext";
 import MessageBox from "./MessageBox";
-import { PiPaperPlaneTiltFill } from "react-icons/pi";
-import allMessages from "../assets/dummy_messages.json";
-import { AuthenticatedUserContext } from "../contexts/AuthenticatedUserContext";
 
 export default function MessagesContainer({ search }: { search: string }) {
   const chatContainer = useRef<HTMLDivElement>(null);
@@ -55,7 +57,7 @@ export default function MessagesContainer({ search }: { search: string }) {
             className="flex w-full grow resize-none rounded-lg bg-gray-200 px-2 py-3 pl-4 pr-14 text-lg shadow-black outline-none duration-200 ease-in-out hover:shadow-md focus:shadow-md dark:bg-gray-750 md:text-xl"
           />
           <div className="absolute right-2 top-1/2 z-10 block -translate-y-1/2 cursor-pointer rounded-full bg-purple-300 p-2 text-2xl text-purple-700 duration-200 ease-in-out hover:bg-purple-500 hover:text-white">
-            <PiPaperPlaneTiltFill />
+            <SendMessageIcon />
           </div>
         </div>
       </div>

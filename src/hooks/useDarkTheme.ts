@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export const useDarkTheme = () => {
+export default function useDarkTheme() {
   const [darkTheme, setDarkTheme] = useState(false);
 
   useEffect(() => {
@@ -24,4 +24,4 @@ export const useDarkTheme = () => {
   };
 
   return [darkTheme, toggleTheme] as const;
-};
+}

@@ -1,16 +1,16 @@
+import axios from "axios";
 import { FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
 import GoogleIcon from "../assets/google.ico";
 import BannerImage from "../assets/account-banner.png";
-import { FaEye } from "react-icons/fa";
-import { LuChevronRight } from "react-icons/lu";
-import { ACCESS_TOKEN } from "../constants";
-import axios from "axios";
-import { BeatLoader } from "react-spinners";
-import { IoMdAlert } from "react-icons/io";
 
-const LOGIN = "LOGIN";
-const SIGNUP = "SIGNUP";
+import { BeatLoader as Loading } from "react-spinners";
+import { FaEye as ShowPasswordIcon } from "react-icons/fa";
+import { LuChevronRight as RightArrowIcon } from "react-icons/lu";
+import { IoMdAlert as AlertIcon } from "react-icons/io";
+
+import { ACCESS_TOKEN } from "../constants";
 
 interface UserFormProps {
   formType: "LOGIN" | "SIGNUP";
@@ -48,7 +48,7 @@ export default function UserForm({ formType }: UserFormProps) {
     try {
       setLoading(true);
 
-      if (formType === SIGNUP) {
+      if (formType === "SIGNUP") {
         const payload = {
           Email: email,
           Password: password,
@@ -63,7 +63,7 @@ export default function UserForm({ formType }: UserFormProps) {
         localStorage.setItem(ACCESS_TOKEN, data.accessToken);
         window.location.href = "/chat";
       }
-      if (formType === LOGIN) {
+      if (formType === "LOGIN") {
         const payload = {
           Email: email,
           Password: password,
@@ -89,12 +89,12 @@ export default function UserForm({ formType }: UserFormProps) {
         <div className="md:w-[300px] lg:w-[450px]">
           <div className="my-6 flex flex-col gap-2 text-center md:text-start">
             <h1 className="text-3xl font-semibold text-gray-800">
-              {formType === SIGNUP
+              {formType === "SIGNUP"
                 ? "Enjoy with MysterioMessagez"
                 : "Continue to your Account"}
             </h1>
             <h2 className="text-gray-500">
-              {formType === SIGNUP
+              {formType === "SIGNUP"
                 ? "Real-time communication 🚀"
                 : "Welcome back 👋🏻"}
             </h2>
@@ -102,7 +102,7 @@ export default function UserForm({ formType }: UserFormProps) {
           <button className="mx-auto my-6 flex w-full items-center justify-center gap-1 rounded-full border-2 border-purple-200 bg-purple-200 px-5 py-3 text-purple-700 duration-300 ease-in-out hover:bg-transparent md:mx-0">
             <img src={GoogleIcon} alt="Google Icon" />
             <span>
-              {formType === SIGNUP ? "Sign up" : "Log in"} with Google
+              {formType === "SIGNUP" ? "Sign up" : "Log in"} with Google
             </span>
           </button>
           <div className="flex items-center gap-2 ">
@@ -112,7 +112,7 @@ export default function UserForm({ formType }: UserFormProps) {
           </div>
           {errorMessage ? (
             <div className="my-2 flex w-full items-center gap-2 rounded-lg bg-red-500 p-2 text-white">
-              <IoMdAlert size={25} className="flex-shrink-0" />
+              <AlertIcon size={25} className="flex-shrink-0" />
               {errorMessage}
             </div>
           ) : null}
@@ -133,7 +133,7 @@ export default function UserForm({ formType }: UserFormProps) {
                 Email
               </label>
             </div>
-            {formType === SIGNUP ? (
+            {formType === "SIGNUP" ? (
               <div className="relative flex flex-col-reverse">
                 <input
                   onChange={(e) => setFullName(e.target.value)}
@@ -169,7 +169,7 @@ export default function UserForm({ formType }: UserFormProps) {
                 Password
               </label>
               {password ? (
-                <FaEye
+                <ShowPasswordIcon
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer text-lg text-gray-700"
                 />
@@ -177,28 +177,28 @@ export default function UserForm({ formType }: UserFormProps) {
             </div>
             <button className="group flex h-[3.75rem] items-center justify-center rounded-md bg-purple-700 px-3 py-4 text-white">
               {loading ? (
-                <BeatLoader color="#fff" />
+                <Loading color="#fff" />
               ) : (
                 <>
                   <span className="text-lg">
-                    {formType === SIGNUP ? "Sign up" : "Log in"}
+                    {formType === "SIGNUP" ? "Sign up" : "Log in"}
                   </span>
-                  <LuChevronRight className="relative text-2xl duration-300 ease-in-out group-hover:translate-x-2" />
+                  <RightArrowIcon className="relative text-2xl duration-300 ease-in-out group-hover:translate-x-2" />
                 </>
               )}
             </button>
           </form>
           <p className="my-2 text-center text-sm text-gray-500">
             <span>
-              {formType === LOGIN
+              {formType === "LOGIN"
                 ? "Dont have an account? "
                 : "Already have an account? "}
             </span>
             <Link
-              to={formType === LOGIN ? "/signup" : "/login"}
+              to={formType === "LOGIN" ? "/signup" : "/login"}
               className="font-semibold underline"
             >
-              {formType === LOGIN ? "Get Started" : "Log in"}
+              {formType === "LOGIN" ? "Get Started" : "Log in"}
             </Link>
           </p>
         </div>

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import ThemeContext from "../contexts/ThemeContext";
-import { useDarkTheme } from "../hooks/useDarkTheme";
+import { ThemeContext } from "../contexts/ThemeContext";
+import useDarkTheme from "../hooks/useDarkTheme";
 
 export default function ThemeProvider({
   children,
