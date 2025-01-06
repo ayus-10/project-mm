@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
-import { IAuthenticatedUser } from "../interfaces/IAuthenticatedUser";
-import { AuthenticatedUserContext } from "../contexts/AuthenticatedUserContext";
+import { IAuthenticatedUser } from "@/interfaces/IAuthenticatedUser";
+import { AuthenticatedUserContext } from "@/contexts/AuthenticatedUserContext";
 
 export default function AuthenticatedUserProvider({
   children,

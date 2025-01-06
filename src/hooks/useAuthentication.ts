@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import refreshTokens from "../requests/refreshTokens";
+import refreshTokens from "@/requests/refreshTokens";
 import axios from "axios";
-import { ACCESS_TOKEN } from "../constants";
-import { AuthenticatedUserContext } from "../contexts/AuthenticatedUserContext";
+import { ACCESS_TOKEN } from "@/constants";
+import { AuthenticatedUserContext } from "@/contexts/AuthenticatedUserContext";
 
 interface AuthResponse {
   email: string;

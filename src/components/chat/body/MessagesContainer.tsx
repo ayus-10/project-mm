@@ -1,9 +1,9 @@
 import { useContext, useEffect, useRef, useState } from "react";
 
 import { PiPaperPlaneTiltFill as SendMessageIcon } from "react-icons/pi";
-import allMessages from "../../../assets/dummy_messages.json";
+import allMessages from "@/assets/dummy_messages.json";
 
-import { AuthenticatedUserContext } from "../../../contexts/AuthenticatedUserContext";
+import { AuthenticatedUserContext } from "@/contexts/AuthenticatedUserContext";
 import MessageBox from "./MessageBox";
 
 export default function MessagesContainer({ search }: { search: string }) {

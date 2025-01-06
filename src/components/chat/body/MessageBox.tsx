@@ -1,5 +1,5 @@
-import { IMessage } from "../../../interfaces/IMessage";
-import DefaultProfilePicture from "../../DefaultProfilePicture";
+import { IMessage } from "@/interfaces/IMessage";
+import DefaultProfilePicture from "@/components/DefaultProfilePicture";
 
 interface MessageBoxProps extends IMessage {
   align: "LEFT" | "RIGHT";

@@ -8,11 +8,11 @@ import { MdClose as CloseIcon } from "react-icons/md";
 import { useFriendRequestStore, useUserProfileStore } from "../store";
 import { ButtonContent } from "./ButtonContent";
 
-import { ACCESS_TOKEN } from "../../../../../../constants";
-import refreshTokens from "../../../../../../requests/refreshTokens";
+import { ACCESS_TOKEN } from "@/constants";
+import refreshTokens from "@/requests/refreshTokens";
 
 import { FriendRequestCardType } from "../types";
-import { IFriend } from "../../../../../../interfaces/IFriend";
+import { IFriend } from "@/interfaces/IFriend";
 
 interface FriendRequestSent {
   request: IFriend;

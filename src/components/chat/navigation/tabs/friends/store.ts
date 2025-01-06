@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { IUser } from "../../../../../interfaces/IUser";
-import { IFriend } from "../../../../../interfaces/IFriend";
+import { IUser } from "@/interfaces/IUser";
+import { IFriend } from "@/interfaces/IFriend";
 
 interface UserProfileStore {
   search: string;

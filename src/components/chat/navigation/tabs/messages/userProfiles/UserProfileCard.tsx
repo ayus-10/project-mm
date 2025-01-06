@@ -1,5 +1,5 @@
 import { MdDelete as DeleteIcon } from "react-icons/md";
-import DefaultProfilePicture from "../../../../../DefaultProfilePicture";
+import DefaultProfilePicture from "@/components/DefaultProfilePicture";
 
 interface UserProfileCardProps {
   id: string;

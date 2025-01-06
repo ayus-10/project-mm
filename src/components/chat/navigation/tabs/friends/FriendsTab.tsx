@@ -10,11 +10,11 @@ import FriendRequestCard from "./requestCard/FriendRequestCard";
 import { useFriendRequestStore, useUserProfileStore } from "./store";
 
 import { ActiveTab } from "./types";
-import { IUser } from "../../../../../interfaces/IUser";
-import { IFriend } from "../../../../../interfaces/IFriend";
+import { IUser } from "@/interfaces/IUser";
+import { IFriend } from "@/interfaces/IFriend";
 
-import { ACCESS_TOKEN } from "../../../../../constants";
-import refreshTokens from "../../../../../requests/refreshTokens";
+import { ACCESS_TOKEN } from "@/constants";
+import refreshTokens from "@/requests/refreshTokens";
 
 interface FriendRequests {
   sent: IFriend[];

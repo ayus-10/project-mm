@@ -2,15 +2,15 @@ import axios from "axios";
 import { FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import GoogleIcon from "../assets/google.ico";
-import BannerImage from "../assets/account-banner.png";
+import GoogleIcon from "@/assets/google.ico";
+import BannerImage from "@/assets/account-banner.png";
 
 import { BeatLoader as Loading } from "react-spinners";
 import { FaEye as ShowPasswordIcon } from "react-icons/fa";
 import { LuChevronRight as RightArrowIcon } from "react-icons/lu";
 import { IoMdAlert as AlertIcon } from "react-icons/io";
 
-import { ACCESS_TOKEN } from "../constants";
+import { ACCESS_TOKEN } from "@/constants";
 
 interface UserFormProps {
   formType: "LOGIN" | "SIGNUP";

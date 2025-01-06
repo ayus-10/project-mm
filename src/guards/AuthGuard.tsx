@@ -1,7 +1,7 @@
 import { ReactNode, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Loading from "../components/Loading";
-import useAuthentication from "../hooks/useAuthentication";
+import Loading from "@/components/Loading";
+import useAuthentication from "@/hooks/useAuthentication";
 
 export default function AuthGuard({
   children,

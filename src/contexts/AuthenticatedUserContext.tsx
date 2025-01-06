@@ -1,5 +1,5 @@
 import { createContext, Dispatch, SetStateAction } from "react";
-import { IAuthenticatedUser } from "../interfaces/IAuthenticatedUser";
+import { IAuthenticatedUser } from "@/interfaces/IAuthenticatedUser";
 
 interface AuthenticatedUserContextValue {
   user: IAuthenticatedUser;

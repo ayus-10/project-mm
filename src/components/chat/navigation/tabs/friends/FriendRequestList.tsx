@@ -1,6 +1,6 @@
 import { MoonLoader as Loading } from "react-spinners";
 
-import { IFriend } from "../../../../../interfaces/IFriend";
+import { IFriend } from "@/interfaces/IFriend";
 import { ActiveTab } from "./types";
 
 import FriendRequestCard from "./requestCard/FriendRequestCard";

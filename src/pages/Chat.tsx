@@ -1,5 +1,5 @@
-import ChatNavigation from "../components/chat/navigation/ChatNavigation";
-import ChatBody from "../components/chat/body/ChatBody";
+import ChatNavigation from "@/components/chat/navigation/ChatNavigation";
+import ChatBody from "@/components/chat/body/ChatBody";
 
 export default function Chat() {
   return (

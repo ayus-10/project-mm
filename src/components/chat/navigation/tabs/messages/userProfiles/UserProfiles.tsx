@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { IoSearch as SearchUserIcon } from "react-icons/io5";
 
-import allUserProfiles from "../../../../../../assets/dummy_profiles.json";
+import allUserProfiles from "@/assets/dummy_profiles.json";
 import { ActiveTab } from "./types";
 
 import UserProfileCard from "./UserProfileCard";

@@ -1,6 +1,6 @@
 import { FriendRequestCardType } from "../types";
 
-import DefaultProfilePicture from "../../../../../DefaultProfilePicture";
+import DefaultProfilePicture from "@/components/DefaultProfilePicture";
 import RequestAction from "./RequestAction";
 
 interface FriendRequestCardProps {
