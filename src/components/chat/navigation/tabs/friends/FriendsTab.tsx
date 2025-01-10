@@ -5,11 +5,11 @@ import { IoSearch as SearchIcon } from "react-icons/io5";
 import { MdClose as CloseIcon } from "react-icons/md";
 import { PiUserCirclePlusThin as UserProfileIcon } from "react-icons/pi";
 
-import FriendRequestList from "./FriendRequestList";
-import FriendRequestCard from "./requestCard/FriendRequestCard";
+import FriendList from "./FriendList";
+import FriendCard from "./FriendCard";
 import { useFriendRequestStore, useUserProfileStore } from "./store";
 
-import { ActiveTab } from "./types";
+import { ViewFriendsTab } from "./types";
 import { IUser } from "@/interfaces/IUser";
 import { IFriend } from "@/interfaces/IFriend";
 
@@ -21,8 +21,14 @@ interface FriendRequests {
   received: IFriend[];
 }
 
+interface AllFriends {
+  friends: IFriend[];
+}
+
 export default function FriendsTab() {
-  const [activeTab, setActiveTab] = useState<ActiveTab>("RECEIVED");
+  const tabButtons: ViewFriendsTab[] = ["RECEIVED", "SENT", "ALL"];
+
+  const [activeTab, setActiveTab] = useState<ViewFriendsTab>("RECEIVED");
 
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -36,6 +42,8 @@ export default function FriendsTab() {
     receivedRequests,
     setReceivedRequests,
   } = useFriendRequestStore();
+
+  const [allFriends, setAllFriends] = useState<IFriend[]>([]);
 
   const [loadingRequests, setLoadingRequests] = useState(false);
   const [loadingProfile, setLoadingProfile] = useState(false);
@@ -111,6 +119,7 @@ export default function FriendsTab() {
         setReceivedRequests(data.received);
       } catch (error) {
         if (axios.isAxiosError(error)) {
+          await refreshTokens();
           const { data } = await sendRequest();
           setSentRequests(data.sent);
           setReceivedRequests(data.received);
@@ -122,6 +131,28 @@ export default function FriendsTab() {
 
     getRequests();
   }, [axiosWithAuth, setSentRequests, setReceivedRequests]);
+
+  useEffect(() => {
+    async function getAllFriends() {
+      const sendRequest = () => axiosWithAuth.get<AllFriends>("/api/Friends");
+
+      try {
+        setLoadingRequests(true);
+        const { data } = await sendRequest();
+        setAllFriends(data.friends);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          await refreshTokens();
+          const { data } = await sendRequest();
+          setAllFriends(data.friends);
+        }
+      } finally {
+        setLoadingRequests(false);
+      }
+    }
+
+    getAllFriends();
+  }, [axiosWithAuth]);
 
   return (
     <div className="flex h-full flex-col gap-8">
@@ -140,7 +171,7 @@ export default function FriendsTab() {
           </button>
         </form>
         {profile ? (
-          <FriendRequestCard tab="FIND" user={profile} />
+          <FriendCard tab="FIND" user={profile} />
         ) : (
           <div className="flex h-16 items-center justify-center gap-2 rounded-lg bg-purple-200 px-3 dark:bg-gray-750">
             <UserProfileIcon className="flex-shrink-0 text-5xl text-purple-700 dark:text-white" />
@@ -153,33 +184,26 @@ export default function FriendsTab() {
         )}
       </div>
       <div className="flex h-full flex-col gap-2">
-        <h1 className="text-lg font-semibold md:text-xl">Friend requests</h1>
+        <h1 className="text-lg font-semibold md:text-xl">View friends</h1>
         <div className="relative flex justify-between gap-2 rounded-lg bg-purple-200 p-2 dark:bg-gray-750">
-          <button
-            onClick={() => setActiveTab("RECEIVED")}
-            className={`w-full rounded-lg bg-purple-300 px-4 py-1 duration-200 ease-in-out md:px-6 md:py-2 md:font-semibold ${
-              activeTab === "RECEIVED" ? "text-white" : "text-purple-700"
-            }`}
-          >
-            <span className="relative z-30">Recieved</span>
-          </button>
-          <button
-            onClick={() => setActiveTab("SENT")}
-            className={`w-full rounded-lg bg-purple-300 px-4 py-1 duration-200 ease-in-out md:px-6 md:py-2 md:font-semibold ${
-              activeTab === "SENT" ? "text-white" : "text-purple-700"
-            }`}
-          >
-            <span className="relative z-30">Sent</span>
-          </button>
-          <div
-            className={`absolute top-1/2 z-20 h-[calc(100%-1rem)] w-[calc(50%-0.5rem)] -translate-y-1/2 rounded-lg bg-purple-700 duration-200 ease-in-out ${
-              activeTab === "SENT" ? "left-[50%]" : "left-[0.5rem]"
-            }`}
-          />
+          {tabButtons.map((btn) => (
+            <button
+              key={btn}
+              onClick={() => setActiveTab(btn)}
+              className={`w-1/3 rounded-lg px-3 py-1 duration-200 ease-in-out ${
+                activeTab === btn
+                  ? "bg-purple-600 text-white"
+                  : "bg-purple-300 text-purple-700"
+              }`}
+            >
+              <span className="relative z-30">{btn}</span>
+            </button>
+          ))}
         </div>
-        <FriendRequestList
+        <FriendList
           sent={sentRequests}
           received={receivedRequests}
+          all={allFriends}
           tab={activeTab}
           isLoading={loadingRequests}
         />

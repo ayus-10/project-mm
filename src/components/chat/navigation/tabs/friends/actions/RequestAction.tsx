@@ -11,7 +11,7 @@ import { ButtonContent } from "./ButtonContent";
 import { ACCESS_TOKEN } from "@/constants";
 import refreshTokens from "@/requests/refreshTokens";
 
-import { FriendRequestCardType } from "../types";
+import { ActionType } from "../types";
 import { IFriend } from "@/interfaces/IFriend";
 
 interface FriendRequestSent {
@@ -19,7 +19,7 @@ interface FriendRequestSent {
 }
 
 interface RequestActionProps {
-  tab: FriendRequestCardType;
+  tab: ActionType;
   userId: string;
 }
 
@@ -151,59 +151,65 @@ export default function RequestAction({ tab, userId }: RequestActionProps) {
   switch (tab) {
     case "RECEIVED":
       return (
-        <div className="flex gap-2">
+        <div className="flex items-end justify-between gap-2">
+          <div className="flex gap-2">
+            <button
+              onClick={acceptRequest}
+              className="rounded-full border-2 border-green-200 bg-green-200 px-3 text-green-500 duration-200 ease-in-out hover:border-green-500 hover:bg-transparent"
+            >
+              <ButtonContent
+                color="#22c55e"
+                label={{ active: "Accepted", inactive: "Accept" }}
+                status={accepted}
+              />
+              <CheckIcon className="md:hidden" />
+            </button>
+            <button
+              onClick={rejectRequest}
+              className="rounded-full border-2 border-red-200 bg-red-200 px-3 text-red-500 duration-200 ease-in-out hover:border-red-500 hover:bg-transparent"
+            >
+              <ButtonContent
+                color="#ef4444"
+                label={{ active: "Rejected", inactive: "Reject" }}
+                status={rejected}
+              />
+              <CloseIcon className="md:hidden" />
+            </button>
+          </div>
+        </div>
+      );
+    case "SENT":
+      return (
+        <div className="flex items-end justify-between gap-2">
           <button
-            onClick={acceptRequest}
-            className="rounded-full border-2 border-green-200 bg-green-200 px-3 text-green-500 duration-200 ease-in-out hover:border-green-500 hover:bg-transparent"
-          >
-            <ButtonContent
-              color="#22c55e"
-              label={{ active: "Accepted", inactive: "Accept" }}
-              status={accepted}
-            />
-            <CheckIcon className="md:hidden" />
-          </button>
-          <button
-            onClick={rejectRequest}
+            onClick={cancelRequest}
             className="rounded-full border-2 border-red-200 bg-red-200 px-3 text-red-500 duration-200 ease-in-out hover:border-red-500 hover:bg-transparent"
           >
             <ButtonContent
               color="#ef4444"
-              label={{ active: "Rejected", inactive: "Reject" }}
-              status={rejected}
+              label={{ active: "Canceled", inactive: "Cancel" }}
+              status={canceled}
             />
             <CloseIcon className="md:hidden" />
           </button>
         </div>
       );
-    case "SENT":
-      return (
-        <button
-          onClick={cancelRequest}
-          className="rounded-full border-2 border-red-200 bg-red-200 px-3 text-red-500 duration-200 ease-in-out hover:border-red-500 hover:bg-transparent"
-        >
-          <ButtonContent
-            color="#ef4444"
-            label={{ active: "Canceled", inactive: "Cancel" }}
-            status={canceled}
-          />
-          <CloseIcon className="md:hidden" />
-        </button>
-      );
     case "FIND":
       return (
-        <button
-          disabled={added !== false}
-          onClick={addFriend}
-          className="rounded-full border-2 border-purple-200 bg-purple-200 px-3 text-purple-500 duration-200 ease-in-out hover:border-purple-500 hover:bg-transparent"
-        >
-          <ButtonContent
-            color="#9333ea"
-            label={{ active: "Request sent", inactive: "Add friend" }}
-            status={added}
-          />
-          <AddIcon className="md:hidden" />
-        </button>
+        <div className="flex items-end justify-between gap-2">
+          <button
+            disabled={added !== false}
+            onClick={addFriend}
+            className="rounded-full border-2 border-purple-200 bg-purple-200 px-3 text-purple-500 duration-200 ease-in-out hover:border-purple-500 hover:bg-transparent"
+          >
+            <ButtonContent
+              color="#9333ea"
+              label={{ active: "Request sent", inactive: "Add friend" }}
+              status={added}
+            />
+            <AddIcon className="md:hidden" />
+          </button>
+        </div>
       );
   }
 }

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { AuthenticatedUserContext } from "@/contexts/AuthenticatedUserContext";
 
-import UserProfiles from "./userProfiles/UserProfiles";
+import UserProfiles from "./profiles/UserProfiles";
 import DefaultProfilePicture from "@/components/DefaultProfilePicture";
 
 export default function MessagesTab() {

@@ -1,2 +1,2 @@
-export type ActiveTab = "SENT" | "RECEIVED";
-export type FriendRequestCardType = "FIND" | "RECEIVED" | "SENT";
+export type ViewFriendsTab = "SENT" | "RECEIVED" | "ALL";
+export type ActionType = "FIND" | "RECEIVED" | "SENT";

@@ -1,10 +1,10 @@
-import { FriendRequestCardType } from "../types";
+import { ActionType, ViewFriendsTab } from "./types";
 
 import DefaultProfilePicture from "@/components/DefaultProfilePicture";
-import RequestAction from "./RequestAction";
+import RequestAction from "./actions/RequestAction";
 
-interface FriendRequestCardProps {
-  tab: FriendRequestCardType;
+interface FriendCardProps {
+  tab: ActionType | ViewFriendsTab;
   user: {
     id: string;
     fullName: string;
@@ -13,7 +13,7 @@ interface FriendRequestCardProps {
   };
 }
 
-export default function FriendRequestCard(props: FriendRequestCardProps) {
+export default function FriendCard(props: FriendCardProps) {
   const { tab, user } = props;
 
   return (
@@ -27,14 +27,12 @@ export default function FriendRequestCard(props: FriendRequestCardProps) {
           <h2 className="line-clamp-1 text-sm md:text-base">{user.email}</h2>
         </div>
       </div>
-      <div className="flex items-end justify-between gap-2">
-        <RequestAction tab={tab} userId={user.id} />
-        {user.requestSent ? (
-          <span className="text-sm text-gray-500 dark:text-gray-400">
-            {user.requestSent}
-          </span>
-        ) : null}
-      </div>
+      {tab !== "ALL" ? <RequestAction tab={tab} userId={user.id} /> : null}
+      {user.requestSent ? (
+        <span className="text-sm text-gray-500 dark:text-gray-400">
+          {user.requestSent}
+        </span>
+      ) : null}
     </div>
   );
 }
