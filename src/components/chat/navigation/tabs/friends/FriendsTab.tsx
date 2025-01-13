@@ -34,16 +34,18 @@ export default function FriendsTab() {
 
   const [errorMessage, setErrorMessage] = useState("");
 
+  const [fetchCount, setFetchCount] = useState(0);
+
   const { search, profile, setSearch, setProfile } = useUserProfileStore();
 
   const {
     sentRequests,
-    setSentRequests,
     receivedRequests,
+    allFriends,
+    setSentRequests,
     setReceivedRequests,
+    setAllFriends,
   } = useFriendRequestStore();
-
-  const [allFriends, setAllFriends] = useState<IFriend[]>([]);
 
   const [loadingRequests, setLoadingRequests] = useState(false);
   const [loadingProfile, setLoadingProfile] = useState(false);
@@ -80,6 +82,16 @@ export default function FriendsTab() {
   }
 
   useEffect(() => {
+    const eventSource = new EventSource("/api/Events");
+
+    eventSource.onmessage = () => setFetchCount((c) => c + 1);
+
+    eventSource.onerror = () => eventSource.close();
+
+    return () => eventSource.close();
+  }, []);
+
+  useEffect(() => {
     async function find() {
       const sendRequest = () =>
         axiosWithAuth.get<IUser>(`/api/Friends/find?email=${search}`);
@@ -108,12 +120,13 @@ export default function FriendsTab() {
   }, [search, axiosWithAuth, setProfile]);
 
   useEffect(() => {
-    async function getRequests() {
+    async function getRequests(showLoading: boolean) {
       const sendRequest = () =>
         axiosWithAuth.get<FriendRequests>("/api/Friends/requests");
 
       try {
-        setLoadingRequests(true);
+        if (showLoading) setLoadingRequests(true);
+
         const { data } = await sendRequest();
         setSentRequests(data.sent);
         setReceivedRequests(data.received);
@@ -125,19 +138,20 @@ export default function FriendsTab() {
           setReceivedRequests(data.received);
         }
       } finally {
-        setLoadingRequests(false);
+        if (showLoading) setLoadingRequests(false);
       }
     }
 
-    getRequests();
-  }, [axiosWithAuth, setSentRequests, setReceivedRequests]);
+    getRequests(fetchCount === 0);
+  }, [axiosWithAuth, fetchCount, setSentRequests, setReceivedRequests]);
 
   useEffect(() => {
-    async function getAllFriends() {
+    async function getAllFriends(showLoading: boolean) {
       const sendRequest = () => axiosWithAuth.get<AllFriends>("/api/Friends");
 
       try {
-        setLoadingRequests(true);
+        if (showLoading) setLoadingRequests(true);
+
         const { data } = await sendRequest();
         setAllFriends(data.friends);
       } catch (error) {
@@ -147,12 +161,12 @@ export default function FriendsTab() {
           setAllFriends(data.friends);
         }
       } finally {
-        setLoadingRequests(false);
+        if (showLoading) setLoadingRequests(false);
       }
     }
 
-    getAllFriends();
-  }, [axiosWithAuth]);
+    getAllFriends(fetchCount === 0);
+  }, [axiosWithAuth, fetchCount, setAllFriends]);
 
   return (
     <div className="flex h-full flex-col gap-8">

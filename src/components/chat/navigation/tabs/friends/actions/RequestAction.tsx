@@ -34,9 +34,11 @@ export default function RequestAction({ tab, userId }: RequestActionProps) {
 
   const {
     sentRequests,
-    setSentRequests,
+    allFriends,
     receivedRequests,
+    setSentRequests,
     setReceivedRequests,
+    setAllFriends,
   } = useFriendRequestStore();
 
   const [added, setAdded] = useState<boolean | undefined>(false);
@@ -78,10 +80,20 @@ export default function RequestAction({ tab, userId }: RequestActionProps) {
 
     const handleResponse = () => {
       setAccepted(true);
-      if (receivedRequests)
-        setReceivedRequests(
-          receivedRequests.filter((r) => r.senderId !== userId),
-        );
+
+      if (!receivedRequests) return;
+
+      setReceivedRequests(
+        receivedRequests.filter((r) => r.senderId !== userId),
+      );
+
+      const acceptedRequest = receivedRequests.find(
+        (r) => r.senderId === userId,
+      );
+
+      if (!acceptedRequest || !allFriends) return;
+
+      setAllFriends([...allFriends, acceptedRequest]);
     };
 
     await handleRequest(sendRequest, handleResponse, setAccepted);
