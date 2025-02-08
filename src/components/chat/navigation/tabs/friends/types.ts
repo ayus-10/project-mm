@@ -1,2 +1,2 @@
-export type ViewFriendsTab = "SENT" | "RECEIVED" | "ALL";
-export type ActionType = "FIND" | "RECEIVED" | "SENT";
+export type ViewFriendsTab = "SENT" | "RECEIVED";
+export type ActionType = "FIND" | ViewFriendsTab;

@@ -1,48 +1,36 @@
-import { useContext } from "react";
 import { MoonLoader as Loading } from "react-spinners";
 
 import { IFriend } from "@/interfaces/IFriend";
 import { ViewFriendsTab } from "./types";
 
-import { AuthenticatedUserContext } from "@/contexts/AuthenticatedUserContext";
-import FriendRequestCard from "./FriendCard";
+import FriendRequestCard from "./card/FriendCard";
 import NotFound from "@/assets/empty.png";
 
 interface FriendListProps {
   sent?: IFriend[];
   received?: IFriend[];
-  all?: IFriend[];
   tab: ViewFriendsTab;
   isLoading: boolean;
 }
 
 export default function FriendList(props: FriendListProps) {
-  const { tab, received, sent, all, isLoading } = props;
-
-  const { user: loggedInUser } = useContext(AuthenticatedUserContext);
-
-  const isLoggedInUserReceiver = (f: IFriend) =>
-    f.receiverEmail === loggedInUser.email;
+  const { tab, received, sent, isLoading } = props;
 
   const isValidArray = (arr: IFriend[] | undefined): arr is IFriend[] =>
     Array.isArray(arr) && arr.length > 0;
 
   const isSentTab = tab === "SENT";
   const isReceivedTab = tab === "RECEIVED";
-  const isAllTab = tab === "ALL";
 
   const showSent = isSentTab && isValidArray(sent);
   const showReceived = isReceivedTab && isValidArray(received);
-  const showAll = isAllTab && isValidArray(all);
 
   const errorMessage =
     isSentTab && !isValidArray(sent)
       ? "You have not sent any requests yet."
       : isReceivedTab && !isValidArray(received)
         ? "You have not received any requests yet."
-        : isAllTab && !isValidArray(all)
-          ? "You have not made any friends yet."
-          : null;
+        : null;
 
   if (isLoading) {
     return (
@@ -78,23 +66,7 @@ export default function FriendList(props: FriendListProps) {
                 }}
               />
             ))
-          : showAll
-            ? all.map((f) => (
-                <FriendRequestCard
-                  key={f.friendId}
-                  tab={tab}
-                  user={{
-                    email: isLoggedInUserReceiver(f)
-                      ? f.senderEmail
-                      : f.receiverEmail,
-                    fullName: isLoggedInUserReceiver(f)
-                      ? f.senderFullName
-                      : f.receiverFullName,
-                    id: isLoggedInUserReceiver(f) ? f.senderId : f.receiverId,
-                  }}
-                />
-              ))
-            : null}
+          : null}
       {errorMessage ? (
         <div className="flex flex-col items-center py-4">
           <img className="size-[125px]" src={NotFound} alt="Not found" />

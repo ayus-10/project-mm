@@ -12,10 +12,8 @@ interface UserProfileStore {
 interface FriendRequestStore {
   sentRequests: IFriend[] | undefined;
   receivedRequests: IFriend[] | undefined;
-  allFriends: IFriend[] | undefined;
   setSentRequests: (requests: IFriend[] | undefined) => void;
   setReceivedRequests: (requests: IFriend[] | undefined) => void;
-  setAllFriends: (friends: IFriend[] | undefined) => void;
 }
 
 export const useUserProfileStore = create<UserProfileStore>((set) => ({
@@ -28,8 +26,6 @@ export const useUserProfileStore = create<UserProfileStore>((set) => ({
 export const useFriendRequestStore = create<FriendRequestStore>((set) => ({
   sentRequests: undefined,
   receivedRequests: undefined,
-  allFriends: undefined,
   setSentRequests: (requests) => set({ sentRequests: requests }),
   setReceivedRequests: (requests) => set({ receivedRequests: requests }),
-  setAllFriends: (friends) => set({ allFriends: friends }),
 }));

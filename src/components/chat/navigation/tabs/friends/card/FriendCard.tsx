@@ -1,7 +1,7 @@
-import { ActionType, ViewFriendsTab } from "./types";
+import { ActionType, ViewFriendsTab } from "../types";
 
 import DefaultProfilePicture from "@/components/DefaultProfilePicture";
-import RequestAction from "./actions/RequestAction";
+import RequestAction from "./RequestAction";
 
 interface FriendCardProps {
   tab: ActionType | ViewFriendsTab;
@@ -27,7 +27,7 @@ export default function FriendCard(props: FriendCardProps) {
           <h2 className="line-clamp-1 text-sm md:text-base">{user.email}</h2>
         </div>
       </div>
-      {tab !== "ALL" ? <RequestAction tab={tab} userId={user.id} /> : null}
+      <RequestAction tab={tab} userId={user.id} />
       {user.requestSent ? (
         <span className="text-sm text-gray-500 dark:text-gray-400">
           {user.requestSent}

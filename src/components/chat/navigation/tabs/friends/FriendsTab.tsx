@@ -6,7 +6,7 @@ import { MdClose as CloseIcon } from "react-icons/md";
 import { PiUserCirclePlusThin as UserProfileIcon } from "react-icons/pi";
 
 import FriendList from "./FriendList";
-import FriendCard from "./FriendCard";
+import FriendCard from "./card/FriendCard";
 import { useFriendRequestStore, useUserProfileStore } from "./store";
 
 import { ViewFriendsTab } from "./types";
@@ -21,12 +21,8 @@ interface FriendRequests {
   received: IFriend[];
 }
 
-interface AllFriends {
-  friends: IFriend[];
-}
-
 export default function FriendsTab() {
-  const tabButtons: ViewFriendsTab[] = ["RECEIVED", "SENT", "ALL"];
+  const tabButtons: ViewFriendsTab[] = ["RECEIVED", "SENT"];
 
   const [activeTab, setActiveTab] = useState<ViewFriendsTab>("RECEIVED");
 
@@ -41,10 +37,8 @@ export default function FriendsTab() {
   const {
     sentRequests,
     receivedRequests,
-    allFriends,
     setSentRequests,
     setReceivedRequests,
-    setAllFriends,
   } = useFriendRequestStore();
 
   const [loadingRequests, setLoadingRequests] = useState(false);
@@ -145,29 +139,6 @@ export default function FriendsTab() {
     getRequests(fetchCount === 0);
   }, [axiosWithAuth, fetchCount, setSentRequests, setReceivedRequests]);
 
-  useEffect(() => {
-    async function getAllFriends(showLoading: boolean) {
-      const sendRequest = () => axiosWithAuth.get<AllFriends>("/api/Friends");
-
-      try {
-        if (showLoading) setLoadingRequests(true);
-
-        const { data } = await sendRequest();
-        setAllFriends(data.friends);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          await refreshTokens();
-          const { data } = await sendRequest();
-          setAllFriends(data.friends);
-        }
-      } finally {
-        if (showLoading) setLoadingRequests(false);
-      }
-    }
-
-    getAllFriends(fetchCount === 0);
-  }, [axiosWithAuth, fetchCount, setAllFriends]);
-
   return (
     <div className="flex h-full flex-col gap-8">
       <div className="flex flex-col gap-2">
@@ -198,13 +169,13 @@ export default function FriendsTab() {
         )}
       </div>
       <div className="flex h-full flex-col gap-2">
-        <h1 className="text-lg font-semibold md:text-xl">View friends</h1>
+        <h1 className="text-lg font-semibold md:text-xl">Friend requests</h1>
         <div className="relative flex justify-between gap-2 rounded-lg bg-purple-200 p-2 dark:bg-gray-750">
           {tabButtons.map((btn) => (
             <button
               key={btn}
               onClick={() => setActiveTab(btn)}
-              className={`w-1/3 rounded-lg px-3 py-1 duration-200 ease-in-out ${
+              className={`w-1/2 rounded-lg px-3 py-1 duration-200 ease-in-out ${
                 activeTab === btn
                   ? "bg-purple-600 text-white"
                   : "bg-purple-300 text-purple-700"
@@ -217,7 +188,6 @@ export default function FriendsTab() {
         <FriendList
           sent={sentRequests}
           received={receivedRequests}
-          all={allFriends}
           tab={activeTab}
           isLoading={loadingRequests}
         />
