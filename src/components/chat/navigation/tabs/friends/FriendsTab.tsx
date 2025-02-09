@@ -14,7 +14,7 @@ import { IUser } from "@/interfaces/IUser";
 import { IFriend } from "@/interfaces/IFriend";
 
 import { ACCESS_TOKEN } from "@/constants";
-import refreshTokens from "@/requests/refreshTokens";
+import refreshTokens from "@/utils/refreshTokens";
 
 interface FriendRequests {
   sent: IFriend[];

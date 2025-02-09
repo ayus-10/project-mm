@@ -9,7 +9,7 @@ import { useFriendRequestStore, useUserProfileStore } from "../store";
 import { ButtonContent } from "./ButtonContent";
 
 import { ACCESS_TOKEN } from "@/constants";
-import refreshTokens from "@/requests/refreshTokens";
+import refreshTokens from "@/utils/refreshTokens";
 
 import { ActionType } from "../types";
 import { IFriend } from "@/interfaces/IFriend";

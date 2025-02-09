@@ -1,4 +1,4 @@
-import { MoonLoader as Loading } from "react-spinners";
+import Loading from "@/components/Loading";
 
 import { IFriend } from "@/interfaces/IFriend";
 import { ViewFriendsTab } from "./types";
@@ -33,11 +33,7 @@ export default function FriendList(props: FriendListProps) {
         : null;
 
   if (isLoading) {
-    return (
-      <div className="flex h-full w-full items-center justify-center">
-        <Loading color="#9333ea" />
-      </div>
-    );
+    return <Loading type="SMALL" />;
   }
 
   return (

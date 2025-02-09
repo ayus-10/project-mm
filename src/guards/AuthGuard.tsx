@@ -21,5 +21,5 @@ export default function AuthGuard({
 
   if (isLoggedIn || !isProtectedPath) return children;
 
-  return <Loading />;
+  return <Loading type="FULL" />;
 }

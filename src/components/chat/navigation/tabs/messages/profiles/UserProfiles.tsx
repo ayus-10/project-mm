@@ -1,42 +1,89 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { IoSearch as SearchUserIcon } from "react-icons/io5";
 
-import allUserProfiles from "@/assets/dummy_profiles.json";
 import { ActiveTab } from "./types";
+import { IConversation } from "@/interfaces/IConversation";
+import { ACCESS_TOKEN } from "@/constants";
 
+import refreshTokens from "@/utils/refreshTokens";
+import EmptyImage from "@/assets/alien.png";
 import UserProfileCard from "./UserProfileCard";
-import TabSwitchButton from "./TabSwitchButton";
+import Loading from "@/components/Loading";
+
+interface GetConversationsResponse {
+  conversations: IConversation[];
+}
 
 export default function UserProfiles() {
-  const [userProfiles, setUserProfiles] = useState(allUserProfiles);
+  const tabs: ActiveTab[] = ["ALL", "NEW"];
 
   const [search, setSearch] = useState("");
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("ALL");
 
+  const [conversations, setConversations] = useState<IConversation[]>([]);
+
+  const [loading, setLoading] = useState(false);
+
+  const [filteredConversations, setFilteredConversations] = useState<
+    IConversation[]
+  >([]);
+
+  const validConversations = filteredConversations.filter(
+    ({ message }) => message !== null,
+  );
+
+  useEffect(() => {
+    const sendRequest = () =>
+      axios.get<GetConversationsResponse>("/api/Chat/conversations", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+        },
+      });
+
+    async function getConversations() {
+      try {
+        setLoading(true);
+        const { data } = await sendRequest();
+        setConversations(data.conversations);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          await refreshTokens();
+          const { data } = await sendRequest();
+          setConversations(data.conversations);
+        }
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    getConversations();
+  }, []);
+
   useEffect(() => {
     if (search) {
-      const filteredUserProfiles = allUserProfiles.filter((profile) =>
-        profile.fullName.toLowerCase().includes(search),
+      const filtered = conversations.filter((conversation) =>
+        conversation.receiverName.toLowerCase().includes(search),
       );
-      setUserProfiles(filteredUserProfiles);
+      setFilteredConversations(filtered);
 
       setActiveTab("ALL");
     } else {
-      setUserProfiles(allUserProfiles);
+      setFilteredConversations(conversations);
     }
-  }, [search]);
+  }, [search, conversations]);
 
   useEffect(() => {
     if (activeTab === "NEW") {
-      const filteredUserProfiles = allUserProfiles.filter(
-        (profile) => profile.unseenMessagesCount > 0,
+      const filtered = conversations.filter(
+        (conversation) => conversation.message?.isSeen,
       );
-      setUserProfiles(filteredUserProfiles);
+      setFilteredConversations(filtered);
     } else {
-      setUserProfiles(allUserProfiles);
+      setFilteredConversations(conversations);
     }
-  }, [activeTab]);
+  }, [activeTab, conversations]);
 
   return (
     <div className="flex h-1 w-full grow flex-col">
@@ -52,28 +99,42 @@ export default function UserProfiles() {
         </div>
       </div>
       <div className="flex w-full gap-2 py-1">
-        <TabSwitchButton
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          currentTab="ALL"
-        />
-        <TabSwitchButton
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          currentTab="NEW"
-        />
-      </div>
-      <div className="grow overflow-y-scroll">
-        {userProfiles.map((profile) => (
-          <UserProfileCard
-            key={profile.id}
-            id={profile.id}
-            fullName={profile.fullName}
-            lastMessage={profile.lastMessage}
-            sentTime={profile.sentTime}
-            unseenMessagesCount={profile.unseenMessagesCount}
-          />
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`cursor-pointer rounded-full px-3 text-sm font-medium text-white duration-200 ease-in-out hover:bg-purple-700 dark:hover:bg-purple-500 ${
+              activeTab === tab
+                ? "bg-purple-700 dark:bg-purple-500"
+                : "bg-purple-300"
+            }`}
+          >
+            {tab}
+          </button>
         ))}
+      </div>
+      <div className="grow overflow-y-auto">
+        {validConversations.length > 0 ? (
+          validConversations.map((conversation) => (
+            <UserProfileCard
+              key={conversation.message!.messageTime}
+              fullName={conversation.receiverName}
+              lastMessage={conversation.message!.lastMessage}
+              sentTime={conversation.message!.messageTime}
+              hasUnseenMessages={!conversation.message!.isSeen}
+            />
+          ))
+        ) : loading ? (
+          <Loading type="SMALL" />
+        ) : (
+          <div className="flex flex-col items-center gap-2 p-6">
+            <img src={EmptyImage} className="size-[150px]" />
+            <div className="text-center italic">
+              <p>Nothing here!</p>
+              <p>Looks like everyone’s taking a nap.</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
