@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { IoSearch as SearchUserIcon } from "react-icons/io5";
 
-import { ActiveTab } from "./types";
+import { IFriend } from "@/interfaces/IFriend";
 import { IConversation } from "@/interfaces/IConversation";
 import { ACCESS_TOKEN } from "@/constants";
 
@@ -15,14 +15,22 @@ interface GetConversationsResponse {
   conversations: IConversation[];
 }
 
+interface GetFriendsResponse {
+  friends: IFriend[];
+}
+
+type ActiveTab = "ALL" | "UNSEEN" | "FRIENDS";
+
 export default function UserProfiles() {
-  const tabs: ActiveTab[] = ["ALL", "NEW"];
+  const tabs: ActiveTab[] = ["ALL", "UNSEEN", "FRIENDS"];
 
   const [search, setSearch] = useState("");
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("ALL");
 
   const [conversations, setConversations] = useState<IConversation[]>([]);
+
+  const [friends, setFriends] = useState<IFriend[]>([]);
 
   const [loading, setLoading] = useState(false);
 
@@ -35,30 +43,52 @@ export default function UserProfiles() {
   );
 
   useEffect(() => {
-    const sendRequest = () =>
-      axios.get<GetConversationsResponse>("/api/Chat/conversations", {
+    const sendRequest = <T,>(endpoint: string) =>
+      axios.get<T>(endpoint, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
         },
       });
 
+    const getConversationsRequest = () =>
+      sendRequest<GetConversationsResponse>("/api/Chat/conversations");
+
+    const getFriendsRequest = () =>
+      sendRequest<GetFriendsResponse>("/api/Friends");
+
     async function getConversations() {
       try {
-        setLoading(true);
-        const { data } = await sendRequest();
+        const { data } = await getConversationsRequest();
         setConversations(data.conversations);
       } catch (error) {
         if (axios.isAxiosError(error)) {
           await refreshTokens();
-          const { data } = await sendRequest();
+          const { data } = await getConversationsRequest();
           setConversations(data.conversations);
         }
-      } finally {
-        setLoading(false);
       }
     }
 
-    getConversations();
+    async function getFriends() {
+      try {
+        const { data } = await getFriendsRequest();
+        setFriends(data.friends);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          await refreshTokens();
+          const { data } = await getFriendsRequest();
+          setFriends(data.friends);
+        }
+      }
+    }
+
+    async function getAll() {
+      setLoading(true);
+      await Promise.all([getConversations(), getFriends()]);
+      setLoading(false);
+    }
+
+    getAll();
   }, []);
 
   useEffect(() => {
@@ -75,9 +105,9 @@ export default function UserProfiles() {
   }, [search, conversations]);
 
   useEffect(() => {
-    if (activeTab === "NEW") {
+    if (activeTab === "UNSEEN") {
       const filtered = conversations.filter(
-        (conversation) => conversation.message?.isSeen,
+        (conversation) => !conversation.message?.isSeen,
       );
       setFilteredConversations(filtered);
     } else {
@@ -99,7 +129,7 @@ export default function UserProfiles() {
         </div>
       </div>
       <div className="flex w-full gap-2 py-1">
-        {tabs.map((tab) => (
+        {tabs.map((tab, index) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -107,7 +137,8 @@ export default function UserProfiles() {
               activeTab === tab
                 ? "bg-purple-700 dark:bg-purple-500"
                 : "bg-purple-300"
-            }`}
+            }
+            ${index === 2 ? "ml-auto" : ""}`}
           >
             {tab}
           </button>
