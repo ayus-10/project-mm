@@ -50,13 +50,13 @@ export default function UserForm({ formType }: UserFormProps) {
 
       if (formType === "SIGNUP") {
         const payload = {
-          Email: email,
-          Password: password,
-          FullName: fullName,
+          email,
+          password,
+          fullName,
         };
 
         const { data } = await axios.post<SignupResponse>(
-          "/api/Users",
+          "/api/users",
           payload,
         );
 
@@ -65,11 +65,11 @@ export default function UserForm({ formType }: UserFormProps) {
       }
       if (formType === "LOGIN") {
         const payload = {
-          Email: email,
-          Password: password,
+          email,
+          password,
         };
 
-        const { data } = await axios.post<LoginResponse>("/api/Auth", payload);
+        const { data } = await axios.post<LoginResponse>("/api/auth", payload);
 
         localStorage.setItem(ACCESS_TOKEN, data.accessToken);
         window.location.href = "/chat";

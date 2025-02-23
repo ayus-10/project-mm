@@ -51,7 +51,7 @@ export default function RequestAction({ tab, userId }: RequestActionProps) {
   async function acceptRequest() {
     setAccepted(undefined);
 
-    const res = await customPost(`/api/friends/accept?senderId=${userId}`);
+    const res = await customPatch(`/api/friends/accept?senderId=${userId}`);
 
     if (res && receivedRequests) {
       setAccepted(true);

@@ -27,7 +27,7 @@ export default function useAuthentication() {
       };
 
       const fetchAuth = () =>
-        axios.get<AuthResponse>("/api/Auth", {
+        axios.get<AuthResponse>("/api/auth", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
           },

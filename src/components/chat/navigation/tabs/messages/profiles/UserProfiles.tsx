@@ -1,12 +1,10 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { IoSearch as SearchUserIcon } from "react-icons/io5";
 
 import { IFriend } from "@/interfaces/IFriend";
 import { IConversation } from "@/interfaces/IConversation";
-import { ACCESS_TOKEN } from "@/constants";
+import { customGet } from "@/utils/customAxios";
 
-import refreshTokens from "@/utils/refreshTokens";
 import EmptyImage from "@/assets/alien.png";
 import UserProfileCard from "./UserProfileCard";
 import Loading from "@/components/Loading";
@@ -21,6 +19,8 @@ interface GetFriendsResponse {
 
 type ActiveTab = "ALL" | "UNSEEN" | "FRIENDS";
 
+// TODO: implement client-side LOAD MORE
+// TODO: fetch these data somewhere up
 export default function UserProfiles() {
   const tabs: ActiveTab[] = ["ALL", "UNSEEN", "FRIENDS"];
 
@@ -43,43 +43,18 @@ export default function UserProfiles() {
   );
 
   useEffect(() => {
-    const sendRequest = <T,>(endpoint: string) =>
-      axios.get<T>(endpoint, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-        },
-      });
-
-    const getConversationsRequest = () =>
-      sendRequest<GetConversationsResponse>("/api/Chat/conversations");
-
-    const getFriendsRequest = () =>
-      sendRequest<GetFriendsResponse>("/api/Friends");
-
     async function getConversations() {
-      try {
-        const { data } = await getConversationsRequest();
-        setConversations(data.conversations);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          await refreshTokens();
-          const { data } = await getConversationsRequest();
-          setConversations(data.conversations);
-        }
-      }
+      const res = await customGet<GetConversationsResponse>(
+        "/api/chat/conversations",
+      );
+
+      if (res) setConversations(res.conversations);
     }
 
     async function getFriends() {
-      try {
-        const { data } = await getFriendsRequest();
-        setFriends(data.friends);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          await refreshTokens();
-          const { data } = await getFriendsRequest();
-          setFriends(data.friends);
-        }
-      }
+      const res = await customGet<GetFriendsResponse>("/api/friends");
+
+      if (res) setFriends(res.friends);
     }
 
     async function getAll() {
