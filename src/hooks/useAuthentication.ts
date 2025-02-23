@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import refreshTokens from "@/utils/refreshTokens";
 import axios from "axios";
-import { ACCESS_TOKEN } from "@/constants";
 import { AuthenticatedUserContext } from "@/contexts/AuthenticatedUserContext";
 
 interface AuthResponse {
@@ -29,7 +28,7 @@ export default function useAuthentication() {
       const fetchAuth = () =>
         axios.get<AuthResponse>("/api/auth", {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+            Authorization: `Bearer ${localStorage.getItem("ACCESS_TOKEN")}`,
           },
         });
 

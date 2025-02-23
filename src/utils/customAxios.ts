@@ -1,9 +1,8 @@
 import axios from "axios";
 
-import { ACCESS_TOKEN } from "@/constants";
 import refreshTokens from "./refreshTokens";
 
-const getAccessToken = () => localStorage.getItem(ACCESS_TOKEN);
+const getAccessToken = () => localStorage.getItem("ACCESS_TOKEN");
 
 export async function customPost<T>(endpoint: string, payload?: unknown) {
   const sendPost = () =>
