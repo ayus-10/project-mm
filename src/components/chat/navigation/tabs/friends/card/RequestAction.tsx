@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import { customDelete, customPatch, customPost } from "@/utils/customAxios";
 
 import { FaCheck as CheckIcon } from "react-icons/fa6";
 import { IoMdAdd as AddIcon } from "react-icons/io";
@@ -7,9 +7,6 @@ import { MdClose as CloseIcon } from "react-icons/md";
 
 import { useFriendRequestStore, useUserProfileStore } from "../store";
 import { ButtonContent } from "./ButtonContent";
-
-import { ACCESS_TOKEN } from "@/constants";
-import refreshTokens from "@/utils/refreshTokens";
 
 import { ActionType } from "../types";
 import { IFriend } from "@/interfaces/IFriend";
@@ -24,12 +21,6 @@ interface RequestActionProps {
 }
 
 export default function RequestAction({ tab, userId }: RequestActionProps) {
-  const axiosWithAuth = axios.create({
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-    },
-  });
-
   const { setProfile, setSearch } = useUserProfileStore();
 
   const {
@@ -45,97 +36,52 @@ export default function RequestAction({ tab, userId }: RequestActionProps) {
   const [canceled, setCanceled] = useState<boolean | undefined>(false);
 
   async function addFriend() {
-    const sendRequest = () =>
-      axiosWithAuth.post<FriendRequestSent>(
-        "/api/Friends?receiverId=" + userId,
-      );
+    setAdded(undefined);
 
-    const handleResponse = (request: IFriend) => {
+    const res = await customPost<FriendRequestSent>(
+      `/api/friends?receiverId=${userId}`,
+    );
+
+    if (res && sentRequests) {
       setAdded(true);
-      if (sentRequests) setSentRequests([...sentRequests, request]);
-    };
-
-    try {
-      setAdded(undefined);
-      const { data } = await sendRequest();
-      handleResponse(data.request);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        try {
-          await refreshTokens();
-          const { data } = await sendRequest();
-          handleResponse(data.request);
-        } catch {
-          setAdded(false);
-        }
-      }
+      setSentRequests([...sentRequests, res.request]);
     }
   }
 
   async function acceptRequest() {
-    const sendRequest = () =>
-      axiosWithAuth.patch("/api/Friends/accept?senderId=" + userId);
+    setAccepted(undefined);
 
-    const handleResponse = () => {
+    const res = await customPost(`/api/friends/accept?senderId=${userId}`);
+
+    if (res && receivedRequests) {
       setAccepted(true);
-
-      if (!receivedRequests) return;
-
       setReceivedRequests(
         receivedRequests.filter((r) => r.senderId !== userId),
       );
-    };
-
-    await handleRequest(sendRequest, handleResponse, setAccepted);
+    }
   }
 
   async function rejectRequest() {
-    const sendRequest = () =>
-      axiosWithAuth.patch("/api/Friends/reject?senderId=" + userId);
+    setRejected(undefined);
 
-    const handleResponse = () => {
+    const res = await customPatch(`/api/friends/reject?senderId=${userId}`);
+
+    if (res && receivedRequests) {
       setRejected(true);
-      if (receivedRequests)
-        setReceivedRequests(
-          receivedRequests.filter((r) => r.senderId !== userId),
-        );
-    };
-
-    await handleRequest(sendRequest, handleResponse, setRejected);
+      setReceivedRequests(
+        receivedRequests.filter((r) => r.senderId !== userId),
+      );
+    }
   }
 
   async function cancelRequest() {
-    const sendRequest = () =>
-      axiosWithAuth.delete("/api/Friends/?receiverId=" + userId);
+    setCanceled(undefined);
 
-    const handleResponse = () => {
+    const res = await customDelete(`/api/friends/?receiverId=${userId}`);
+
+    if (res && sentRequests) {
       setCanceled(true);
-      if (sentRequests)
-        setSentRequests(sentRequests.filter((r) => r.receiverId !== userId));
-    };
-
-    await handleRequest(sendRequest, handleResponse, setCanceled);
-  }
-
-  async function handleRequest(
-    sendRequest: () => Promise<AxiosResponse<unknown, unknown>>,
-    handleResponse: () => void,
-    setState: (value: React.SetStateAction<boolean | undefined>) => void,
-  ) {
-    try {
-      setState(undefined);
-      await sendRequest();
-      handleResponse();
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        try {
-          await refreshTokens();
-          await sendRequest();
-          handleResponse();
-        } catch {
-          setState(false);
-        }
-      }
+      setSentRequests(sentRequests.filter((r) => r.receiverId !== userId));
     }
   }
 

@@ -1,5 +1,5 @@
-import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
-import axios from "axios";
+import { FormEvent, useEffect, useRef, useState } from "react";
+import { customGet } from "@/utils/customAxios";
 
 import { IoSearch as SearchIcon } from "react-icons/io5";
 import { MdClose as CloseIcon } from "react-icons/md";
@@ -12,9 +12,6 @@ import { useFriendRequestStore, useUserProfileStore } from "./store";
 import { ViewFriendsTab } from "./types";
 import { IUser } from "@/interfaces/IUser";
 import { IFriend } from "@/interfaces/IFriend";
-
-import { ACCESS_TOKEN } from "@/constants";
-import refreshTokens from "@/utils/refreshTokens";
 
 interface FriendRequests {
   sent: IFriend[];
@@ -44,16 +41,6 @@ export default function FriendsTab() {
   const [loadingRequests, setLoadingRequests] = useState(false);
   const [loadingProfile, setLoadingProfile] = useState(false);
 
-  const axiosWithAuth = useMemo(
-    () =>
-      axios.create({
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-        },
-      }),
-    [],
-  );
-
   function searchUserProfile(e: FormEvent) {
     e.preventDefault();
 
@@ -76,7 +63,7 @@ export default function FriendsTab() {
   }
 
   useEffect(() => {
-    const eventSource = new EventSource("/api/Events");
+    const eventSource = new EventSource("/api/events");
 
     eventSource.onmessage = () => setFetchCount((c) => c + 1);
 
@@ -87,57 +74,34 @@ export default function FriendsTab() {
 
   useEffect(() => {
     async function find() {
-      const sendRequest = () =>
-        axiosWithAuth.get<IUser>(`/api/Friends/find?email=${search}`);
+      setLoadingProfile(true);
 
-      try {
-        setLoadingProfile(true);
-        const { data } = await sendRequest();
-        setProfile(data);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          try {
-            await refreshTokens();
-            const { data } = await sendRequest();
-            setProfile(data);
-          } catch (newError) {
-            if (axios.isAxiosError(newError))
-              setErrorMessage(newError.response?.data);
-          }
-        }
-      } finally {
-        setLoadingProfile(false);
-      }
+      const res = await customGet<IUser>(`/api/friends/find?email=${search}`);
+      if (res) setProfile(res);
+
+      setLoadingProfile(false);
     }
 
     if (search) find();
-  }, [search, axiosWithAuth, setProfile]);
+  }, [search, setProfile]);
 
+  // TODO: remove this from here
   useEffect(() => {
     async function getRequests(showLoading: boolean) {
-      const sendRequest = () =>
-        axiosWithAuth.get<FriendRequests>("/api/Friends/requests");
+      if (showLoading) setLoadingRequests(true);
 
-      try {
-        if (showLoading) setLoadingRequests(true);
+      const res = await customGet<FriendRequests>("/api/friends/requests");
 
-        const { data } = await sendRequest();
-        setSentRequests(data.sent);
-        setReceivedRequests(data.received);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          await refreshTokens();
-          const { data } = await sendRequest();
-          setSentRequests(data.sent);
-          setReceivedRequests(data.received);
-        }
-      } finally {
-        if (showLoading) setLoadingRequests(false);
+      if (res) {
+        setSentRequests(res.sent);
+        setReceivedRequests(res.received);
       }
+
+      if (showLoading) setLoadingRequests(false);
     }
 
     getRequests(fetchCount === 0);
-  }, [axiosWithAuth, fetchCount, setSentRequests, setReceivedRequests]);
+  }, [fetchCount, setSentRequests, setReceivedRequests]);
 
   return (
     <div className="flex h-full flex-col gap-8">
