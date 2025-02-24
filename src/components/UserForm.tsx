@@ -10,8 +10,6 @@ import { FaEye as ShowPasswordIcon } from "react-icons/fa";
 import { LuChevronRight as RightArrowIcon } from "react-icons/lu";
 import { IoMdAlert as AlertIcon } from "react-icons/io";
 
-import { ACCESS_TOKEN } from "@/constants";
-
 interface UserFormProps {
   formType: "LOGIN" | "SIGNUP";
 }
@@ -60,7 +58,7 @@ export default function UserForm({ formType }: UserFormProps) {
           payload,
         );
 
-        localStorage.setItem(ACCESS_TOKEN, data.accessToken);
+        localStorage.setItem("ACCESS_TOKEN", data.accessToken);
         window.location.href = "/chat";
       }
       if (formType === "LOGIN") {
@@ -71,7 +69,7 @@ export default function UserForm({ formType }: UserFormProps) {
 
         const { data } = await axios.post<LoginResponse>("/api/auth", payload);
 
-        localStorage.setItem(ACCESS_TOKEN, data.accessToken);
+        localStorage.setItem("ACCESS_TOKEN", data.accessToken);
         window.location.href = "/chat";
       }
     } catch (error) {
