@@ -7,7 +7,8 @@ import { PiUserCirclePlusThin as UserProfileIcon } from "react-icons/pi";
 
 import FriendList from "./FriendList";
 import FriendCard from "./card/FriendCard";
-import { useFriendRequestStore, useUserProfileStore } from "./store";
+import { useFriendRequestStore } from "@/stores/friendRequestStore";
+import { useUserProfileStore } from "@/stores/userProfileStore";
 
 import { ViewFriendsTab } from "./types";
 import { IUser } from "@/interfaces/IUser";

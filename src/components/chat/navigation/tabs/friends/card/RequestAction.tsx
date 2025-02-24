@@ -5,7 +5,8 @@ import { FaCheck as CheckIcon } from "react-icons/fa6";
 import { IoMdAdd as AddIcon } from "react-icons/io";
 import { MdClose as CloseIcon } from "react-icons/md";
 
-import { useFriendRequestStore, useUserProfileStore } from "../store";
+import { useFriendRequestStore } from "@/stores/friendRequestStore";
+import { useUserProfileStore } from "@/stores/userProfileStore";
 import { ButtonContent } from "./ButtonContent";
 
 import { ActionType } from "../types";

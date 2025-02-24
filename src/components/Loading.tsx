@@ -1,4 +1,4 @@
-import { HashLoader, MoonLoader } from "react-spinners";
+import { HashLoader, BeatLoader } from "react-spinners";
 
 interface LoadingProps {
   type: "FULL" | "SMALL";
@@ -17,8 +17,8 @@ export default function Loading({ type }: LoadingProps) {
       );
     case "SMALL":
       return (
-        <div className="flex h-full w-full items-center justify-center">
-          <MoonLoader color="#9333ea" />
+        <div className="flex h-full w-full justify-center pt-12">
+          <BeatLoader color="#a855f7" />
         </div>
       );
   }
