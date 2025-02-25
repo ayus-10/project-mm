@@ -1,9 +1,9 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Chat from "./pages/Chat";
+import { Login } from "./pages/Login";
+import { Signup } from "./pages/Signup";
+import { Chat } from "./pages/Chat";
 
-export default function App() {
+export function App() {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/chat" />} />

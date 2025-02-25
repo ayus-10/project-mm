@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import refreshTokens from "@/utils/refreshTokens";
+import { refreshTokens } from "@/utils/refreshTokens";
 import axios from "axios";
 import { AuthenticatedUserContext } from "@/contexts/AuthenticatedUserContext";
 
@@ -8,7 +8,7 @@ interface AuthResponse {
   fullName: string;
 }
 
-export default function useAuthentication() {
+export function useAuthentication() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(undefined);
 
   const { setUser } = useContext(AuthenticatedUserContext);

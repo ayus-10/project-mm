@@ -4,9 +4,9 @@ import { PiPaperPlaneTiltFill as SendMessageIcon } from "react-icons/pi";
 import allMessages from "@/assets/dummy_messages.json";
 
 import { AuthenticatedUserContext } from "@/contexts/AuthenticatedUserContext";
-import MessageBox from "./MessageBox";
+import { MessageBox } from "./MessageBox";
 
-export default function MessagesContainer({ search }: { search: string }) {
+export function MessagesContainer({ search }: { search: string }) {
   const chatContainer = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (chatContainer.current) {

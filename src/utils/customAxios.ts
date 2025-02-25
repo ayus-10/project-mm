@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import refreshTokens from "./refreshTokens";
+import { refreshTokens } from "./refreshTokens";
 
 const getAccessToken = () => localStorage.getItem("ACCESS_TOKEN");
 

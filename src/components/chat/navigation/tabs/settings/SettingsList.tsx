@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { ThemeContext } from "@/contexts/ThemeContext";
 
-import ToggleSwitch from "./ToggleSwitch";
+import { ToggleSwitch } from "./ToggleSwitch";
 
-export default function SettingsList({ tab }: { tab: string }) {
+export function SettingsList({ tab }: { tab: string }) {
   const { darkTheme } = useContext(ThemeContext);
 
   switch (tab) {

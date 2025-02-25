@@ -7,9 +7,9 @@ import {
 } from "react-icons/fa";
 import { FaShield as SecurityIcon } from "react-icons/fa6";
 
-import SettingsList from "./SettingsList";
+import { SettingsList } from "./SettingsList";
 
-export default function SettingsTab() {
+export function SettingsTab() {
   const settingItems = [
     {
       text: "Notifications",
@@ -37,7 +37,7 @@ export default function SettingsTab() {
         <div key={item.text}>
           <button
             onClick={() => setSetting(item.text)}
-            className={`flex w-full cursor-pointer items-center gap-4 border-b-2 border-purple-300 bg-white px-4 py-3 text-purple-700 duration-200 ease-in-out hover:bg-purple-100 dark:border-purple-500 dark:bg-gray-750 dark:hover:bg-gray-800 
+            className={`flex w-full cursor-pointer items-center gap-4 border-b-2 border-purple-300 bg-white px-4 py-3 text-purple-700 duration-200 ease-in-out hover:bg-purple-100 dark:border-purple-500 dark:bg-gray-750 dark:hover:bg-gray-800
               ${setting === item.text ? "rounded-t-md" : "rounded-md"}
             `}
           >

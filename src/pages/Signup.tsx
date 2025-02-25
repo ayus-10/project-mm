@@ -1,5 +1,5 @@
-import UserForm from "@/components/UserForm";
+import { UserForm } from "@/components/UserForm";
 
-export default function Signup() {
+export function Signup() {
   return <UserForm formType="SIGNUP" />;
 }

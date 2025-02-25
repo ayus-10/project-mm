@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import ChatNavigation from "@/components/chat/navigation/ChatNavigation";
-import ChatBody from "@/components/chat/body/ChatBody";
+import { ChatNavigation } from "@/components/chat/navigation/ChatNavigation";
+import { ChatBody } from "@/components/chat/body/ChatBody";
 
 import { IConversation } from "@/interfaces/IConversation";
 import { IFriend } from "@/interfaces/IFriend";
@@ -23,7 +23,7 @@ interface GetFriendsResponse {
   friends: IFriend[];
 }
 
-export default function Chat() {
+export function Chat() {
   const [fetchCount, setFetchCount] = useState(0);
 
   const { setSentRequests, setReceivedRequests, setLoadingRequests } =

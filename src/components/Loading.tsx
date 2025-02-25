@@ -4,7 +4,7 @@ interface LoadingProps {
   type: "FULL" | "SMALL";
 }
 
-export default function Loading({ type }: LoadingProps) {
+export function Loading({ type }: LoadingProps) {
   switch (type) {
     case "FULL":
       return (

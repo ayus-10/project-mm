@@ -5,15 +5,15 @@ import { IoSearch as SearchIcon } from "react-icons/io5";
 import { MdClose as CloseIcon } from "react-icons/md";
 import { PiUserCirclePlusThin as UserProfileIcon } from "react-icons/pi";
 
-import FriendList from "./FriendList";
-import FriendCard from "./card/FriendCard";
+import { FriendList } from "./FriendList";
+import { FriendCard } from "./card/FriendCard";
 import { useFriendRequestStore } from "@/stores/friendRequestStore";
 import { useUserProfileStore } from "@/stores/userProfileStore";
 
 import { ViewFriendsTab } from "./types";
 import { IUser } from "@/interfaces/IUser";
 
-export default function FriendsTab() {
+export function FriendsTab() {
   const tabButtons: ViewFriendsTab[] = ["RECEIVED", "SENT"];
 
   const [activeTab, setActiveTab] = useState<ViewFriendsTab>("RECEIVED");

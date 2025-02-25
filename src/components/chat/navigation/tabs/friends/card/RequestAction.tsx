@@ -21,7 +21,7 @@ interface RequestActionProps {
   userId: string;
 }
 
-export default function RequestAction({ tab, userId }: RequestActionProps) {
+export function RequestAction({ tab, userId }: RequestActionProps) {
   const { setProfile, setSearch } = useUserProfileStore();
 
   const {

@@ -4,13 +4,13 @@ import { LuChevronLeft as BackIcon, LuMenu as MenuIcon } from "react-icons/lu";
 import { IoSettingsOutline as SettingsTabIcon } from "react-icons/io5";
 import { LiaUserFriendsSolid as FriendsTabIcon } from "react-icons/lia";
 import { useEffect, useState } from "react";
-import MessagesTab from "./tabs/messages/MessagesTab";
-import SettingsTab from "./tabs/settings/SettingsTab";
-import FriendsTab from "./tabs/friends/FriendsTab";
+import { MessagesTab } from "./tabs/messages/MessagesTab";
+import { SettingsTab } from "./tabs/settings/SettingsTab";
+import { FriendsTab } from "./tabs/friends/FriendsTab";
 
 type ActiveTab = "MESSAGES" | "FRIENDS" | "SETTINGS";
 
-export default function ChatNavigation() {
+export function ChatNavigation() {
   const [showNavigation, setShowNavigation] = useState(false);
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("MESSAGES");

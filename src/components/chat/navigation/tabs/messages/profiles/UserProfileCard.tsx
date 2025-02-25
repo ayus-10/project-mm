@@ -1,6 +1,6 @@
 import { MdDelete as DeleteIcon } from "react-icons/md";
-import DefaultProfilePicture from "@/components/DefaultProfilePicture";
-import timeDifferenceFromNow from "@/utils/timeDifferenceFromNow";
+import { DefaultProfilePicture } from "@/components/DefaultProfilePicture";
+import { timeDifferenceFromNow } from "@/utils/timeDifferenceFromNow";
 
 interface UserProfileCardProps {
   fullName: string;
@@ -9,7 +9,7 @@ interface UserProfileCardProps {
   hasUnseenMessages: boolean;
 }
 
-export default function UserProfileCard(props: UserProfileCardProps) {
+export function UserProfileCard(props: UserProfileCardProps) {
   const { fullName, lastMessage, sentTime, hasUnseenMessages } = props;
 
   return (

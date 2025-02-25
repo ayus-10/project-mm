@@ -1,5 +1,5 @@
-import UserForm from "@/components/UserForm";
+import { UserForm } from "@/components/UserForm";
 
-export default function Login() {
+export function Login() {
   return <UserForm formType="LOGIN" />;
 }

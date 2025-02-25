@@ -22,7 +22,7 @@ interface SignupResponse {
   accessToken: string;
 }
 
-export default function UserForm({ formType }: UserFormProps) {
+export function UserForm({ formType }: UserFormProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   const [fullName, setFullName] = useState("");

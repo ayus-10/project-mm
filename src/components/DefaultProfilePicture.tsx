@@ -1,10 +1,6 @@
 import { FaUserCircle as UserIcon } from "react-icons/fa";
 
-export default function DefaultProfilePicture({
-  largeSize,
-}: {
-  largeSize?: boolean;
-}) {
+export function DefaultProfilePicture({ largeSize }: { largeSize?: boolean }) {
   return (
     <div
       className={`rounded-full bg-white text-gray-600 dark:text-gray-700 ${

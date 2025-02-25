@@ -1,10 +1,8 @@
 import { ReactNode } from "react";
 import { ThemeContext } from "@/contexts/ThemeContext";
-import useDarkTheme from "@/hooks/useDarkTheme";
+import { useDarkTheme } from "@/hooks/useDarkTheme";
 
-export default function ThemeProvider({
-  children,
-}: Readonly<{ children: ReactNode }>) {
+export function ThemeProvider({ children }: Readonly<{ children: ReactNode }>) {
   const [darkTheme, toggleTheme] = useDarkTheme();
 
   return (

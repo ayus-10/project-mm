@@ -1,7 +1,7 @@
 import { ActionType, ViewFriendsTab } from "../types";
 
-import DefaultProfilePicture from "@/components/DefaultProfilePicture";
-import RequestAction from "./RequestAction";
+import { DefaultProfilePicture } from "@/components/DefaultProfilePicture";
+import { RequestAction } from "./RequestAction";
 
 interface FriendCardProps {
   tab: ActionType | ViewFriendsTab;
@@ -13,7 +13,7 @@ interface FriendCardProps {
   };
 }
 
-export default function FriendCard(props: FriendCardProps) {
+export function FriendCard(props: FriendCardProps) {
   const { tab, user } = props;
 
   return (

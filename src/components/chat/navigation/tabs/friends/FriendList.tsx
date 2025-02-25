@@ -1,9 +1,9 @@
-import Loading from "@/components/Loading";
+import { Loading } from "@/components/Loading";
 
 import { IFriend } from "@/interfaces/IFriend";
 import { ViewFriendsTab } from "./types";
 
-import FriendRequestCard from "./card/FriendCard";
+import { FriendCard } from "./card/FriendCard";
 import NotFound from "@/assets/empty.png";
 
 interface FriendListProps {
@@ -13,7 +13,7 @@ interface FriendListProps {
   isLoading: boolean;
 }
 
-export default function FriendList(props: FriendListProps) {
+export function FriendList(props: FriendListProps) {
   const { tab, received, sent, isLoading } = props;
 
   const isValidArray = (arr: IFriend[] | undefined): arr is IFriend[] =>
@@ -40,7 +40,7 @@ export default function FriendList(props: FriendListProps) {
     <div className="my-2 mb-4 flex h-1 grow flex-col items-center gap-2 overflow-y-auto">
       {showSent
         ? sent.map((s) => (
-            <FriendRequestCard
+            <FriendCard
               key={s.friendId}
               tab={tab}
               user={{
@@ -52,7 +52,7 @@ export default function FriendList(props: FriendListProps) {
           ))
         : showReceived
           ? received.map((r) => (
-              <FriendRequestCard
+              <FriendCard
                 key={r.friendId}
                 tab={tab}
                 user={{

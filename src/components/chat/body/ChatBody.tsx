@@ -4,9 +4,9 @@ import { IoIosVideocam as VideoCallIcon } from "react-icons/io";
 import { IoSearch as SearchMessageIcon } from "react-icons/io5";
 import { MdLocalPhone as AudioCallIcon } from "react-icons/md";
 
-import MessagesContainer from "./MessagesContainer";
+import { MessagesContainer } from "./MessagesContainer";
 
-export default function ChatBody() {
+export function ChatBody() {
   const currentChat = {
     username: "John Doe",
     email: "johndoe@example.com",

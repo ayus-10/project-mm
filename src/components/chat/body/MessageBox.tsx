@@ -1,11 +1,11 @@
 import { IMessage } from "@/interfaces/IMessage";
-import DefaultProfilePicture from "@/components/DefaultProfilePicture";
+import { DefaultProfilePicture } from "@/components/DefaultProfilePicture";
 
 interface MessageBoxProps extends IMessage {
   align: "LEFT" | "RIGHT";
 }
 
-export default function MessageBox(props: MessageBoxProps) {
+export function MessageBox(props: MessageBoxProps) {
   const { align, sentTime, receivedTime, messageText } = props;
 
   return (

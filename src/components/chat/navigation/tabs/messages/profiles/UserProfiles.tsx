@@ -5,13 +5,13 @@ import { IConversation } from "@/interfaces/IConversation";
 import { useFriendsAndConversationsStore } from "@/stores/friendsAndConversationsStore";
 
 import EmptyImage from "@/assets/alien.png";
-import UserProfileCard from "./UserProfileCard";
-import Loading from "@/components/Loading";
+import { UserProfileCard } from "./UserProfileCard";
+import { Loading } from "@/components/Loading";
 
 type ActiveTab = "ALL" | "UNSEEN" | "FRIENDS";
 
 // TODO: implement client-side LOAD MORE
-export default function UserProfiles() {
+export function UserProfiles() {
   const tabs: ActiveTab[] = ["ALL", "UNSEEN", "FRIENDS"];
 
   const [search, setSearch] = useState("");

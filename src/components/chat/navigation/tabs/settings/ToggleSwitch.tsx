@@ -6,7 +6,7 @@ interface ToggleSwitchProps {
   checked: boolean;
 }
 
-export default function ToggleSwitch(props: ToggleSwitchProps) {
+export function ToggleSwitch(props: ToggleSwitchProps) {
   const { parent, checked } = props;
 
   const { toggleTheme } = useContext(ThemeContext);

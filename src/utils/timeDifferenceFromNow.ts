@@ -1,4 +1,4 @@
-export default function timeDifferenceFromNow(isoDate: string) {
+export function timeDifferenceFromNow(isoDate: string) {
   const inputDate = new Date(isoDate).getTime();
   const now = new Date().getTime();
 
