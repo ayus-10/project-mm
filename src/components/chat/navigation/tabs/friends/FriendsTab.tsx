@@ -12,12 +12,6 @@ import { useUserProfileStore } from "@/stores/userProfileStore";
 
 import { ViewFriendsTab } from "./types";
 import { IUser } from "@/interfaces/IUser";
-import { IFriend } from "@/interfaces/IFriend";
-
-interface FriendRequests {
-  sent: IFriend[];
-  received: IFriend[];
-}
 
 export default function FriendsTab() {
   const tabButtons: ViewFriendsTab[] = ["RECEIVED", "SENT"];
@@ -28,18 +22,11 @@ export default function FriendsTab() {
 
   const [errorMessage, setErrorMessage] = useState("");
 
-  const [fetchCount, setFetchCount] = useState(0);
-
   const { search, profile, setSearch, setProfile } = useUserProfileStore();
 
-  const {
-    sentRequests,
-    receivedRequests,
-    setSentRequests,
-    setReceivedRequests,
-  } = useFriendRequestStore();
+  const { sentRequests, receivedRequests, loadingRequests } =
+    useFriendRequestStore();
 
-  const [loadingRequests, setLoadingRequests] = useState(false);
   const [loadingProfile, setLoadingProfile] = useState(false);
 
   function searchUserProfile(e: FormEvent) {
@@ -64,16 +51,6 @@ export default function FriendsTab() {
   }
 
   useEffect(() => {
-    const eventSource = new EventSource("/api/events");
-
-    eventSource.onmessage = () => setFetchCount((c) => c + 1);
-
-    eventSource.onerror = () => eventSource.close();
-
-    return () => eventSource.close();
-  }, []);
-
-  useEffect(() => {
     async function find() {
       setLoadingProfile(true);
 
@@ -85,24 +62,6 @@ export default function FriendsTab() {
 
     if (search) find();
   }, [search, setProfile]);
-
-  // TODO: remove this from here
-  useEffect(() => {
-    async function getRequests(showLoading: boolean) {
-      if (showLoading) setLoadingRequests(true);
-
-      const res = await customGet<FriendRequests>("/api/friends/requests");
-
-      if (res) {
-        setSentRequests(res.sent);
-        setReceivedRequests(res.received);
-      }
-
-      if (showLoading) setLoadingRequests(false);
-    }
-
-    getRequests(fetchCount === 0);
-  }, [fetchCount, setSentRequests, setReceivedRequests]);
 
   return (
     <div className="flex h-full flex-col gap-8">
