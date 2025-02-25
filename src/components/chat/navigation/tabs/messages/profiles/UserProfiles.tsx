@@ -1,26 +1,16 @@
 import { useEffect, useState } from "react";
 import { IoSearch as SearchUserIcon } from "react-icons/io5";
 
-import { IFriend } from "@/interfaces/IFriend";
 import { IConversation } from "@/interfaces/IConversation";
-import { customGet } from "@/utils/customAxios";
+import { useFriendsAndConversationsStore } from "@/stores/friendsAndConversationsStore";
 
 import EmptyImage from "@/assets/alien.png";
 import UserProfileCard from "./UserProfileCard";
 import Loading from "@/components/Loading";
 
-interface GetConversationsResponse {
-  conversations: IConversation[];
-}
-
-interface GetFriendsResponse {
-  friends: IFriend[];
-}
-
 type ActiveTab = "ALL" | "UNSEEN" | "FRIENDS";
 
 // TODO: implement client-side LOAD MORE
-// TODO: fetch these data somewhere up
 export default function UserProfiles() {
   const tabs: ActiveTab[] = ["ALL", "UNSEEN", "FRIENDS"];
 
@@ -28,11 +18,7 @@ export default function UserProfiles() {
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("ALL");
 
-  const [conversations, setConversations] = useState<IConversation[]>([]);
-
-  const [friends, setFriends] = useState<IFriend[]>([]);
-
-  const [loading, setLoading] = useState(false);
+  const { conversations, loadingFNC } = useFriendsAndConversationsStore();
 
   const [filteredConversations, setFilteredConversations] = useState<
     IConversation[]
@@ -41,30 +27,6 @@ export default function UserProfiles() {
   const validConversations = filteredConversations.filter(
     ({ message }) => message !== null,
   );
-
-  useEffect(() => {
-    async function getConversations() {
-      const res = await customGet<GetConversationsResponse>(
-        "/api/chat/conversations",
-      );
-
-      if (res) setConversations(res.conversations);
-    }
-
-    async function getFriends() {
-      const res = await customGet<GetFriendsResponse>("/api/friends");
-
-      if (res) setFriends(res.friends);
-    }
-
-    async function getAll() {
-      setLoading(true);
-      await Promise.all([getConversations(), getFriends()]);
-      setLoading(false);
-    }
-
-    getAll();
-  }, []);
 
   useEffect(() => {
     if (search) {
@@ -130,7 +92,7 @@ export default function UserProfiles() {
               hasUnseenMessages={!conversation.message!.isSeen}
             />
           ))
-        ) : loading ? (
+        ) : loadingFNC ? (
           <Loading type="SMALL" />
         ) : (
           <div className="flex flex-col items-center gap-2 p-6">
